@@ -78,27 +78,27 @@ const AgeCalculator = () => {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white px-4 py-8">
-      <div className="max-w-2xl mx-auto">
+    <div className="min-h-screen bg-black text-white px-4 py-8 neue-haas">
+      <div className="max-w-3xl mx-auto">
         {/* Header */}
-        <div className="flex items-center mb-8">
+        <div className="flex items-center mb-12">
           <Button
             variant="ghost"
             size="icon"
             onClick={() => navigate("/")}
-            className="mr-4 rounded-full hover:bg-gray-800"
+            className="mr-6 rounded-full hover:bg-gray-800 electric-glow w-14 h-14"
           >
-            <ArrowLeft className="w-6 h-6" />
+            <ArrowLeft className="w-7 h-7" />
           </Button>
-          <h1 className="text-4xl md:text-5xl font-bold">Age Calculator</h1>
+          <h1 className="text-hierarchy-lg">Age Calculator</h1>
         </div>
 
         {/* Calculator Card */}
-        <Card className="bg-black border-gray-800 rounded-3xl">
-          <CardContent className="p-8">
-            <div className="space-y-6">
+        <Card className="card-electric bg-black border-gray-800">
+          <CardContent className="p-12">
+            <div className="space-y-10">
               <div>
-                <Label htmlFor="birthdate" className="text-lg font-semibold mb-3 block">
+                <Label htmlFor="birthdate" className="text-2xl font-semibold mb-6 block">
                   Enter your birth date
                 </Label>
                 <Input
@@ -106,43 +106,43 @@ const AgeCalculator = () => {
                   type="date"
                   value={birthDate}
                   onChange={(e) => setBirthDate(e.target.value)}
-                  className="bg-gray-900 border-gray-700 rounded-2xl text-lg py-6 focus-glow"
+                  className="input-electric"
                   max={new Date().toISOString().split('T')[0]}
                 />
               </div>
 
               <Button
                 onClick={calculateAge}
-                className="w-full bg-white text-black hover:bg-gray-200 text-lg py-6 rounded-3xl hover-scale button-glow font-semibold"
+                className="pill-button w-full bg-white text-black hover:bg-gray-100 electric-glow-strong font-bold"
               >
                 Calculate Age
               </Button>
 
               {/* Result */}
               {result && (
-                <div className="mt-8 animate-fade-in">
-                  <div className="bg-gray-900 rounded-3xl p-6 text-center">
-                    <h3 className="text-2xl font-bold mb-4">Your Age</h3>
-                    <div className="grid grid-cols-3 gap-4 mb-6">
+                <div className="mt-12 smooth-fade-in">
+                  <div className="bg-gray-900 rounded-pill p-10 text-center border border-gray-700">
+                    <h3 className="text-3xl font-bold mb-8">Your Age</h3>
+                    <div className="grid grid-cols-3 gap-8 mb-10">
                       <div>
-                        <div className="text-3xl font-bold text-white">{result.years}</div>
-                        <div className="text-gray-400">Years</div>
+                        <div className="text-5xl font-bold text-cyan-400 mb-2">{result.years}</div>
+                        <div className="text-gray-300 text-lg">Years</div>
                       </div>
                       <div>
-                        <div className="text-3xl font-bold text-white">{result.months}</div>
-                        <div className="text-gray-400">Months</div>
+                        <div className="text-5xl font-bold text-cyan-400 mb-2">{result.months}</div>
+                        <div className="text-gray-300 text-lg">Months</div>
                       </div>
                       <div>
-                        <div className="text-3xl font-bold text-white">{result.days}</div>
-                        <div className="text-gray-400">Days</div>
+                        <div className="text-5xl font-bold text-cyan-400 mb-2">{result.days}</div>
+                        <div className="text-gray-300 text-lg">Days</div>
                       </div>
                     </div>
                     <Button
                       onClick={copyResult}
                       variant="outline"
-                      className="border-gray-700 text-white hover:bg-gray-800 rounded-2xl"
+                      className="border-gray-600 text-white hover:bg-gray-800 electric-glow rounded-pill px-8 py-4"
                     >
-                      {copied ? <Check className="w-4 h-4 mr-2" /> : <Copy className="w-4 h-4 mr-2" />}
+                      {copied ? <Check className="w-5 h-5 mr-3" /> : <Copy className="w-5 h-5 mr-3" />}
                       {copied ? "Copied!" : "Copy Result"}
                     </Button>
                   </div>
