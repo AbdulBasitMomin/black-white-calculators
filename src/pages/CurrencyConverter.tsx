@@ -191,6 +191,7 @@ const CurrencyConverter = () => {
       }
       const data = await response.json();
       setExchangeRates(data.rates);
+      console.log('Exchange rates fetched:', data.rates);
     } catch (error) {
       console.error('Failed to fetch exchange rates:', error);
       toast({
@@ -234,8 +235,20 @@ const CurrencyConverter = () => {
       return;
     }
 
-    // Check if currencies are supported
-    if (fromCurrency !== "USD" && !exchangeRates[fromCurrency]) {
+    // Same currency conversion
+    if (fromCurrency === toCurrency) {
+      setResult({
+        convertedAmount: amountNum,
+        rate: 1
+      });
+      return;
+    }
+
+    // Get rates (all rates are relative to USD)
+    const fromRate = fromCurrency === "USD" ? 1 : exchangeRates[fromCurrency];
+    const toRate = toCurrency === "USD" ? 1 : exchangeRates[toCurrency];
+
+    if (!fromRate && fromCurrency !== "USD") {
       toast({
         title: "Currency not supported",
         description: `${fromCurrency} is not available in current exchange rates`,
@@ -244,7 +257,7 @@ const CurrencyConverter = () => {
       return;
     }
 
-    if (toCurrency !== "USD" && !exchangeRates[toCurrency]) {
+    if (!toRate && toCurrency !== "USD") {
       toast({
         title: "Currency not supported", 
         description: `${toCurrency} is not available in current exchange rates`,
@@ -253,14 +266,29 @@ const CurrencyConverter = () => {
       return;
     }
 
-    // Convert to USD first, then to target currency
-    const usdAmount = fromCurrency === "USD" ? amountNum : amountNum / exchangeRates[fromCurrency];
-    const convertedAmount = toCurrency === "USD" ? usdAmount : usdAmount * exchangeRates[toCurrency];
-    const rate = toCurrency === "USD" ? 1 / exchangeRates[fromCurrency] : exchangeRates[toCurrency] / exchangeRates[fromCurrency];
+    // Convert: amount in fromCurrency -> USD -> toCurrency
+    const amountInUSD = fromCurrency === "USD" ? amountNum : amountNum / fromRate;
+    const convertedAmount = toCurrency === "USD" ? amountInUSD : amountInUSD * toRate;
+    
+    // Calculate exchange rate from fromCurrency to toCurrency
+    const exchangeRate = fromCurrency === "USD" ? toRate : 
+                        toCurrency === "USD" ? (1 / fromRate) : 
+                        toRate / fromRate;
+
+    console.log('Conversion details:', {
+      amount: amountNum,
+      fromCurrency,
+      toCurrency,
+      fromRate,
+      toRate,
+      amountInUSD,
+      convertedAmount,
+      exchangeRate
+    });
 
     setResult({
       convertedAmount: Math.round(convertedAmount * 100) / 100,
-      rate: Math.round(rate * 10000) / 10000
+      rate: Math.round(exchangeRate * 10000) / 10000
     });
   };
 
@@ -305,10 +333,10 @@ const CurrencyConverter = () => {
         {/* Calculator Card */}
         <Card className="card-electric bg-black border-gray-800">
           <CardContent className="p-8">
-            <div className="space-y-8">
+            <div className="space-y-6">
               {/* Amount Input */}
               <div>
-                <Label htmlFor="amount" className="text-xl font-semibold mb-4 block">
+                <Label htmlFor="amount" className="text-lg font-semibold mb-3 block">
                   Amount
                 </Label>
                 <Input
@@ -324,7 +352,7 @@ const CurrencyConverter = () => {
 
               {/* From Currency */}
               <div>
-                <Label className="text-xl font-semibold mb-4 block">From</Label>
+                <Label className="text-lg font-semibold mb-3 block">From</Label>
                 <CurrencyCombobox
                   currencies={currencies}
                   value={fromCurrency}
@@ -335,7 +363,7 @@ const CurrencyConverter = () => {
 
               {/* To Currency */}
               <div>
-                <Label className="text-xl font-semibold mb-4 block">To</Label>
+                <Label className="text-lg font-semibold mb-3 block">To</Label>
                 <CurrencyCombobox
                   currencies={currencies}
                   value={toCurrency}
@@ -365,15 +393,15 @@ const CurrencyConverter = () => {
 
               {/* Result */}
               {result && (
-                <div className="mt-8 smooth-fade-in">
-                  <div className="bg-gray-900 rounded-pill p-8 text-center electric-glow">
-                    <h3 className="text-2xl font-bold mb-6">Converted Amount</h3>
-                    <div className="mb-6">
-                      <div className="text-hierarchy-md text-white mb-3">
+                <div className="mt-6 smooth-fade-in">
+                  <div className="bg-gray-900 rounded-pill p-6 text-center electric-glow">
+                    <h3 className="text-xl font-bold mb-4">Converted Amount</h3>
+                    <div className="mb-4">
+                      <div className="text-hierarchy-md text-white mb-2">
                         {currencies.find(c => c.code === toCurrency)?.symbol}
                         {result.convertedAmount.toLocaleString()} {toCurrency}
                       </div>
-                      <div className="text-gray-400 text-lg">
+                      <div className="text-gray-400 text-base">
                         1 {fromCurrency} = {result.rate} {toCurrency}
                       </div>
                     </div>

@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { ArrowLeft, Copy, Check, Heart, TrendingUp, AlertTriangle, Shield } from "lucide-react";
+import { ArrowLeft, Copy, Check, Heart, TrendingUp } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -9,7 +9,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
-import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, LineChart, Line, PieChart, Pie, Cell } from "recharts";
+import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, PieChart, Pie, Cell } from "recharts";
 
 const BMICalculator = () => {
   const navigate = useNavigate();
@@ -26,7 +26,6 @@ const BMICalculator = () => {
     healthTips: string[];
     bmiCategoryData: any[];
     riskGaugeData: any[];
-    weightDistributionData: any[];
   } | null>(null);
   const [copied, setCopied] = useState(false);
 
@@ -83,14 +82,6 @@ const BMICalculator = () => {
     ];
   };
 
-  const getWeightDistributionData = (currentWeight: number, idealMin: number, idealMax: number) => [
-    { range: "Underweight", weight: idealMin - 10, inRange: currentWeight < idealMin - 5, color: "#3B82F6" },
-    { range: "Ideal Min", weight: idealMin, inRange: currentWeight >= idealMin && currentWeight <= idealMax, color: "#10B981" },
-    { range: "Current", weight: currentWeight, inRange: true, color: "#00FFFF" },
-    { range: "Ideal Max", weight: idealMax, inRange: currentWeight >= idealMin && currentWeight <= idealMax, color: "#10B981" },
-    { range: "Overweight", weight: idealMax + 10, inRange: currentWeight > idealMax + 5, color: "#F59E0B" },
-  ];
-
   const calculateBMI = () => {
     if (!height || !weight) {
       toast({
@@ -119,11 +110,10 @@ const BMICalculator = () => {
     }
 
     const bmi = weightInKg / (heightInM * heightInM);
-    const { category, color, riskLevel, riskColor, tips } = getBMICategory(bmi);
+    const { category, color, riskLevel, tips } = getBMICategory(bmi);
     const idealWeightRange = getIdealWeightRange(heightInM * 100);
     const bmiCategoryData = getBMICategoryData(bmi);
     const riskGaugeData = getRiskGaugeData(bmi);
-    const weightDistributionData = getWeightDistributionData(weightInKg, idealWeightRange.min, idealWeightRange.max);
 
     setResult({
       bmi: Math.round(bmi * 10) / 10,
@@ -133,8 +123,7 @@ const BMICalculator = () => {
       idealWeightRange,
       healthTips: tips,
       bmiCategoryData,
-      riskGaugeData,
-      weightDistributionData
+      riskGaugeData
     });
   };
 
@@ -162,7 +151,7 @@ const BMICalculator = () => {
     <div className="min-h-screen bg-black text-white px-4 py-8 neue-haas">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
-        <div className="flex items-center mb-12">
+        <div className="flex items-center mb-8">
           <Button
             variant="ghost"
             size="icon"
@@ -176,11 +165,11 @@ const BMICalculator = () => {
 
         {/* Calculator Card */}
         <Card className="card-electric bg-black border-gray-800 mb-8">
-          <CardContent className="p-12">
-            <div className="space-y-10">
+          <CardContent className="p-8">
+            <div className="space-y-8">
               {/* Unit Selection */}
               <div>
-                <Label className="text-2xl font-semibold mb-6 block">Unit System</Label>
+                <Label className="text-xl font-semibold mb-4 block">Unit System</Label>
                 <Select value={unit} onValueChange={setUnit}>
                   <SelectTrigger className="input-electric">
                     <SelectValue />
@@ -194,7 +183,7 @@ const BMICalculator = () => {
 
               {/* Height Input */}
               <div>
-                <Label htmlFor="height" className="text-2xl font-semibold mb-6 block">
+                <Label htmlFor="height" className="text-xl font-semibold mb-4 block">
                   Height {unit === "metric" ? "(cm)" : "(ft)"}
                 </Label>
                 <Input
@@ -210,7 +199,7 @@ const BMICalculator = () => {
 
               {/* Weight Input */}
               <div>
-                <Label htmlFor="weight" className="text-2xl font-semibold mb-6 block">
+                <Label htmlFor="weight" className="text-xl font-semibold mb-4 block">
                   Weight {unit === "metric" ? "(kg)" : "(lbs)"}
                 </Label>
                 <Input
@@ -236,14 +225,14 @@ const BMICalculator = () => {
 
         {/* Results */}
         {result && (
-          <div className="space-y-8 smooth-fade-in">
+          <div className="space-y-6 smooth-fade-in">
             {/* Main BMI Display */}
             <Card className="card-electric bg-black border-gray-800">
-              <CardContent className="p-10 text-center">
-                <h3 className="text-3xl font-bold mb-8">Your BMI Results</h3>
-                <div className="mb-8">
-                  <div className="text-6xl font-bold text-cyan-400 mb-4">{result.bmi}</div>
-                  <div className={`text-2xl font-semibold mb-2 ${result.color}`}>
+              <CardContent className="p-8 text-center">
+                <h3 className="text-2xl font-bold mb-6">Your BMI Results</h3>
+                <div className="mb-6">
+                  <div className="text-5xl font-bold text-cyan-400 mb-3">{result.bmi}</div>
+                  <div className={`text-xl font-semibold mb-2 ${result.color}`}>
                     {result.category}
                   </div>
                   <div className="text-lg text-gray-300">
@@ -254,41 +243,41 @@ const BMICalculator = () => {
                 <Button
                   onClick={copyResult}
                   variant="outline"
-                  className="border-gray-600 text-white hover:bg-gray-800 electric-glow rounded-pill px-8 py-4"
+                  className="border-gray-600 text-white hover:bg-gray-800 electric-glow rounded-pill px-6 py-3"
                 >
-                  {copied ? <Check className="w-5 h-5 mr-3" /> : <Copy className="w-5 h-5 mr-3" />}
+                  {copied ? <Check className="w-4 h-4 mr-2" /> : <Copy className="w-4 h-4 mr-2" />}
                   {copied ? "Copied!" : "Copy Result"}
                 </Button>
               </CardContent>
             </Card>
 
             {/* Health Insights */}
-            <div className="grid md:grid-cols-2 gap-8">
+            <div className="grid md:grid-cols-2 gap-6">
               <Card className="card-electric bg-black border-gray-800">
-                <CardContent className="p-8">
-                  <div className="flex items-center mb-6">
-                    <TrendingUp className="w-6 h-6 mr-3 text-cyan-400" />
-                    <h4 className="text-xl font-bold">Ideal Weight Range</h4>
+                <CardContent className="p-6">
+                  <div className="flex items-center mb-4">
+                    <TrendingUp className="w-5 h-5 mr-3 text-cyan-400" />
+                    <h4 className="text-lg font-bold">Ideal Weight Range</h4>
                   </div>
                   <div className="text-center">
-                    <div className="text-2xl font-bold text-cyan-400 mb-2">
+                    <div className="text-xl font-bold text-cyan-400 mb-2">
                       {result.idealWeightRange.min} - {result.idealWeightRange.max} kg
                     </div>
-                    <div className="text-gray-300">Healthy weight for your height</div>
+                    <div className="text-gray-300 text-sm">Healthy weight for your height</div>
                   </div>
                 </CardContent>
               </Card>
 
               <Card className="card-electric bg-black border-gray-800">
-                <CardContent className="p-8">
-                  <div className="flex items-center mb-6">
-                    <Heart className="w-6 h-6 mr-3 text-cyan-400" />
-                    <h4 className="text-xl font-bold">Health Tips</h4>
+                <CardContent className="p-6">
+                  <div className="flex items-center mb-4">
+                    <Heart className="w-5 h-5 mr-3 text-cyan-400" />
+                    <h4 className="text-lg font-bold">Health Tips</h4>
                   </div>
-                  <ul className="space-y-2">
+                  <ul className="space-y-1">
                     {result.healthTips.map((tip, index) => (
                       <li key={index} className="text-gray-300 text-sm flex items-start">
-                        <span className="text-cyan-400 mr-2">•</span>
+                        <span className="text-cyan-400 mr-2 mt-1">•</span>
                         {tip}
                       </li>
                     ))}
@@ -299,64 +288,68 @@ const BMICalculator = () => {
 
             {/* BMI Categories Chart */}
             <Card className="card-electric bg-black border-gray-800">
-              <CardContent className="p-8">
-                <h4 className="text-2xl font-bold mb-8 text-center">BMI Categories</h4>
-                <ChartContainer
-                  config={{
-                    value: { label: "BMI Value", color: "hsl(var(--electric-blue))" },
-                  }}
-                  className="h-[300px]"
-                >
-                  <ResponsiveContainer width="100%" height="100%">
-                    <BarChart data={result.bmiCategoryData}>
-                      <XAxis dataKey="category" />
-                      <YAxis />
-                      <ChartTooltip content={<ChartTooltipContent />} />
-                      <Bar dataKey="value" radius={[4, 4, 0, 0]}>
-                        {result.bmiCategoryData.map((entry, index) => (
-                          <Cell 
-                            key={`cell-${index}`} 
-                            fill={entry.userHere ? "#00FFFF" : entry.color}
-                            opacity={entry.userHere ? 1 : 0.6}
-                          />
-                        ))}
-                      </Bar>
-                    </BarChart>
-                  </ResponsiveContainer>
-                </ChartContainer>
+              <CardContent className="p-6">
+                <h4 className="text-xl font-bold mb-6 text-center">BMI Categories</h4>
+                <div className="bg-gray-900 rounded-3xl p-4">
+                  <ChartContainer
+                    config={{
+                      value: { label: "BMI Value", color: "hsl(var(--electric-blue))" },
+                    }}
+                    className="h-[250px] w-full"
+                  >
+                    <ResponsiveContainer width="100%" height="100%">
+                      <BarChart data={result.bmiCategoryData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+                        <XAxis dataKey="category" tick={{ fontSize: 12 }} />
+                        <YAxis tick={{ fontSize: 12 }} />
+                        <ChartTooltip content={<ChartTooltipContent />} />
+                        <Bar dataKey="value" radius={[4, 4, 0, 0]}>
+                          {result.bmiCategoryData.map((entry, index) => (
+                            <Cell 
+                              key={`cell-${index}`} 
+                              fill={entry.userHere ? "#00FFFF" : entry.color}
+                              opacity={entry.userHere ? 1 : 0.6}
+                            />
+                          ))}
+                        </Bar>
+                      </BarChart>
+                    </ResponsiveContainer>
+                  </ChartContainer>
+                </div>
               </CardContent>
             </Card>
 
             {/* Health Risk Gauge */}
             <Card className="card-electric bg-black border-gray-800">
-              <CardContent className="p-8">
-                <h4 className="text-2xl font-bold mb-8 text-center">Health Risk Assessment</h4>
-                <ChartContainer
-                  config={{
-                    value: { label: "Risk Level", color: "hsl(var(--electric-blue))" },
-                  }}
-                  className="h-[300px]"
-                >
-                  <ResponsiveContainer width="100%" height="100%">
-                    <PieChart>
-                      <Pie
-                        data={result.riskGaugeData}
-                        cx="50%"
-                        cy="50%"
-                        startAngle={180}
-                        endAngle={0}
-                        innerRadius={80}
-                        outerRadius={120}
-                        dataKey="value"
-                      >
-                        {result.riskGaugeData.map((entry, index) => (
-                          <Cell key={`cell-${index}`} fill={entry.color} />
-                        ))}
-                      </Pie>
-                      <ChartTooltip content={<ChartTooltipContent />} />
-                    </PieChart>
-                  </ResponsiveContainer>
-                </ChartContainer>
+              <CardContent className="p-6">
+                <h4 className="text-xl font-bold mb-6 text-center">Health Risk Assessment</h4>
+                <div className="bg-gray-900 rounded-3xl p-4">
+                  <ChartContainer
+                    config={{
+                      value: { label: "Risk Level", color: "hsl(var(--electric-blue))" },
+                    }}
+                    className="h-[200px] w-full"
+                  >
+                    <ResponsiveContainer width="100%" height="100%">
+                      <PieChart>
+                        <Pie
+                          data={result.riskGaugeData}
+                          cx="50%"
+                          cy="50%"
+                          startAngle={180}
+                          endAngle={0}
+                          innerRadius={60}
+                          outerRadius={90}
+                          dataKey="value"
+                        >
+                          {result.riskGaugeData.map((entry, index) => (
+                            <Cell key={`cell-${index}`} fill={entry.color} />
+                          ))}
+                        </Pie>
+                        <ChartTooltip content={<ChartTooltipContent />} />
+                      </PieChart>
+                    </ResponsiveContainer>
+                  </ChartContainer>
+                </div>
                 <div className="text-center mt-4">
                   <div className="text-lg font-semibold text-cyan-400">{result.riskLevel}</div>
                 </div>
