@@ -39,21 +39,21 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white neue-haas">
+    <div className="min-h-screen min-h-[100dvh] bg-black text-white neue-haas safe-area-top safe-area-bottom">
       {/* Hero Section */}
-      <section className="min-h-screen flex items-center justify-center px-4">
-        <div className="text-center max-w-6xl mx-auto">
-          <h1 className="text-hierarchy-xl mb-6 smooth-fade-in">
+      <section className="min-h-screen min-h-[100dvh] flex items-center justify-center container-responsive">
+        <div className="text-center w-full">
+          <h1 className="text-hierarchy-xl mb-4 sm:mb-6 smooth-fade-in">
             Simple Everyday
             <br />
             <span className="text-white">Calculators</span>
           </h1>
-          <p className="text-hierarchy-md text-gray-300 mb-8 smooth-fade-in max-w-3xl mx-auto leading-relaxed">
+          <p className="text-hierarchy-md text-gray-300 mb-6 sm:mb-8 smooth-fade-in max-w-3xl mx-auto leading-relaxed">
             Age, BMI, Currency, Dates — Free, Fast, Accurate.
           </p>
           <Button
             onClick={scrollToCalculators}
-            className="pill-button bg-white text-black hover:bg-gray-100 electric-glow-strong font-bold"
+            className="pill-button bg-white text-black hover:bg-gray-100 electric-glow-strong font-bold touch-target"
           >
             Start Calculating
           </Button>
@@ -61,27 +61,27 @@ const Index = () => {
       </section>
 
       {/* Tools Section */}
-      <section id="calculators" className="py-16 px-4">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-hierarchy-lg text-center mb-12">
+      <section id="calculators" className="section-spacing container-responsive">
+        <div className="w-full">
+          <h2 className="text-hierarchy-lg text-center mb-8 sm:mb-12">
             Choose Your Tool
           </h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-8 max-w-5xl mx-auto">
+          <div className="grid-responsive max-w-5xl mx-auto">
             {calculatorTools.map((tool, index) => (
               <Card
                 key={tool.title}
-                className="card-electric bg-black border-gray-800 cursor-pointer group"
+                className="card-electric bg-black border-gray-800 cursor-pointer group touch-target"
                 onClick={() => navigate(tool.path)}
                 style={{ animationDelay: `${index * 0.15}s` }}
               >
-                <CardContent className="p-8 text-center">
-                  <div className="mb-6">
-                    <tool.icon className="w-16 h-16 mx-auto text-white group-hover:text-cyan-400 transition-colors duration-300" />
+                <CardContent className="card-spacing text-center">
+                  <div className="mb-4 sm:mb-6">
+                    <tool.icon className="w-12 h-12 sm:w-16 sm:h-16 mx-auto text-white group-hover:text-cyan-400 transition-colors duration-300" />
                   </div>
-                  <h3 className="text-2xl font-bold mb-4 text-white group-hover:text-cyan-400 transition-colors duration-300">
+                  <h3 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-white group-hover:text-cyan-400 transition-colors duration-300">
                     {tool.title}
                   </h3>
-                  <p className="text-gray-300 text-base leading-relaxed">
+                  <p className="text-gray-300 text-sm sm:text-base leading-relaxed">
                     {tool.description}
                   </p>
                 </CardContent>
@@ -92,9 +92,9 @@ const Index = () => {
       </section>
 
       {/* Footer */}
-      <footer className="py-8 px-4 border-t border-gray-800">
-        <div className="max-w-7xl mx-auto text-center">
-          <p className="text-gray-400 text-base">
+      <footer className="py-6 sm:py-8 container-responsive border-t border-gray-800">
+        <div className="text-center">
+          <p className="text-gray-400 text-sm sm:text-base">
             © 2025 Everyday Tools Hub. All Rights Reserved.
           </p>
         </div>

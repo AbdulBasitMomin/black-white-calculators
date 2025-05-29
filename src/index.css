@@ -94,20 +94,36 @@
     @apply border-border;
   }
 
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground antialiased;
     font-family: 'Neue Haas Grotesk', 'SF Pro Display', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     font-feature-settings: 'liga' 1, 'kern' 1;
+    min-height: 100vh;
+    min-height: 100dvh;
+    overflow-x: hidden;
+  }
+
+  /* iOS Safari viewport fix */
+  @supports (-webkit-touch-callout: none) {
+    body {
+      min-height: -webkit-fill-available;
+    }
   }
 }
 
 @layer utilities {
   .electric-glow {
-    @apply transition-all duration-300 hover:scale-[1.03] hover:shadow-[0_0_30px_rgba(0,255,255,0.3)] hover:border-cyan-400;
+    @apply transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_25px_rgba(0,255,255,0.3)] hover:border-cyan-400;
   }
   
   .electric-glow-strong {
-    @apply transition-all duration-300 hover:scale-[1.03] hover:shadow-[0_0_40px_rgba(0,255,255,0.5)] hover:border-cyan-400;
+    @apply transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_35px_rgba(0,255,255,0.5)] hover:border-cyan-400;
   }
   
   .focus-electric {
@@ -115,31 +131,79 @@
   }
   
   .pill-button {
-    @apply rounded-full px-8 py-4 font-semibold text-lg transition-all duration-300 hover:scale-[1.03] hover:shadow-[0_0_25px_rgba(0,255,255,0.4)];
+    @apply rounded-full px-6 py-3 sm:px-8 sm:py-4 font-semibold text-base sm:text-lg transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_25px_rgba(0,255,255,0.4)] touch-manipulation;
   }
   
   .card-electric {
-    @apply rounded-[50px] border border-gray-800 transition-all duration-300 hover:scale-[1.03] hover:shadow-[0_0_40px_rgba(0,255,255,0.3)] hover:border-cyan-400;
+    @apply rounded-[30px] sm:rounded-[50px] border border-gray-800 transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_35px_rgba(0,255,255,0.3)] hover:border-cyan-400;
   }
   
   .input-electric {
-    @apply rounded-[30px] bg-gray-900 border border-gray-700 text-lg py-6 px-6 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-cyan-400/50 focus:border-cyan-400 focus:shadow-[0_0_20px_rgba(0,255,255,0.2)];
+    @apply rounded-[20px] sm:rounded-[30px] bg-gray-900 border border-gray-700 text-base sm:text-lg py-4 px-4 sm:py-6 sm:px-6 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-cyan-400/50 focus:border-cyan-400 focus:shadow-[0_0_20px_rgba(0,255,255,0.2)] touch-manipulation;
   }
   
   .text-hierarchy-xl {
-    @apply text-5xl md:text-7xl font-bold tracking-tight;
+    @apply text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight leading-tight;
   }
   
   .text-hierarchy-lg {
-    @apply text-3xl md:text-4xl font-bold tracking-tight;
+    @apply text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight leading-tight;
   }
   
   .text-hierarchy-md {
-    @apply text-xl md:text-2xl font-medium;
+    @apply text-lg sm:text-xl md:text-2xl lg:text-3xl font-medium leading-relaxed;
   }
   
   .smooth-fade-in {
     @apply animate-fade-in;
+  }
+
+  .container-responsive {
+    @apply mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl;
+  }
+
+  .section-spacing {
+    @apply py-8 sm:py-12 md:py-16 lg:py-20;
+  }
+
+  .card-spacing {
+    @apply p-4 sm:p-6 md:p-8;
+  }
+
+  .grid-responsive {
+    @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 sm:gap-6 lg:gap-8;
+  }
+
+  /* Touch targets for mobile */
+  .touch-target {
+    @apply min-h-[44px] min-w-[44px];
+  }
+
+  /* Safe area support for iOS */
+  .safe-area-top {
+    padding-top: env(safe-area-inset-top);
+  }
+
+  .safe-area-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  /* Chart responsiveness */
+  .chart-container {
+    @apply w-full h-[200px] sm:h-[250px] md:h-[300px];
+  }
+
+  /* Text scaling for better readability */
+  @media (max-width: 320px) {
+    .text-hierarchy-xl {
+      @apply text-2xl;
+    }
+    .text-hierarchy-lg {
+      @apply text-xl;
+    }
+    .text-hierarchy-md {
+      @apply text-base;
+    }
   }
 }
 
@@ -147,4 +211,43 @@
   .neue-haas {
     font-family: 'Neue Haas Grotesk', 'SF Pro Display', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   }
+
+  /* Responsive button variants */
+  .btn-responsive {
+    @apply px-4 py-3 sm:px-6 sm:py-4 text-sm sm:text-base font-semibold rounded-full transition-all duration-300 touch-manipulation;
+  }
+
+  /* Mobile-first navigation */
+  .nav-mobile {
+    @apply fixed bottom-0 left-0 right-0 bg-black/90 backdrop-blur-lg border-t border-gray-800 safe-area-bottom;
+  }
+
+  /* Optimized input styles */
+  .input-responsive {
+    @apply w-full px-4 py-3 sm:px-6 sm:py-4 text-base sm:text-lg bg-gray-900 border border-gray-700 rounded-[20px] sm:rounded-[30px] focus:outline-none focus:ring-2 focus:ring-cyan-400/50 focus:border-cyan-400 transition-all duration-300 touch-manipulation;
+  }
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1a1a1a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Firefox scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #333 #1a1a1a;
 }
