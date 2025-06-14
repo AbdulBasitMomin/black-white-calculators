@@ -21,6 +21,7 @@ interface Currency {
   code: string;
   name: string;
   symbol: string;
+  flag: string;
 }
 
 interface CurrencyComboboxProps {
@@ -47,28 +48,29 @@ export function CurrencyCombobox({
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-full justify-between input-electric text-lg py-6 font-normal"
+          className="w-full justify-between backdrop-blur-xl bg-white/10 border border-white/30 hover:bg-white/20 text-white rounded-2xl p-6 text-lg font-normal transition-all duration-300"
         >
           {selectedCurrency ? (
-            <span className="flex items-center gap-2">
+            <span className="flex items-center gap-3">
+              <span className="text-2xl">{selectedCurrency.flag}</span>
               <span className="font-semibold">{selectedCurrency.code}</span>
-              <span className="text-gray-400">-</span>
-              <span>{selectedCurrency.name}</span>
+              <span className="text-white/60">-</span>
+              <span className="text-white/90">{selectedCurrency.name}</span>
             </span>
           ) : (
-            <span className="text-gray-400">{placeholder}</span>
+            <span className="text-white/60">{placeholder}</span>
           )}
-          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+          <ChevronsUpDown className="ml-2 h-5 w-5 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-full p-0 bg-gray-900 border-gray-700" align="start">
-        <Command className="bg-gray-900 border-gray-700">
+      <PopoverContent className="w-full p-0 backdrop-blur-xl bg-gray-900/90 border border-white/20 rounded-2xl shadow-2xl" align="start">
+        <Command className="backdrop-blur-xl bg-transparent border-0">
           <CommandInput 
             placeholder="Search currencies..." 
-            className="bg-gray-900 text-white border-gray-700"
+            className="backdrop-blur-xl bg-white/10 text-white border border-white/20 rounded-xl m-2"
           />
           <CommandList className="max-h-60">
-            <CommandEmpty className="text-gray-400 py-6 text-center">
+            <CommandEmpty className="text-white/70 py-6 text-center">
               No currency found.
             </CommandEmpty>
             <CommandGroup>
@@ -80,19 +82,20 @@ export function CurrencyCombobox({
                     onValueChange(currency.code);
                     setOpen(false);
                   }}
-                  className="text-white hover:bg-gray-800 cursor-pointer"
+                  className="text-white hover:bg-white/20 cursor-pointer rounded-xl mx-2 my-1 transition-all duration-200"
                 >
                   <Check
                     className={cn(
-                      "mr-2 h-4 w-4",
+                      "mr-3 h-4 w-4",
                       value === currency.code ? "opacity-100" : "opacity-0"
                     )}
                   />
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-3 flex-1">
+                    <span className="text-xl">{currency.flag}</span>
                     <span className="font-semibold">{currency.code}</span>
-                    <span className="text-gray-400">-</span>
-                    <span>{currency.name}</span>
-                    <span className="ml-auto text-gray-400">{currency.symbol}</span>
+                    <span className="text-white/60">-</span>
+                    <span className="flex-1">{currency.name}</span>
+                    <span className="text-white/70 text-sm">{currency.symbol}</span>
                   </div>
                 </CommandItem>
               ))}
