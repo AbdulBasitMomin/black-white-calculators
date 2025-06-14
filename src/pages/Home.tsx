@@ -119,22 +119,6 @@ const Home = () => {
             <p className="text-xl md:text-2xl text-gray-700 dark:text-white/80 mb-12 max-w-3xl mx-auto leading-relaxed drop-shadow-sm">
               Experience the next generation of calculation tools. Precision meets elegance in our collection of premium calculators designed for the modern world.
             </p>
-
-            {/* Featured Stats */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto mb-16">
-              <div className="glass-card-light rounded-[2rem] p-6 shadow-2xl">
-                <div className="text-3xl font-bold bg-gradient-to-r from-gray-800 to-purple-600 dark:from-white dark:to-purple-200 bg-clip-text text-transparent mb-2">9+</div>
-                <div className="text-gray-600 dark:text-white/80">Premium Tools</div>
-              </div>
-              <div className="glass-card-light rounded-[2rem] p-6 shadow-2xl">
-                <div className="text-3xl font-bold bg-gradient-to-r from-gray-800 to-pink-600 dark:from-white dark:to-pink-200 bg-clip-text text-transparent mb-2">100%</div>
-                <div className="text-gray-600 dark:text-white/80">Accurate Results</div>
-              </div>
-              <div className="glass-card-light rounded-[2rem] p-6 shadow-2xl">
-                <div className="text-3xl font-bold bg-gradient-to-r from-gray-800 to-cyan-600 dark:from-white dark:to-cyan-200 bg-clip-text text-transparent mb-2">24/7</div>
-                <div className="text-gray-600 dark:text-white/80">Always Available</div>
-              </div>
-            </div>
           </div>
         </section>
 
