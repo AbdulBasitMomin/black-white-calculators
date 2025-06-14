@@ -101,15 +101,15 @@ const BMICalculator = () => {
   };
 
   return (
-    <div className="min-h-screen relative overflow-hidden">
+    <div className="min-h-screen relative overflow-hidden bg-gradient-to-br from-purple-50 via-blue-50 to-pink-50 dark:from-gray-900 dark:via-purple-900 dark:to-gray-900">
       {/* Animated Background */}
-      <div className="fixed inset-0 bg-gradient-to-br from-purple-400/20 via-pink-300/20 to-blue-400/20 animate-gradientMove"></div>
-      <div className="fixed inset-0 bg-gradient-to-tr from-blue-600/10 via-transparent to-purple-600/10"></div>
+      <div className="fixed inset-0 bg-gradient-to-br from-purple-200/30 via-pink-200/30 to-blue-200/30 dark:from-purple-400/20 dark:via-pink-300/20 dark:to-blue-400/20 animate-gradientMove"></div>
+      <div className="fixed inset-0 bg-gradient-to-tr from-blue-300/20 via-transparent to-purple-300/20 dark:from-blue-600/10 dark:via-transparent dark:to-purple-600/10"></div>
       
       {/* Floating Orbs */}
-      <div className="fixed top-20 left-10 w-32 h-32 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full blur-3xl opacity-20 animate-float"></div>
-      <div className="fixed bottom-32 right-20 w-24 h-24 bg-gradient-to-r from-blue-400 to-cyan-400 rounded-full blur-2xl opacity-30 animate-float" style={{ animationDelay: "2s" }}></div>
-      <div className="fixed top-1/2 left-1/4 w-16 h-16 bg-gradient-to-r from-pink-400 to-purple-400 rounded-full blur-xl opacity-25 animate-float" style={{ animationDelay: "4s" }}></div>
+      <div className="fixed top-20 left-10 w-32 h-32 bg-gradient-to-r from-purple-300/60 to-pink-300/60 dark:from-purple-400 dark:to-pink-400 rounded-full blur-3xl opacity-40 dark:opacity-20 animate-float"></div>
+      <div className="fixed bottom-32 right-20 w-24 h-24 bg-gradient-to-r from-blue-300/70 to-cyan-300/70 dark:from-blue-400 dark:to-cyan-400 rounded-full blur-2xl opacity-50 dark:opacity-30 animate-float" style={{ animationDelay: "2s" }}></div>
+      <div className="fixed top-1/2 left-1/4 w-16 h-16 bg-gradient-to-r from-pink-300/60 to-purple-300/60 dark:from-pink-400 dark:to-purple-400 rounded-full blur-xl opacity-45 dark:opacity-25 animate-float" style={{ animationDelay: "4s" }}></div>
 
       <div className="relative z-10 min-h-screen backdrop-blur-[2px] pt-20">
         <div className="max-w-2xl mx-auto px-6 py-8">
@@ -119,15 +119,15 @@ const BMICalculator = () => {
               variant="ghost"
               size="icon"
               onClick={() => navigate("/")}
-              className="mr-4 rounded-full w-12 h-12 backdrop-blur-xl bg-white/10 border border-white/20 hover:bg-white/20 transition-all duration-300 hover:scale-110 shadow-lg"
+              className="mr-4 rounded-full w-12 h-12 glass-button-light text-gray-700 dark:text-white hover:scale-110 shadow-lg"
             >
-              <ArrowLeft className="w-6 h-6 text-white drop-shadow-sm" />
+              <ArrowLeft className="w-6 h-6" />
             </Button>
             <div className="flex items-center space-x-4">
               <div className="w-14 h-14 bg-gradient-to-br from-purple-500/80 to-pink-600/80 rounded-3xl flex items-center justify-center shadow-2xl backdrop-blur-xl border border-white/20">
                 <Heart className="w-7 h-7 text-white drop-shadow-sm" />
               </div>
-              <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-white via-purple-100 to-pink-100 bg-clip-text text-transparent drop-shadow-sm">
+              <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-gray-800 via-purple-600 to-pink-600 dark:from-white dark:via-purple-100 dark:to-pink-100 bg-clip-text text-transparent drop-shadow-sm">
                 BMI Calculator
               </h1>
             </div>
@@ -141,7 +141,7 @@ const BMICalculator = () => {
               className={`p-6 rounded-2xl transition-all duration-300 hover:scale-105 shadow-lg ${
                 unit === "metric" 
                   ? "bg-gradient-to-r from-purple-500/80 to-pink-600/80 text-white backdrop-blur-xl border border-white/20" 
-                  : "backdrop-blur-xl bg-white/10 border border-white/30 hover:bg-white/20 text-white"
+                  : "glass-button-light text-gray-700 dark:text-white"
               }`}
             >
               <Scale className="w-5 h-5 mr-2" />
@@ -153,7 +153,7 @@ const BMICalculator = () => {
               className={`p-6 rounded-2xl transition-all duration-300 hover:scale-105 shadow-lg ${
                 unit === "imperial" 
                   ? "bg-gradient-to-r from-purple-500/80 to-pink-600/80 text-white backdrop-blur-xl border border-white/20" 
-                  : "backdrop-blur-xl bg-white/10 border border-white/30 hover:bg-white/20 text-white"
+                  : "glass-button-light text-gray-700 dark:text-white"
               }`}
             >
               <Scale className="w-5 h-5 mr-2" />
@@ -162,12 +162,12 @@ const BMICalculator = () => {
           </div>
 
           {/* Calculator Card */}
-          <Card className="backdrop-blur-xl bg-white/10 border border-white/20 shadow-2xl mb-8 rounded-[2rem] overflow-hidden">
+          <Card className="glass-card-light shadow-2xl mb-8 rounded-[2rem] overflow-hidden">
             <CardContent className="p-8">
               <div className="space-y-8">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-3">
-                    <Label htmlFor="weight" className="text-xl font-semibold text-white drop-shadow-sm">
+                    <Label htmlFor="weight" className="text-xl font-semibold text-gray-800 dark:text-white drop-shadow-sm">
                       Weight {unit === "metric" ? "(kg)" : "(lbs)"}
                     </Label>
                     <Input
@@ -176,12 +176,12 @@ const BMICalculator = () => {
                       value={weight}
                       onChange={(e) => setWeight(e.target.value)}
                       placeholder={unit === "metric" ? "70" : "154"}
-                      className="w-full p-6 text-xl rounded-2xl backdrop-blur-xl bg-white/10 border border-white/30 text-white placeholder:text-white/60 focus:bg-white/20 transition-all duration-300 shadow-lg"
+                      className="w-full p-6 text-xl rounded-2xl glass-input text-gray-800 dark:text-white placeholder:text-gray-500 dark:placeholder:text-white/60 transition-all duration-300 shadow-lg"
                     />
                   </div>
 
                   <div className="space-y-3">
-                    <Label htmlFor="height" className="text-xl font-semibold text-white drop-shadow-sm">
+                    <Label htmlFor="height" className="text-xl font-semibold text-gray-800 dark:text-white drop-shadow-sm">
                       Height {unit === "metric" ? "(cm)" : "(inches)"}
                     </Label>
                     <Input
@@ -190,14 +190,14 @@ const BMICalculator = () => {
                       value={height}
                       onChange={(e) => setHeight(e.target.value)}
                       placeholder={unit === "metric" ? "175" : "69"}
-                      className="w-full p-6 text-xl rounded-2xl backdrop-blur-xl bg-white/10 border border-white/30 text-white placeholder:text-white/60 focus:bg-white/20 transition-all duration-300 shadow-lg"
+                      className="w-full p-6 text-xl rounded-2xl glass-input text-gray-800 dark:text-white placeholder:text-gray-500 dark:placeholder:text-white/60 transition-all duration-300 shadow-lg"
                     />
                   </div>
                 </div>
 
-                <div className="backdrop-blur-xl bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-2xl p-6 border border-white/20">
-                  <h4 className="font-semibold text-white mb-2 drop-shadow-sm">What is BMI?</h4>
-                  <p className="text-sm text-white/80">
+                <div className="glass-info-card rounded-2xl p-6">
+                  <h4 className="font-semibold text-gray-800 dark:text-white mb-2 drop-shadow-sm">What is BMI?</h4>
+                  <p className="text-sm text-gray-600 dark:text-white/80">
                     Body Mass Index (BMI) is a measure of body fat based on height and weight. It's a useful screening tool for weight categories.
                   </p>
                 </div>
@@ -216,38 +216,38 @@ const BMICalculator = () => {
           {result && (
             <div className="space-y-6 animate-fadeIn">
               {/* Main BMI Result */}
-              <Card className="backdrop-blur-xl bg-white/10 border border-white/20 shadow-2xl rounded-[2rem] overflow-hidden">
+              <Card className="glass-card-light shadow-2xl rounded-[2rem] overflow-hidden">
                 <CardContent className="p-8 text-center">
-                  <h3 className="text-3xl font-bold mb-8 text-white drop-shadow-sm">Your BMI Results</h3>
+                  <h3 className="text-3xl font-bold mb-8 text-gray-800 dark:text-white drop-shadow-sm">Your BMI Results</h3>
                   
                   <div className="mb-8">
                     <div className={`text-5xl font-bold mb-3 drop-shadow-sm ${getBMIColor(result.bmi)}`}>
                       {result.bmi}
                     </div>
-                    <div className="text-xl font-semibold text-white mb-2 drop-shadow-sm">{result.category}</div>
-                    <div className="text-white/80">{result.healthStatus}</div>
+                    <div className="text-xl font-semibold text-gray-800 dark:text-white mb-2 drop-shadow-sm">{result.category}</div>
+                    <div className="text-gray-600 dark:text-white/80">{result.healthStatus}</div>
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                    <div className="backdrop-blur-xl bg-gradient-to-br from-green-500/20 to-emerald-500/20 rounded-2xl p-6 border border-white/20">
-                      <div className="text-lg font-bold text-white mb-2 drop-shadow-sm">
+                    <div className="glass-card-light rounded-2xl p-6 border border-green-200/30 dark:border-green-500/30">
+                      <div className="text-lg font-bold text-gray-800 dark:text-white mb-2 drop-shadow-sm">
                         Ideal Weight Range
                       </div>
-                      <div className="text-white/80">{result.idealWeight}</div>
+                      <div className="text-gray-600 dark:text-white/80">{result.idealWeight}</div>
                     </div>
                     
-                    <div className="backdrop-blur-xl bg-gradient-to-br from-blue-500/20 to-cyan-500/20 rounded-2xl p-6 border border-white/20">
-                      <div className="text-lg font-bold text-white mb-2 drop-shadow-sm">
+                    <div className="glass-card-light rounded-2xl p-6 border border-blue-200/30 dark:border-blue-500/30">
+                      <div className="text-lg font-bold text-gray-800 dark:text-white mb-2 drop-shadow-sm">
                         Category
                       </div>
-                      <div className="text-white/80">{result.category}</div>
+                      <div className="text-gray-600 dark:text-white/80">{result.category}</div>
                     </div>
                   </div>
                   
                   <Button
                     onClick={copyResult}
                     variant="outline"
-                    className="backdrop-blur-xl bg-white/10 border border-white/30 hover:bg-white/20 text-white rounded-full px-6 py-3 transition-all duration-300 hover:scale-105"
+                    className="glass-button-light text-gray-700 dark:text-white rounded-full px-6 py-3 transition-all duration-300 hover:scale-105"
                   >
                     {copied ? <Check className="w-4 h-4 mr-2" /> : <Copy className="w-4 h-4 mr-2" />}
                     {copied ? "Copied!" : "Copy Result"}
@@ -256,26 +256,26 @@ const BMICalculator = () => {
               </Card>
 
               {/* BMI Scale */}
-              <Card className="backdrop-blur-xl bg-white/10 border border-white/20 shadow-2xl rounded-[2rem] overflow-hidden">
+              <Card className="glass-card-light shadow-2xl rounded-[2rem] overflow-hidden">
                 <CardContent className="p-8">
-                  <h4 className="text-lg font-bold mb-4 text-white drop-shadow-sm">BMI Scale Reference</h4>
+                  <h4 className="text-lg font-bold mb-4 text-gray-800 dark:text-white drop-shadow-sm">BMI Scale Reference</h4>
                   
                   <div className="space-y-3">
-                    <div className="flex justify-between items-center p-3 backdrop-blur-xl bg-blue-500/20 rounded-lg border border-white/20">
-                      <span className="font-medium text-white">Underweight</span>
-                      <span className="text-white/80">Below 18.5</span>
+                    <div className="flex justify-between items-center p-3 glass-card-light rounded-lg border border-blue-200/30 dark:border-blue-500/30">
+                      <span className="font-medium text-gray-800 dark:text-white">Underweight</span>
+                      <span className="text-gray-600 dark:text-white/80">Below 18.5</span>
                     </div>
-                    <div className="flex justify-between items-center p-3 backdrop-blur-xl bg-green-500/20 rounded-lg border border-white/20">
-                      <span className="font-medium text-white">Normal weight</span>
-                      <span className="text-white/80">18.5 - 24.9</span>
+                    <div className="flex justify-between items-center p-3 glass-card-light rounded-lg border border-green-200/30 dark:border-green-500/30">
+                      <span className="font-medium text-gray-800 dark:text-white">Normal weight</span>
+                      <span className="text-gray-600 dark:text-white/80">18.5 - 24.9</span>
                     </div>
-                    <div className="flex justify-between items-center p-3 backdrop-blur-xl bg-yellow-500/20 rounded-lg border border-white/20">
-                      <span className="font-medium text-white">Overweight</span>
-                      <span className="text-white/80">25.0 - 29.9</span>
+                    <div className="flex justify-between items-center p-3 glass-card-light rounded-lg border border-yellow-200/30 dark:border-yellow-500/30">
+                      <span className="font-medium text-gray-800 dark:text-white">Overweight</span>
+                      <span className="text-gray-600 dark:text-white/80">25.0 - 29.9</span>
                     </div>
-                    <div className="flex justify-between items-center p-3 backdrop-blur-xl bg-red-500/20 rounded-lg border border-white/20">
-                      <span className="font-medium text-white">Obese</span>
-                      <span className="text-white/80">30.0 and above</span>
+                    <div className="flex justify-between items-center p-3 glass-card-light rounded-lg border border-red-200/30 dark:border-red-500/30">
+                      <span className="font-medium text-gray-800 dark:text-white">Obese</span>
+                      <span className="text-gray-600 dark:text-white/80">30.0 and above</span>
                     </div>
                   </div>
                 </CardContent>
