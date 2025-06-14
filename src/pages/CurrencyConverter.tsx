@@ -99,13 +99,16 @@ const CurrencyConverter = () => {
 
     setLoading(true);
     try {
-      // Using Fixer.io API - free tier with real-time rates
-      const response = await fetch(`https://api.fixer.io/latest?access_key=YOUR_API_KEY&base=${fromCurrency}&symbols=${toCurrency}`);
+      console.log(`Fetching exchange rate from ${fromCurrency} to ${toCurrency}`);
       
-      // Fallback to exchangerate-api.com if Fixer fails
-      const fallbackResponse = await fetch(`https://api.exchangerate-api.com/v4/latest/${fromCurrency}`);
-      const data = await fallbackResponse.json();
+      // Using exchangerate-api.com - free real-time rates
+      const response = await fetch(`https://api.exchangerate-api.com/v4/latest/${fromCurrency}`);
       
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      const data = await response.json();
       console.log("Exchange rate data:", data);
       
       if (data.rates && data.rates[toCurrency]) {
@@ -114,15 +117,17 @@ const CurrencyConverter = () => {
         setResult(convertedAmount);
         setExchangeRate(rate);
         setLastUpdated(new Date().toLocaleString());
+        
+        console.log(`Conversion successful: ${amount} ${fromCurrency} = ${convertedAmount} ${toCurrency}`);
       } else {
-        throw new Error("Exchange rate not found");
+        throw new Error("Exchange rate not found for the selected currency");
       }
       
     } catch (error) {
       console.error("Currency conversion error:", error);
       toast({
         title: "Conversion failed",
-        description: "Please check your internet connection and try again",
+        description: "Unable to fetch exchange rates. Please try again later.",
         variant: "destructive",
       });
     } finally {
