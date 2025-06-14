@@ -15,6 +15,10 @@ import BMICalculator from './pages/BMICalculator';
 import CurrencyConverter from './pages/CurrencyConverter';
 import DaysCalculator from './pages/DaysCalculator';
 import CountdownTimer from './pages/CountdownTimer';
+import GPACalculator from './pages/GPACalculator';
+import CalorieCalculator from './pages/CalorieCalculator';
+import SleepCalculator from './pages/SleepCalculator';
+import PregnancyCalculator from './pages/PregnancyCalculator';
 import NotFound from './pages/NotFound';
 
 const queryClient = new QueryClient();
@@ -32,31 +36,7 @@ export function App() {
     root.classList.remove('light', 'dark');
     root.classList.add(theme);
     localStorage.setItem('theme', theme);
-
-    // Create particle animations
-    createParticles();
   }, [theme]);
-
-  const createParticles = () => {
-    const existingParticles = document.querySelector('.particles-container');
-    if (existingParticles) {
-      existingParticles.remove();
-    }
-
-    const particlesContainer = document.createElement('div');
-    particlesContainer.className = 'particles-container fixed inset-0 pointer-events-none z-0';
-    document.body.appendChild(particlesContainer);
-
-    for (let i = 0; i < 20; i++) {
-      const particle = document.createElement('div');
-      particle.className = `absolute w-2 h-2 ${theme === 'dark' ? 'bg-blue-400/20' : 'bg-blue-600/10'} rounded-full animate-ping`;
-      particle.style.left = Math.random() * 100 + '%';
-      particle.style.top = Math.random() * 100 + '%';
-      particle.style.animationDelay = Math.random() * 2 + 's';
-      particle.style.animationDuration = (Math.random() * 3 + 2) + 's';
-      particlesContainer.appendChild(particle);
-    }
-  };
 
   const toggleTheme = () => {
     setTheme(prev => prev === 'light' ? 'dark' : 'light');
@@ -76,6 +56,10 @@ export function App() {
                 <Route path="/currency" element={<CurrencyConverter />} />
                 <Route path="/days" element={<DaysCalculator />} />
                 <Route path="/countdown" element={<CountdownTimer />} />
+                <Route path="/gpa" element={<GPACalculator />} />
+                <Route path="/calorie" element={<CalorieCalculator />} />
+                <Route path="/sleep" element={<SleepCalculator />} />
+                <Route path="/pregnancy" element={<PregnancyCalculator />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </main>
@@ -84,7 +68,7 @@ export function App() {
             {/* Theme Toggle Button */}
             <button
               onClick={toggleTheme}
-              className="fixed bottom-6 right-6 z-50 p-3 bg-blue-600 hover:bg-blue-700 text-white rounded-full shadow-lg transition-all duration-300 hover:scale-110"
+              className="fixed bottom-6 right-6 z-50 p-3 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white rounded-full shadow-xl transition-all duration-300 hover:scale-110"
               aria-label="Toggle theme"
             >
               {theme === 'light' ? '🌙' : '☀️'}
