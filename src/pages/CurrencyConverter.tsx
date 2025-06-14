@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { ArrowLeft, RefreshCw, TrendingUp, DollarSign, Loader2, Copy, CheckCircle } from "lucide-react";
 import { useNavigate } from "react-router-dom";
@@ -165,15 +164,15 @@ const CurrencyConverter = () => {
   }, [fromCurrency, toCurrency]);
 
   return (
-    <div className="min-h-screen relative overflow-hidden">
+    <div className="min-h-screen relative overflow-hidden bg-gradient-to-br from-purple-50 via-blue-50 to-pink-50 dark:from-gray-900 dark:via-purple-900 dark:to-gray-900">
       {/* Animated Background */}
-      <div className="fixed inset-0 bg-gradient-to-br from-purple-400/20 via-pink-300/20 to-blue-400/20 animate-gradientMove"></div>
-      <div className="fixed inset-0 bg-gradient-to-tr from-blue-600/10 via-transparent to-purple-600/10"></div>
+      <div className="fixed inset-0 bg-gradient-to-br from-purple-200/30 via-pink-200/30 to-blue-200/30 dark:from-purple-400/20 dark:via-pink-300/20 dark:to-blue-400/20 animate-gradientMove"></div>
+      <div className="fixed inset-0 bg-gradient-to-tr from-blue-300/20 via-transparent to-purple-300/20 dark:from-blue-600/10 dark:via-transparent dark:to-purple-600/10"></div>
       
       {/* Floating Orbs */}
-      <div className="fixed top-20 left-10 w-32 h-32 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full blur-3xl opacity-20 animate-float"></div>
-      <div className="fixed bottom-32 right-20 w-24 h-24 bg-gradient-to-r from-blue-400 to-cyan-400 rounded-full blur-2xl opacity-30 animate-float" style={{ animationDelay: "2s" }}></div>
-      <div className="fixed top-1/2 left-1/4 w-16 h-16 bg-gradient-to-r from-pink-400 to-purple-400 rounded-full blur-xl opacity-25 animate-float" style={{ animationDelay: "4s" }}></div>
+      <div className="fixed top-20 left-10 w-32 h-32 bg-gradient-to-r from-purple-300/60 to-pink-300/60 dark:from-purple-400 dark:to-pink-400 rounded-full blur-3xl opacity-40 dark:opacity-20 animate-float"></div>
+      <div className="fixed bottom-32 right-20 w-24 h-24 bg-gradient-to-r from-blue-300/70 to-cyan-300/70 dark:from-blue-400 dark:to-cyan-400 rounded-full blur-2xl opacity-50 dark:opacity-30 animate-float" style={{ animationDelay: "2s" }}></div>
+      <div className="fixed top-1/2 left-1/4 w-16 h-16 bg-gradient-to-r from-pink-300/60 to-purple-300/60 dark:from-pink-400 dark:to-purple-400 rounded-full blur-xl opacity-45 dark:opacity-25 animate-float" style={{ animationDelay: "4s" }}></div>
 
       <div className="relative z-10 min-h-screen backdrop-blur-[2px] pt-20">
         <div className="max-w-2xl mx-auto px-6 py-8">
@@ -183,27 +182,27 @@ const CurrencyConverter = () => {
               variant="ghost"
               size="icon"
               onClick={() => navigate("/")}
-              className="mr-4 rounded-full w-12 h-12 backdrop-blur-xl bg-white/10 border border-white/20 hover:bg-white/20 transition-all duration-300 hover:scale-110 shadow-lg"
+              className="mr-4 rounded-full w-12 h-12 glass-button-light text-gray-700 dark:text-white hover:scale-110 shadow-lg"
             >
-              <ArrowLeft className="w-6 h-6 text-white drop-shadow-sm" />
+              <ArrowLeft className="w-6 h-6" />
             </Button>
             <div className="flex items-center space-x-4">
               <div className="w-14 h-14 bg-gradient-to-br from-purple-500/80 to-pink-600/80 rounded-3xl flex items-center justify-center shadow-2xl backdrop-blur-xl border border-white/20">
                 <DollarSign className="w-7 h-7 text-white drop-shadow-sm" />
               </div>
-              <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-white via-purple-100 to-pink-100 bg-clip-text text-transparent drop-shadow-sm">
+              <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-gray-800 via-purple-600 to-pink-600 dark:from-white dark:via-purple-100 dark:to-pink-100 bg-clip-text text-transparent drop-shadow-sm">
                 Currency Converter
               </h1>
             </div>
           </div>
 
           {/* Main Glass Converter Card */}
-          <Card className="backdrop-blur-xl bg-white/10 border border-white/20 shadow-2xl mb-8 rounded-[2rem] overflow-hidden">
+          <Card className="glass-card-light shadow-2xl mb-8 rounded-[2rem] overflow-hidden">
             <CardContent className="p-8">
               <div className="space-y-8">
                 {/* Amount Input */}
                 <div className="space-y-3">
-                  <Label htmlFor="amount" className="text-xl font-semibold text-white drop-shadow-sm">
+                  <Label htmlFor="amount" className="text-xl font-semibold text-gray-800 dark:text-white drop-shadow-sm">
                     Amount
                   </Label>
                   <Input
@@ -212,14 +211,14 @@ const CurrencyConverter = () => {
                     value={amount}
                     onChange={(e) => setAmount(e.target.value)}
                     placeholder="Enter amount"
-                    className="w-full p-6 text-xl rounded-2xl backdrop-blur-xl bg-white/10 border border-white/30 text-white placeholder:text-white/60 focus:bg-white/20 transition-all duration-300 shadow-lg"
+                    className="w-full p-6 text-xl rounded-2xl glass-input text-gray-800 dark:text-white placeholder:text-gray-500 dark:placeholder:text-white/60 transition-all duration-300 shadow-lg"
                   />
                 </div>
 
                 {/* Currency Selection */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-end">
                   <div className="space-y-3">
-                    <Label className="text-xl font-semibold text-white drop-shadow-sm">
+                    <Label className="text-xl font-semibold text-gray-800 dark:text-white drop-shadow-sm">
                       From
                     </Label>
                     <CurrencyCombobox
@@ -235,14 +234,14 @@ const CurrencyConverter = () => {
                       onClick={swapCurrencies}
                       variant="outline"
                       size="icon"
-                      className="rounded-full w-14 h-14 backdrop-blur-xl bg-white/10 border border-white/30 hover:bg-white/20 transition-all duration-300 hover:scale-110 shadow-lg"
+                      className="rounded-full w-14 h-14 glass-button-light text-gray-700 dark:text-white hover:scale-110 shadow-lg"
                     >
-                      <RefreshCw className="w-6 h-6 text-white" />
+                      <RefreshCw className="w-6 h-6" />
                     </Button>
                   </div>
 
                   <div className="space-y-3">
-                    <Label className="text-xl font-semibold text-white drop-shadow-sm">
+                    <Label className="text-xl font-semibold text-gray-800 dark:text-white drop-shadow-sm">
                       To
                     </Label>
                     <CurrencyCombobox
@@ -255,16 +254,16 @@ const CurrencyConverter = () => {
                 </div>
 
                 {/* Info Card */}
-                <div className="backdrop-blur-xl bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-2xl p-6 border border-white/20">
-                  <h4 className="font-semibold text-white mb-2 flex items-center">
+                <div className="glass-info-card rounded-2xl p-6">
+                  <h4 className="font-semibold text-gray-800 dark:text-white mb-2 drop-shadow-sm flex items-center">
                     <TrendingUp className="w-5 h-5 mr-2" />
                     Real-Time Exchange Rates
                   </h4>
-                  <p className="text-white/80 text-sm">
+                  <p className="text-gray-600 dark:text-white/80 text-sm">
                     Get live currency conversion rates updated every minute for accurate financial planning and international transactions.
                   </p>
                   {lastUpdated && (
-                    <p className="text-white/60 text-xs mt-2">
+                    <p className="text-gray-500 dark:text-white/60 text-xs mt-2">
                       Last updated: {lastUpdated}
                     </p>
                   )}
@@ -290,15 +289,15 @@ const CurrencyConverter = () => {
 
           {/* Results Glass Card */}
           {result !== null && (
-            <Card className="backdrop-blur-xl bg-white/10 border border-white/20 shadow-2xl animate-fadeIn rounded-[2rem] overflow-hidden">
+            <Card className="glass-card-light shadow-2xl animate-fadeIn rounded-[2rem] overflow-hidden">
               <CardContent className="p-8 text-center">
-                <h3 className="text-3xl font-bold mb-8 text-white drop-shadow-sm">Conversion Result</h3>
+                <h3 className="text-3xl font-bold mb-8 text-gray-800 dark:text-white drop-shadow-sm">Conversion Result</h3>
                 
                 <div className="mb-8">
-                  <div className="text-lg text-white/70 mb-3">
+                  <div className="text-lg text-gray-600 dark:text-white/70 mb-3">
                     {amount} {fromCurrency} =
                   </div>
-                  <div className="text-5xl font-bold bg-gradient-to-r from-white via-purple-100 to-pink-100 bg-clip-text text-transparent mb-6 drop-shadow-sm">
+                  <div className="text-5xl font-bold bg-gradient-to-r from-gray-800 via-purple-600 to-pink-600 dark:from-white dark:via-purple-100 dark:to-pink-100 bg-clip-text text-transparent mb-6 drop-shadow-sm">
                     {result.toLocaleString(undefined, { 
                       minimumFractionDigits: 2, 
                       maximumFractionDigits: 2 
@@ -308,7 +307,7 @@ const CurrencyConverter = () => {
                   <Button
                     onClick={copyResult}
                     variant="outline"
-                    className="backdrop-blur-xl bg-white/10 border border-white/30 hover:bg-white/20 text-white rounded-full px-6 py-3 transition-all duration-300 hover:scale-105"
+                    className="glass-button-light text-gray-700 dark:text-white rounded-full px-6 py-3 transition-all duration-300 hover:scale-105"
                   >
                     {copied ? (
                       <>
@@ -326,21 +325,21 @@ const CurrencyConverter = () => {
 
                 {exchangeRate && (
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="backdrop-blur-xl bg-purple-500/20 rounded-2xl p-6 border border-white/20">
+                    <div className="glass-card-light rounded-2xl p-6 border border-purple-200/30 dark:border-purple-500/30">
                       <div className="flex items-center mb-3">
-                        <TrendingUp className="w-5 h-5 mr-2 text-white" />
-                        <span className="font-semibold text-white">Exchange Rate</span>
+                        <TrendingUp className="w-5 h-5 mr-2 text-gray-700 dark:text-white" />
+                        <span className="font-semibold text-gray-800 dark:text-white">Exchange Rate</span>
                       </div>
-                      <div className="text-xl text-white/90">
+                      <div className="text-xl text-gray-700 dark:text-white/90">
                         1 {fromCurrency} = {exchangeRate.toFixed(4)} {toCurrency}
                       </div>
                     </div>
                     
-                    <div className="backdrop-blur-xl bg-blue-500/20 rounded-2xl p-6 border border-white/20">
-                      <div className="font-semibold text-white mb-3">
+                    <div className="glass-card-light rounded-2xl p-6 border border-blue-200/30 dark:border-blue-500/30">
+                      <div className="font-semibold text-gray-800 dark:text-white mb-3">
                         Inverse Rate
                       </div>
-                      <div className="text-xl text-white/90">
+                      <div className="text-xl text-gray-700 dark:text-white/90">
                         1 {toCurrency} = {(1/exchangeRate).toFixed(4)} {fromCurrency}
                       </div>
                     </div>
