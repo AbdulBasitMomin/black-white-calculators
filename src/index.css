@@ -89,11 +89,31 @@
 }
 
 @layer utilities {
-  /* Enhanced Glass Morphism Effects */
+  /* Enhanced Glass Morphism Effects - Light Mode */
   .glass-card {
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  }
+
+  .dark .glass-card {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  /* Light mode glass cards */
+  .glass-card-light {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+  }
+
+  .dark .glass-card-light {
+    background: rgba(255, 255, 255, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.2);
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
   }
@@ -110,6 +130,39 @@
     background: rgba(255, 255, 255, 0.25);
     transform: translateY(-2px);
     box-shadow: 0 20px 40px -8px rgba(0, 0, 0, 0.3);
+  }
+
+  .dark .glass-button {
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
+
+  .dark .glass-button:hover {
+    background: rgba(255, 255, 255, 0.25);
+  }
+
+  /* Light mode glass button */
+  .glass-button-light {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .glass-button-light:hover {
+    background: rgba(255, 255, 255, 0.9);
+    transform: translateY(-2px);
+    box-shadow: 0 20px 40px -8px rgba(0, 0, 0, 0.2);
+  }
+
+  .dark .glass-button-light {
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
+
+  .dark .glass-button-light:hover {
+    background: rgba(255, 255, 255, 0.25);
   }
 
   /* Custom animations */
@@ -261,8 +314,31 @@
     background-size: 400% 400%;
   }
 
+  /* Light mode gradient background */
+  .gradient-bg-light {
+    background: linear-gradient(-45deg, #f3e8ff, #fce7f3, #e0f2fe, #ecfccb);
+    background-size: 400% 400%;
+  }
+
+  .dark .gradient-bg-light {
+    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+    background-size: 400% 400%;
+  }
+
   /* Enhanced Text Effects */
   .text-glow {
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+  }
+
+  .dark .text-glow {
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+  }
+
+  .text-glow-light {
+    text-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  }
+
+  .dark .text-glow-light {
     text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
   }
 

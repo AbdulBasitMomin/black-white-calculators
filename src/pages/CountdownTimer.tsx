@@ -74,15 +74,15 @@ const CountdownTimer = () => {
   };
 
   return (
-    <div className="min-h-screen relative overflow-hidden">
+    <div className="min-h-screen relative overflow-hidden bg-gradient-to-br from-purple-50 via-blue-50 to-pink-50 dark:from-gray-900 dark:via-purple-900 dark:to-gray-900">
       {/* Animated Background */}
-      <div className="fixed inset-0 bg-gradient-to-br from-purple-400/20 via-pink-300/20 to-blue-400/20 animate-gradientMove"></div>
-      <div className="fixed inset-0 bg-gradient-to-tr from-blue-600/10 via-transparent to-purple-600/10"></div>
+      <div className="fixed inset-0 bg-gradient-to-br from-purple-200/30 via-pink-200/30 to-blue-200/30 dark:from-purple-400/20 dark:via-pink-300/20 dark:to-blue-400/20 animate-gradientMove"></div>
+      <div className="fixed inset-0 bg-gradient-to-tr from-blue-300/20 via-transparent to-purple-300/20 dark:from-blue-600/10 dark:via-transparent dark:to-purple-600/10"></div>
       
       {/* Floating Orbs */}
-      <div className="fixed top-20 left-10 w-32 h-32 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full blur-3xl opacity-20 animate-float"></div>
-      <div className="fixed bottom-32 right-20 w-24 h-24 bg-gradient-to-r from-blue-400 to-cyan-400 rounded-full blur-2xl opacity-30 animate-float" style={{ animationDelay: "2s" }}></div>
-      <div className="fixed top-1/2 left-1/4 w-16 h-16 bg-gradient-to-r from-pink-400 to-purple-400 rounded-full blur-xl opacity-25 animate-float" style={{ animationDelay: "4s" }}></div>
+      <div className="fixed top-20 left-10 w-32 h-32 bg-gradient-to-r from-purple-300/60 to-pink-300/60 dark:from-purple-400 dark:to-pink-400 rounded-full blur-3xl opacity-40 dark:opacity-20 animate-float"></div>
+      <div className="fixed bottom-32 right-20 w-24 h-24 bg-gradient-to-r from-blue-300/70 to-cyan-300/70 dark:from-blue-400 dark:to-cyan-400 rounded-full blur-2xl opacity-50 dark:opacity-30 animate-float" style={{ animationDelay: "2s" }}></div>
+      <div className="fixed top-1/2 left-1/4 w-16 h-16 bg-gradient-to-r from-pink-300/60 to-purple-300/60 dark:from-pink-400 dark:to-purple-400 rounded-full blur-xl opacity-45 dark:opacity-25 animate-float" style={{ animationDelay: "4s" }}></div>
 
       <div className="relative z-10 min-h-screen backdrop-blur-[2px] pt-20">
         <div className="max-w-2xl mx-auto px-6 py-8">
@@ -92,26 +92,26 @@ const CountdownTimer = () => {
               variant="ghost"
               size="icon"
               onClick={() => navigate("/")}
-              className="mr-4 rounded-full w-12 h-12 backdrop-blur-xl bg-white/10 border border-white/20 hover:bg-white/20 transition-all duration-300 hover:scale-110 shadow-lg"
+              className="mr-4 rounded-full w-12 h-12 glass-button-light hover:scale-110 transition-all duration-300 shadow-lg"
             >
-              <ArrowLeft className="w-6 h-6 text-white drop-shadow-sm" />
+              <ArrowLeft className="w-6 h-6 text-gray-700 dark:text-white drop-shadow-sm" />
             </Button>
             <div className="flex items-center space-x-4">
               <div className="w-14 h-14 bg-gradient-to-br from-purple-500/80 to-pink-600/80 rounded-3xl flex items-center justify-center shadow-2xl backdrop-blur-xl border border-white/20">
                 <Clock className="w-7 h-7 text-white drop-shadow-sm" />
               </div>
-              <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-white via-purple-100 to-pink-100 bg-clip-text text-transparent drop-shadow-sm">
+              <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-gray-800 via-purple-600 to-pink-600 dark:from-white dark:via-purple-100 dark:to-pink-100 bg-clip-text text-transparent drop-shadow-sm">
                 Countdown Timer
               </h1>
             </div>
           </div>
 
           {/* Timer Setup Card */}
-          <Card className="backdrop-blur-xl bg-white/10 border border-white/20 shadow-2xl mb-8 rounded-[2rem] overflow-hidden">
+          <Card className="glass-card-light shadow-2xl mb-8 rounded-[2rem] overflow-hidden">
             <CardContent className="p-8">
               <div className="space-y-8">
                 <div className="space-y-3">
-                  <Label htmlFor="eventname" className="text-xl font-semibold text-white drop-shadow-sm">
+                  <Label htmlFor="eventname" className="text-xl font-semibold text-gray-800 dark:text-white drop-shadow-sm">
                     Event Name (Optional)
                   </Label>
                   <Input
@@ -120,13 +120,13 @@ const CountdownTimer = () => {
                     placeholder="New Year 2025"
                     value={eventName}
                     onChange={(e) => setEventName(e.target.value)}
-                    className="w-full p-6 text-xl rounded-2xl backdrop-blur-xl bg-white/10 border border-white/30 text-white placeholder:text-white/60 focus:bg-white/20 transition-all duration-300 shadow-lg"
+                    className="w-full p-6 text-xl rounded-2xl glass-button-light text-gray-800 dark:text-white placeholder:text-gray-500 dark:placeholder:text-white/60 transition-all duration-300 shadow-lg"
                   />
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <div className="space-y-3">
-                    <Label htmlFor="targetdate" className="text-xl font-semibold text-white drop-shadow-sm">
+                    <Label htmlFor="targetdate" className="text-xl font-semibold text-gray-800 dark:text-white drop-shadow-sm">
                       Target Date
                     </Label>
                     <Input
@@ -135,12 +135,12 @@ const CountdownTimer = () => {
                       value={targetDate}
                       onChange={(e) => setTargetDate(e.target.value)}
                       min={new Date().toISOString().split('T')[0]}
-                      className="w-full p-6 text-xl rounded-2xl backdrop-blur-xl bg-white/10 border border-white/30 text-white placeholder:text-white/60 focus:bg-white/20 transition-all duration-300 shadow-lg"
+                      className="w-full p-6 text-xl rounded-2xl glass-button-light text-gray-800 dark:text-white placeholder:text-gray-500 dark:placeholder:text-white/60 transition-all duration-300 shadow-lg"
                     />
                   </div>
 
                   <div className="space-y-3">
-                    <Label htmlFor="targettime" className="text-xl font-semibold text-white drop-shadow-sm">
+                    <Label htmlFor="targettime" className="text-xl font-semibold text-gray-800 dark:text-white drop-shadow-sm">
                       Target Time
                     </Label>
                     <Input
@@ -148,7 +148,7 @@ const CountdownTimer = () => {
                       type="time"
                       value={targetTime}
                       onChange={(e) => setTargetTime(e.target.value)}
-                      className="w-full p-6 text-xl rounded-2xl backdrop-blur-xl bg-white/10 border border-white/30 text-white placeholder:text-white/60 focus:bg-white/20 transition-all duration-300 shadow-lg"
+                      className="w-full p-6 text-xl rounded-2xl glass-button-light text-gray-800 dark:text-white placeholder:text-gray-500 dark:placeholder:text-white/60 transition-all duration-300 shadow-lg"
                     />
                   </div>
                 </div>
@@ -175,7 +175,7 @@ const CountdownTimer = () => {
                   <Button
                     onClick={resetTimer}
                     variant="outline"
-                    className="flex items-center space-x-2 px-6 py-3 rounded-full backdrop-blur-xl bg-white/10 border border-white/30 hover:bg-white/20 text-white transition-all duration-300 hover:scale-105"
+                    className="flex items-center space-x-2 px-6 py-3 rounded-full glass-button-light text-gray-700 dark:text-white transition-all duration-300 hover:scale-105"
                   >
                     <RotateCcw className="w-5 h-5" />
                     <span>Reset</span>
@@ -187,38 +187,38 @@ const CountdownTimer = () => {
 
           {/* Countdown Display */}
           {(targetDate && targetTime) && (
-            <Card className="backdrop-blur-xl bg-white/10 border border-white/20 shadow-2xl rounded-[2rem] overflow-hidden">
+            <Card className="glass-card-light shadow-2xl rounded-[2rem] overflow-hidden">
               <CardContent className="p-8 text-center">
                 {eventName && (
-                  <h3 className="text-3xl font-bold mb-8 text-white drop-shadow-sm">
+                  <h3 className="text-3xl font-bold mb-8 text-gray-800 dark:text-white drop-shadow-sm">
                     {eventName}
                   </h3>
                 )}
                 
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
-                  <div className="backdrop-blur-xl bg-purple-500/20 rounded-2xl p-6 border border-white/20">
-                    <div className="text-4xl font-bold text-white mb-2 drop-shadow-sm">
+                  <div className="bg-purple-500/20 dark:bg-purple-500/20 rounded-2xl p-6 border border-purple-200 dark:border-white/20">
+                    <div className="text-4xl font-bold text-gray-800 dark:text-white mb-2 drop-shadow-sm">
                       {timeRemaining.days}
                     </div>
-                    <div className="text-white/80">Days</div>
+                    <div className="text-gray-600 dark:text-white/80">Days</div>
                   </div>
-                  <div className="backdrop-blur-xl bg-blue-500/20 rounded-2xl p-6 border border-white/20">
-                    <div className="text-4xl font-bold text-white mb-2 drop-shadow-sm">
+                  <div className="bg-blue-500/20 dark:bg-blue-500/20 rounded-2xl p-6 border border-blue-200 dark:border-white/20">
+                    <div className="text-4xl font-bold text-gray-800 dark:text-white mb-2 drop-shadow-sm">
                       {timeRemaining.hours}
                     </div>
-                    <div className="text-white/80">Hours</div>
+                    <div className="text-gray-600 dark:text-white/80">Hours</div>
                   </div>
-                  <div className="backdrop-blur-xl bg-pink-500/20 rounded-2xl p-6 border border-white/20">
-                    <div className="text-4xl font-bold text-white mb-2 drop-shadow-sm">
+                  <div className="bg-pink-500/20 dark:bg-pink-500/20 rounded-2xl p-6 border border-blue-200 dark:border-white/20">
+                    <div className="text-4xl font-bold text-gray-800 dark:text-white mb-2 drop-shadow-sm">
                       {timeRemaining.minutes}
                     </div>
-                    <div className="text-white/80">Minutes</div>
+                    <div className="text-gray-600 dark:text-white/80">Minutes</div>
                   </div>
-                  <div className="backdrop-blur-xl bg-cyan-500/20 rounded-2xl p-6 border border-white/20">
-                    <div className="text-4xl font-bold text-white mb-2 drop-shadow-sm">
+                  <div className="bg-cyan-500/20 dark:bg-cyan-500/20 rounded-2xl p-6 border border-cyan-200 dark:border-white/20">
+                    <div className="text-4xl font-bold text-gray-800 dark:text-white mb-2 drop-shadow-sm">
                       {timeRemaining.seconds}
                     </div>
-                    <div className="text-white/80">Seconds</div>
+                    <div className="text-gray-600 dark:text-white/80">Seconds</div>
                   </div>
                 </div>
               </CardContent>
