@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { ArrowLeft, Copy, Check } from "lucide-react";
 import { useNavigate } from "react-router-dom";
@@ -90,104 +89,106 @@ const DaysCalculator = () => {
   };
 
   return (
-    <div className="min-h-screen min-h-[100dvh] bg-black text-white container-responsive section-spacing neue-haas safe-area-top safe-area-bottom">
-      <div className="max-w-2xl mx-auto w-full">
-        {/* Header */}
-        <div className="flex items-center mb-6 sm:mb-8">
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => navigate("/")}
-            className="mr-3 sm:mr-4 rounded-full hover:bg-gray-800 electric-glow touch-target w-12 h-12 sm:w-14 sm:h-14"
-          >
-            <ArrowLeft className="w-5 h-5 sm:w-6 sm:h-6" />
-          </Button>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold">Days Calculator</h1>
-        </div>
+    <div className="min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-white pt-16">
+      <div className="container mx-auto px-4 py-8">
+        <div className="max-w-2xl mx-auto w-full">
+          {/* Header */}
+          <div className="flex items-center mb-8">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => navigate("/")}
+              className="mr-4 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 w-14 h-14"
+            >
+              <ArrowLeft className="w-6 h-6" />
+            </Button>
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold">Days Calculator</h1>
+          </div>
 
-        {/* Calculator Card */}
-        <Card className="card-electric bg-black border-gray-800">
-          <CardContent className="card-spacing">
-            <div className="space-y-6">
-              {/* Start Date */}
-              <div>
-                <Label htmlFor="startdate" className="text-base sm:text-lg font-semibold mb-2 sm:mb-3 block">
-                  Start Date
-                </Label>
-                <Input
-                  id="startdate"
-                  type="date"
-                  value={startDate}
-                  onChange={(e) => setStartDate(e.target.value)}
-                  className="input-electric"
-                />
-              </div>
-
-              {/* End Date */}
-              <div>
-                <Label htmlFor="enddate" className="text-base sm:text-lg font-semibold mb-2 sm:mb-3 block">
-                  End Date
-                </Label>
-                <Input
-                  id="enddate"
-                  type="date"
-                  value={endDate}
-                  onChange={(e) => setEndDate(e.target.value)}
-                  className="input-electric"
-                />
-              </div>
-
-              <Button
-                onClick={calculateDays}
-                className="pill-button w-full bg-white text-black hover:bg-gray-100 electric-glow-strong font-bold touch-target"
-              >
-                Calculate Days
-              </Button>
-
-              {/* Result */}
-              {result && (
-                <div className="mt-6 sm:mt-8 smooth-fade-in">
-                  <div className="bg-gray-900 rounded-[20px] sm:rounded-[30px] p-4 sm:p-6 text-center">
-                    <h3 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6">Time Difference</h3>
-                    
-                    {/* Total Days */}
-                    <div className="mb-4 sm:mb-6 p-3 sm:p-4 bg-gray-800 rounded-[15px] sm:rounded-[20px]">
-                      <div className="text-3xl sm:text-4xl font-bold text-white mb-1 sm:mb-2">
-                        {result.totalDays.toLocaleString()}
-                      </div>
-                      <div className="text-gray-400 text-base sm:text-lg">Total Days</div>
-                    </div>
-
-                    {/* Breakdown */}
-                    <div className="grid grid-cols-3 gap-3 sm:gap-4 mb-4 sm:mb-6">
-                      <div>
-                        <div className="text-xl sm:text-2xl font-bold text-white">{result.years}</div>
-                        <div className="text-gray-400 text-sm sm:text-base">Years</div>
-                      </div>
-                      <div>
-                        <div className="text-xl sm:text-2xl font-bold text-white">{result.months}</div>
-                        <div className="text-gray-400 text-sm sm:text-base">Months</div>
-                      </div>
-                      <div>
-                        <div className="text-xl sm:text-2xl font-bold text-white">{result.days}</div>
-                        <div className="text-gray-400 text-sm sm:text-base">Days</div>
-                      </div>
-                    </div>
-
-                    <Button
-                      onClick={copyResult}
-                      variant="outline"
-                      className="border-gray-700 text-white hover:bg-gray-800 rounded-full touch-target"
-                    >
-                      {copied ? <Check className="w-4 h-4 mr-2" /> : <Copy className="w-4 h-4 mr-2" />}
-                      {copied ? "Copied!" : "Copy Result"}
-                    </Button>
-                  </div>
+          {/* Calculator Card */}
+          <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
+            <CardContent className="p-8">
+              <div className="space-y-6">
+                {/* Start Date */}
+                <div>
+                  <Label htmlFor="startdate" className="text-lg font-semibold mb-3 block">
+                    Start Date
+                  </Label>
+                  <Input
+                    id="startdate"
+                    type="date"
+                    value={startDate}
+                    onChange={(e) => setStartDate(e.target.value)}
+                    className="w-full p-6 text-lg"
+                  />
                 </div>
-              )}
-            </div>
-          </CardContent>
-        </Card>
+
+                {/* End Date */}
+                <div>
+                  <Label htmlFor="enddate" className="text-lg font-semibold mb-3 block">
+                    End Date
+                  </Label>
+                  <Input
+                    id="enddate"
+                    type="date"
+                    value={endDate}
+                    onChange={(e) => setEndDate(e.target.value)}
+                    className="w-full p-6 text-lg"
+                  />
+                </div>
+
+                <Button
+                  onClick={calculateDays}
+                  className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 text-lg rounded-full transition-all duration-300 hover:scale-105"
+                >
+                  Calculate Days
+                </Button>
+
+                {/* Result */}
+                {result && (
+                  <div className="mt-8 animate-fadeIn">
+                    <div className="bg-gray-50 dark:bg-gray-700 rounded-xl p-6 text-center">
+                      <h3 className="text-2xl font-bold mb-6">Time Difference</h3>
+                      
+                      {/* Total Days */}
+                      <div className="mb-6 p-4 bg-white dark:bg-gray-600 rounded-lg">
+                        <div className="text-4xl font-bold text-blue-600 dark:text-blue-400 mb-2">
+                          {result.totalDays.toLocaleString()}
+                        </div>
+                        <div className="text-gray-600 dark:text-gray-300 text-lg">Total Days</div>
+                      </div>
+
+                      {/* Breakdown */}
+                      <div className="grid grid-cols-3 gap-4 mb-6">
+                        <div>
+                          <div className="text-2xl font-bold text-gray-900 dark:text-white">{result.years}</div>
+                          <div className="text-gray-600 dark:text-gray-300">Years</div>
+                        </div>
+                        <div>
+                          <div className="text-2xl font-bold text-gray-900 dark:text-white">{result.months}</div>
+                          <div className="text-gray-600 dark:text-gray-300">Months</div>
+                        </div>
+                        <div>
+                          <div className="text-2xl font-bold text-gray-900 dark:text-white">{result.days}</div>
+                          <div className="text-gray-600 dark:text-gray-300">Days</div>
+                        </div>
+                      </div>
+
+                      <Button
+                        onClick={copyResult}
+                        variant="outline"
+                        className="border-gray-300 dark:border-gray-500 text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-600 rounded-full"
+                      >
+                        {copied ? <Check className="w-4 h-4 mr-2" /> : <Copy className="w-4 h-4 mr-2" />}
+                        {copied ? "Copied!" : "Copy Result"}
+                      </Button>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </CardContent>
+          </Card>
+        </div>
       </div>
     </div>
   );
