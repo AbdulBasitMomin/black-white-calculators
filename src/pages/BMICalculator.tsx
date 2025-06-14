@@ -1,5 +1,6 @@
+
 import { useState } from "react";
-import { ArrowLeft, Copy, Check, Heart, TrendingUp } from "lucide-react";
+import { ArrowLeft, Copy, Check, Heart, Scale } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -7,129 +8,75 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
-import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, PieChart, Pie, Cell } from "recharts";
 
 const BMICalculator = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
-  const [height, setHeight] = useState("");
   const [weight, setWeight] = useState("");
+  const [height, setHeight] = useState("");
   const [unit, setUnit] = useState("metric");
   const [result, setResult] = useState<{
     bmi: number;
     category: string;
-    color: string;
-    riskLevel: string;
-    idealWeightRange: { min: number; max: number };
-    healthTips: string[];
-    bmiCategoryData: any[];
-    riskGaugeData: any[];
+    healthStatus: string;
+    idealWeight: string;
   } | null>(null);
   const [copied, setCopied] = useState(false);
 
-  const getBMICategory = (bmi: number) => {
-    if (bmi < 18.5) return { 
-      category: "Underweight", 
-      color: "text-blue-400", 
-      riskLevel: "Low Risk",
-      riskColor: "#3B82F6",
-      tips: ["Increase caloric intake with nutrient-dense foods", "Include protein-rich meals", "Consider consulting a nutritionist"]
-    };
-    if (bmi < 25) return { 
-      category: "Normal weight", 
-      color: "text-green-400", 
-      riskLevel: "Healthy",
-      riskColor: "#10B981",
-      tips: ["Maintain current healthy lifestyle", "Continue regular exercise", "Keep balanced nutrition"]
-    };
-    if (bmi < 30) return { 
-      category: "Overweight", 
-      color: "text-yellow-400", 
-      riskLevel: "Moderate Risk",
-      riskColor: "#F59E0B",
-      tips: ["Incorporate regular cardio exercise", "Focus on portion control", "Increase vegetable intake"]
-    };
-    return { 
-      category: "Obese", 
-      color: "text-red-400", 
-      riskLevel: "High Risk",
-      riskColor: "#EF4444",
-      tips: ["Consult healthcare provider", "Start with low-impact exercises", "Consider professional weight management"]
-    };
-  };
-
-  const getIdealWeightRange = (heightCm: number) => {
-    const heightM = heightCm / 100;
-    const minWeight = 18.5 * heightM * heightM;
-    const maxWeight = 24.9 * heightM * heightM;
-    return { min: Math.round(minWeight), max: Math.round(maxWeight) };
-  };
-
-  const getBMICategoryData = (userBMI: number) => [
-    { category: "Underweight", range: "< 18.5", value: 18.5, userHere: userBMI < 18.5, color: "#3B82F6" },
-    { category: "Normal", range: "18.5-24.9", value: 21.7, userHere: userBMI >= 18.5 && userBMI < 25, color: "#10B981" },
-    { category: "Overweight", range: "25-29.9", value: 27.5, userHere: userBMI >= 25 && userBMI < 30, color: "#F59E0B" },
-    { category: "Obese", range: "≥ 30", value: 35, userHere: userBMI >= 30, color: "#EF4444" },
-  ];
-
-  const getRiskGaugeData = (bmi: number) => {
-    const percentage = Math.min((bmi / 40) * 100, 100);
-    return [
-      { name: "Current", value: percentage, color: "#00FFFF" },
-      { name: "Remaining", value: 100 - percentage, color: "#333333" },
-    ];
-  };
-
   const calculateBMI = () => {
-    if (!height || !weight) {
+    if (!weight || !height) {
       toast({
-        title: "Please enter both height and weight",
+        title: "Please enter both weight and height",
         variant: "destructive",
       });
       return;
     }
 
-    let heightInM, weightInKg;
+    let weightKg = parseFloat(weight);
+    let heightM = parseFloat(height);
 
-    if (unit === "metric") {
-      heightInM = parseFloat(height) / 100;
-      weightInKg = parseFloat(weight);
+    if (unit === "imperial") {
+      weightKg = weightKg * 0.453592; // pounds to kg
+      heightM = heightM * 0.0254; // inches to meters
     } else {
-      heightInM = parseFloat(height) * 0.3048;
-      weightInKg = parseFloat(weight) * 0.453592;
+      heightM = heightM / 100; // cm to meters
     }
 
-    if (heightInM <= 0 || weightInKg <= 0) {
-      toast({
-        title: "Please enter valid positive numbers",
-        variant: "destructive",
-      });
-      return;
+    const bmi = weightKg / (heightM * heightM);
+    let category: string;
+    let healthStatus: string;
+
+    if (bmi < 18.5) {
+      category = "Underweight";
+      healthStatus = "Consider consulting a healthcare provider";
+    } else if (bmi < 25) {
+      category = "Normal weight";
+      healthStatus = "Keep up the great work!";
+    } else if (bmi < 30) {
+      category = "Overweight";
+      healthStatus = "Consider lifestyle changes";
+    } else {
+      category = "Obese";
+      healthStatus = "Consult with a healthcare provider";
     }
 
-    const bmi = weightInKg / (heightInM * heightInM);
-    const { category, color, riskLevel, tips } = getBMICategory(bmi);
-    const idealWeightRange = getIdealWeightRange(heightInM * 100);
-    const bmiCategoryData = getBMICategoryData(bmi);
-    const riskGaugeData = getRiskGaugeData(bmi);
+    // Calculate ideal weight range (BMI 18.5-24.9)
+    const idealWeightMin = 18.5 * (heightM * heightM);
+    const idealWeightMax = 24.9 * (heightM * heightM);
+    const idealWeight = `${Math.round(idealWeightMin)}-${Math.round(idealWeightMax)} kg`;
 
     setResult({
       bmi: Math.round(bmi * 10) / 10,
       category,
-      color,
-      riskLevel,
-      idealWeightRange,
-      healthTips: tips,
-      bmiCategoryData,
-      riskGaugeData
+      healthStatus,
+      idealWeight
     });
   };
 
   const copyResult = async () => {
     if (!result) return;
     
-    const text = `My BMI: ${result.bmi} (${result.category}). Risk Level: ${result.riskLevel}. Ideal weight: ${result.idealWeightRange.min}-${result.idealWeightRange.max}kg`;
+    const text = `BMI: ${result.bmi} (${result.category}) - ${result.healthStatus}`;
     
     try {
       await navigator.clipboard.writeText(text);
@@ -146,75 +93,98 @@ const BMICalculator = () => {
     }
   };
 
+  const getBMIColor = (bmi: number) => {
+    if (bmi < 18.5) return "text-blue-600 dark:text-blue-400";
+    if (bmi < 25) return "text-green-600 dark:text-green-400";
+    if (bmi < 30) return "text-yellow-600 dark:text-yellow-400";
+    return "text-red-600 dark:text-red-400";
+  };
+
   return (
-    <div className="min-h-screen min-h-[100dvh] bg-black text-white container-responsive section-spacing neue-haas safe-area-top safe-area-bottom">
-      <div className="max-w-4xl mx-auto w-full">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-green-50 dark:from-gray-900 dark:via-gray-800 dark:to-green-900 pt-16">
+      <div className="max-w-2xl mx-auto px-4 py-8">
         {/* Header */}
-        <div className="flex items-center mb-6 sm:mb-8">
+        <div className="flex items-center mb-8">
           <Button
             variant="ghost"
             size="icon"
             onClick={() => navigate("/")}
-            className="mr-4 sm:mr-6 rounded-full hover:bg-gray-800 electric-glow touch-target w-12 h-12 sm:w-14 sm:h-14"
+            className="mr-4 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 w-12 h-12"
           >
-            <ArrowLeft className="w-5 h-5 sm:w-7 sm:h-7" />
+            <ArrowLeft className="w-6 h-6" />
           </Button>
-          <h1 className="text-hierarchy-lg">BMI Calculator</h1>
+          <div className="flex items-center space-x-4">
+            <div className="w-12 h-12 bg-green-500 rounded-2xl flex items-center justify-center">
+              <Heart className="w-6 h-6 text-white" />
+            </div>
+            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">BMI Calculator</h1>
+          </div>
+        </div>
+
+        {/* Unit Selection */}
+        <div className="grid grid-cols-2 gap-4 mb-8">
+          <Button
+            variant={unit === "metric" ? "default" : "outline"}
+            onClick={() => setUnit("metric")}
+            className={`p-6 rounded-2xl ${unit === "metric" ? "bg-green-500 text-white" : "border-gray-200 dark:border-gray-700"}`}
+          >
+            <Scale className="w-5 h-5 mr-2" />
+            Metric (kg/cm)
+          </Button>
+          <Button
+            variant={unit === "imperial" ? "default" : "outline"}
+            onClick={() => setUnit("imperial")}
+            className={`p-6 rounded-2xl ${unit === "imperial" ? "bg-green-500 text-white" : "border-gray-200 dark:border-gray-700"}`}
+          >
+            <Scale className="w-5 h-5 mr-2" />
+            Imperial (lb/in)
+          </Button>
         </div>
 
         {/* Calculator Card */}
-        <Card className="card-electric bg-black border-gray-800 mb-6 sm:mb-8">
-          <CardContent className="card-spacing">
-            <div className="space-y-6 sm:space-y-8">
-              {/* Unit Selection */}
-              <div>
-                <Label className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4 block">Unit System</Label>
-                <Select value={unit} onValueChange={setUnit}>
-                  <SelectTrigger className="input-electric">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent className="bg-gray-900 border-gray-700 z-50 rounded-[20px] sm:rounded-[30px]">
-                    <SelectItem value="metric">Metric (cm, kg)</SelectItem>
-                    <SelectItem value="imperial">Imperial (ft, lbs)</SelectItem>
-                  </SelectContent>
-                </Select>
+        <Card className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border-0 shadow-xl mb-8">
+          <CardContent className="p-8">
+            <div className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <Label htmlFor="weight" className="text-lg font-semibold mb-3 block text-gray-900 dark:text-white">
+                    Weight {unit === "metric" ? "(kg)" : "(lbs)"}
+                  </Label>
+                  <Input
+                    id="weight"
+                    type="number"
+                    value={weight}
+                    onChange={(e) => setWeight(e.target.value)}
+                    placeholder={unit === "metric" ? "70" : "154"}
+                    className="w-full p-4 text-lg rounded-xl border-gray-200 dark:border-gray-700"
+                  />
+                </div>
+
+                <div>
+                  <Label htmlFor="height" className="text-lg font-semibold mb-3 block text-gray-900 dark:text-white">
+                    Height {unit === "metric" ? "(cm)" : "(inches)"}
+                  </Label>
+                  <Input
+                    id="height"
+                    type="number"
+                    value={height}
+                    onChange={(e) => setHeight(e.target.value)}
+                    placeholder={unit === "metric" ? "175" : "69"}
+                    className="w-full p-4 text-lg rounded-xl border-gray-200 dark:border-gray-700"
+                  />
+                </div>
               </div>
 
-              {/* Height Input */}
-              <div>
-                <Label htmlFor="height" className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4 block">
-                  Height {unit === "metric" ? "(cm)" : "(ft)"}
-                </Label>
-                <Input
-                  id="height"
-                  type="number"
-                  value={height}
-                  onChange={(e) => setHeight(e.target.value)}
-                  placeholder={unit === "metric" ? "170" : "5.7"}
-                  className="input-electric"
-                  step={unit === "metric" ? "1" : "0.1"}
-                />
-              </div>
-
-              {/* Weight Input */}
-              <div>
-                <Label htmlFor="weight" className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4 block">
-                  Weight {unit === "metric" ? "(kg)" : "(lbs)"}
-                </Label>
-                <Input
-                  id="weight"
-                  type="number"
-                  value={weight}
-                  onChange={(e) => setWeight(e.target.value)}
-                  placeholder={unit === "metric" ? "70" : "154"}
-                  className="input-electric"
-                  step="0.1"
-                />
+              <div className="bg-green-50 dark:bg-green-900/20 rounded-2xl p-6">
+                <h4 className="font-semibold text-green-700 dark:text-green-300 mb-2">What is BMI?</h4>
+                <p className="text-sm text-green-600 dark:text-green-400">
+                  Body Mass Index (BMI) is a measure of body fat based on height and weight. It's a useful screening tool for weight categories.
+                </p>
               </div>
 
               <Button
                 onClick={calculateBMI}
-                className="pill-button w-full bg-white text-black hover:bg-gray-100 electric-glow-strong font-bold touch-target"
+                className="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-4 text-lg rounded-full transition-all duration-300 hover:scale-105 shadow-lg"
               >
                 Calculate BMI
               </Button>
@@ -224,25 +194,40 @@ const BMICalculator = () => {
 
         {/* Results */}
         {result && (
-          <div className="space-y-4 sm:space-y-6 smooth-fade-in">
-            {/* Main BMI Display */}
-            <Card className="card-electric bg-black border-gray-800">
-              <CardContent className="card-spacing text-center">
-                <h3 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6">Your BMI Results</h3>
-                <div className="mb-4 sm:mb-6">
-                  <div className="text-4xl sm:text-5xl font-bold text-cyan-400 mb-2 sm:mb-3">{result.bmi}</div>
-                  <div className={`text-lg sm:text-xl font-semibold mb-1 sm:mb-2 ${result.color}`}>
-                    {result.category}
+          <div className="space-y-6 animate-fadeIn">
+            {/* Main BMI Result */}
+            <Card className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border-0 shadow-xl">
+              <CardContent className="p-8 text-center">
+                <h3 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">Your BMI Results</h3>
+                
+                <div className="mb-6">
+                  <div className={`text-5xl font-bold mb-2 ${getBMIColor(result.bmi)}`}>
+                    {result.bmi}
                   </div>
-                  <div className="text-base sm:text-lg text-gray-300">
-                    Risk Level: {result.riskLevel}
+                  <div className="text-xl font-semibold text-gray-900 dark:text-white mb-2">{result.category}</div>
+                  <div className="text-gray-600 dark:text-gray-300">{result.healthStatus}</div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                  <div className="bg-gradient-to-br from-green-100 to-green-200 dark:from-green-900/30 dark:to-green-800/30 rounded-2xl p-6">
+                    <div className="text-lg font-bold text-green-600 dark:text-green-400 mb-2">
+                      Ideal Weight Range
+                    </div>
+                    <div className="text-gray-600 dark:text-gray-300">{result.idealWeight}</div>
+                  </div>
+                  
+                  <div className="bg-gradient-to-br from-blue-100 to-blue-200 dark:from-blue-900/30 dark:to-blue-800/30 rounded-2xl p-6">
+                    <div className="text-lg font-bold text-blue-600 dark:text-blue-400 mb-2">
+                      Category
+                    </div>
+                    <div className="text-gray-600 dark:text-gray-300">{result.category}</div>
                   </div>
                 </div>
                 
                 <Button
                   onClick={copyResult}
                   variant="outline"
-                  className="border-gray-600 text-white hover:bg-gray-800 electric-glow rounded-full px-4 py-2 sm:px-6 sm:py-3 touch-target"
+                  className="border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full px-6 py-3"
                 >
                   {copied ? <Check className="w-4 h-4 mr-2" /> : <Copy className="w-4 h-4 mr-2" />}
                   {copied ? "Copied!" : "Copy Result"}
@@ -250,107 +235,28 @@ const BMICalculator = () => {
               </CardContent>
             </Card>
 
-            {/* Health Insights */}
-            <div className="grid-responsive">
-              <Card className="card-electric bg-black border-gray-800">
-                <CardContent className="p-4 sm:p-6">
-                  <div className="flex items-center mb-3 sm:mb-4">
-                    <TrendingUp className="w-4 h-4 sm:w-5 sm:h-5 mr-2 sm:mr-3 text-cyan-400" />
-                    <h4 className="text-base sm:text-lg font-bold">Ideal Weight Range</h4>
+            {/* BMI Scale */}
+            <Card className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border-0 shadow-xl">
+              <CardContent className="p-8">
+                <h4 className="text-lg font-bold mb-4 text-gray-900 dark:text-white">BMI Scale Reference</h4>
+                
+                <div className="space-y-3">
+                  <div className="flex justify-between items-center p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+                    <span className="font-medium text-blue-700 dark:text-blue-300">Underweight</span>
+                    <span className="text-blue-600 dark:text-blue-400">Below 18.5</span>
                   </div>
-                  <div className="text-center">
-                    <div className="text-lg sm:text-xl font-bold text-cyan-400 mb-1 sm:mb-2">
-                      {result.idealWeightRange.min} - {result.idealWeightRange.max} kg
-                    </div>
-                    <div className="text-gray-300 text-xs sm:text-sm">Healthy weight for your height</div>
+                  <div className="flex justify-between items-center p-3 bg-green-50 dark:bg-green-900/20 rounded-lg">
+                    <span className="font-medium text-green-700 dark:text-green-300">Normal weight</span>
+                    <span className="text-green-600 dark:text-green-400">18.5 - 24.9</span>
                   </div>
-                </CardContent>
-              </Card>
-
-              <Card className="card-electric bg-black border-gray-800">
-                <CardContent className="p-4 sm:p-6">
-                  <div className="flex items-center mb-3 sm:mb-4">
-                    <Heart className="w-4 h-4 sm:w-5 sm:h-5 mr-2 sm:mr-3 text-cyan-400" />
-                    <h4 className="text-base sm:text-lg font-bold">Health Tips</h4>
+                  <div className="flex justify-between items-center p-3 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg">
+                    <span className="font-medium text-yellow-700 dark:text-yellow-300">Overweight</span>
+                    <span className="text-yellow-600 dark:text-yellow-400">25.0 - 29.9</span>
                   </div>
-                  <ul className="space-y-1">
-                    {result.healthTips.map((tip, index) => (
-                      <li key={index} className="text-gray-300 text-xs sm:text-sm flex items-start">
-                        <span className="text-cyan-400 mr-2 mt-1">•</span>
-                        {tip}
-                      </li>
-                    ))}
-                  </ul>
-                </CardContent>
-              </Card>
-            </div>
-
-            {/* BMI Categories Chart */}
-            <Card className="card-electric bg-black border-gray-800">
-              <CardContent className="p-4 sm:p-6">
-                <h4 className="text-lg sm:text-xl font-bold mb-4 sm:mb-6 text-center">BMI Categories</h4>
-                <div className="bg-gray-900 rounded-[20px] sm:rounded-[30px] p-3 sm:p-4">
-                  <ChartContainer
-                    config={{
-                      value: { label: "BMI Value", color: "hsl(var(--electric-blue))" },
-                    }}
-                    className="chart-container"
-                  >
-                    <ResponsiveContainer width="100%" height="100%">
-                      <BarChart data={result.bmiCategoryData} margin={{ top: 10, right: 15, left: 10, bottom: 5 }}>
-                        <XAxis dataKey="category" tick={{ fontSize: 10 }} />
-                        <YAxis tick={{ fontSize: 10 }} />
-                        <ChartTooltip content={<ChartTooltipContent />} />
-                        <Bar dataKey="value" radius={[2, 2, 0, 0]}>
-                          {result.bmiCategoryData.map((entry, index) => (
-                            <Cell 
-                              key={`cell-${index}`} 
-                              fill={entry.userHere ? "#00FFFF" : entry.color}
-                              opacity={entry.userHere ? 1 : 0.6}
-                            />
-                          ))}
-                        </Bar>
-                      </BarChart>
-                    </ResponsiveContainer>
-                  </ChartContainer>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Health Risk Gauge */}
-            <Card className="card-electric bg-black border-gray-800">
-              <CardContent className="p-4 sm:p-6">
-                <h4 className="text-lg sm:text-xl font-bold mb-4 sm:mb-6 text-center">Health Risk Assessment</h4>
-                <div className="bg-gray-900 rounded-[20px] sm:rounded-[30px] p-3 sm:p-4">
-                  <ChartContainer
-                    config={{
-                      value: { label: "Risk Level", color: "hsl(var(--electric-blue))" },
-                    }}
-                    className="h-[150px] sm:h-[200px] w-full"
-                  >
-                    <ResponsiveContainer width="100%" height="100%">
-                      <PieChart>
-                        <Pie
-                          data={result.riskGaugeData}
-                          cx="50%"
-                          cy="50%"
-                          startAngle={180}
-                          endAngle={0}
-                          innerRadius={40}
-                          outerRadius={60}
-                          dataKey="value"
-                        >
-                          {result.riskGaugeData.map((entry, index) => (
-                            <Cell key={`cell-${index}`} fill={entry.color} />
-                          ))}
-                        </Pie>
-                        <ChartTooltip content={<ChartTooltipContent />} />
-                      </PieChart>
-                    </ResponsiveContainer>
-                  </ChartContainer>
-                </div>
-                <div className="text-center mt-3 sm:mt-4">
-                  <div className="text-base sm:text-lg font-semibold text-cyan-400">{result.riskLevel}</div>
+                  <div className="flex justify-between items-center p-3 bg-red-50 dark:bg-red-900/20 rounded-lg">
+                    <span className="font-medium text-red-700 dark:text-red-300">Obese</span>
+                    <span className="text-red-600 dark:text-red-400">30.0 and above</span>
+                  </div>
                 </div>
               </CardContent>
             </Card>
