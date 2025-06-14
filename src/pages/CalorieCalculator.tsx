@@ -117,15 +117,15 @@ const CalorieCalculator = () => {
   };
 
   return (
-    <div className="min-h-screen relative overflow-hidden">
+    <div className="min-h-screen relative overflow-hidden bg-gradient-to-br from-purple-50 via-blue-50 to-pink-50 dark:from-gray-900 dark:via-purple-900 dark:to-gray-900">
       {/* Animated Background */}
-      <div className="fixed inset-0 bg-gradient-to-br from-purple-400/20 via-pink-300/20 to-blue-400/20 animate-gradientMove"></div>
-      <div className="fixed inset-0 bg-gradient-to-tr from-blue-600/10 via-transparent to-purple-600/10"></div>
+      <div className="fixed inset-0 bg-gradient-to-br from-purple-200/30 via-pink-200/30 to-blue-200/30 dark:from-purple-400/20 dark:via-pink-300/20 dark:to-blue-400/20 animate-gradientMove"></div>
+      <div className="fixed inset-0 bg-gradient-to-tr from-blue-300/20 via-transparent to-purple-300/20 dark:from-blue-600/10 dark:via-transparent dark:to-purple-600/10"></div>
       
       {/* Floating Orbs */}
-      <div className="fixed top-20 left-10 w-32 h-32 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full blur-3xl opacity-20 animate-float"></div>
-      <div className="fixed bottom-32 right-20 w-24 h-24 bg-gradient-to-r from-blue-400 to-cyan-400 rounded-full blur-2xl opacity-30 animate-float" style={{ animationDelay: "2s" }}></div>
-      <div className="fixed top-1/2 left-1/4 w-16 h-16 bg-gradient-to-r from-pink-400 to-purple-400 rounded-full blur-xl opacity-25 animate-float" style={{ animationDelay: "4s" }}></div>
+      <div className="fixed top-20 left-10 w-32 h-32 bg-gradient-to-r from-purple-300/60 to-pink-300/60 dark:from-purple-400 dark:to-pink-400 rounded-full blur-3xl opacity-40 dark:opacity-20 animate-float"></div>
+      <div className="fixed bottom-32 right-20 w-24 h-24 bg-gradient-to-r from-blue-300/70 to-cyan-300/70 dark:from-blue-400 dark:to-cyan-400 rounded-full blur-2xl opacity-50 dark:opacity-30 animate-float" style={{ animationDelay: "2s" }}></div>
+      <div className="fixed top-1/2 left-1/4 w-16 h-16 bg-gradient-to-r from-pink-300/60 to-purple-300/60 dark:from-pink-400 dark:to-purple-400 rounded-full blur-xl opacity-45 dark:opacity-25 animate-float" style={{ animationDelay: "4s" }}></div>
 
       <div className="relative z-10 min-h-screen backdrop-blur-[2px] pt-20">
         <div className="max-w-2xl mx-auto px-6 py-8">
@@ -135,28 +135,28 @@ const CalorieCalculator = () => {
               variant="ghost"
               size="icon"
               onClick={() => navigate("/")}
-              className="mr-4 rounded-full w-12 h-12 backdrop-blur-xl bg-white/10 border border-white/20 hover:bg-white/20 transition-all duration-300 hover:scale-110 shadow-lg"
+              className="mr-4 rounded-full w-12 h-12 glass-button-light text-gray-700 dark:text-white hover:scale-110 shadow-lg"
             >
-              <ArrowLeft className="w-6 h-6 text-white drop-shadow-sm" />
+              <ArrowLeft className="w-6 h-6" />
             </Button>
             <div className="flex items-center space-x-4">
               <div className="w-14 h-14 bg-gradient-to-br from-purple-500/80 to-pink-600/80 rounded-3xl flex items-center justify-center shadow-2xl backdrop-blur-xl border border-white/20">
                 <Heart className="w-7 h-7 text-white drop-shadow-sm" />
               </div>
-              <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-white via-purple-100 to-pink-100 bg-clip-text text-transparent drop-shadow-sm">
+              <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-gray-800 via-purple-600 to-pink-600 dark:from-white dark:via-purple-100 dark:to-pink-100 bg-clip-text text-transparent drop-shadow-sm">
                 Calorie Calculator
               </h1>
             </div>
           </div>
 
           {/* Calculator Card */}
-          <Card className="backdrop-blur-xl bg-white/10 border border-white/20 shadow-2xl mb-8 rounded-[2rem] overflow-hidden">
+          <Card className="glass-card-light shadow-2xl mb-8 rounded-[2rem] overflow-hidden">
             <CardContent className="p-8">
               <div className="space-y-8">
                 {/* Basic Info Grid */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <div className="space-y-3">
-                    <Label htmlFor="age" className="text-xl font-semibold text-white drop-shadow-sm">
+                    <Label htmlFor="age" className="text-xl font-semibold text-gray-800 dark:text-white drop-shadow-sm">
                       Age
                     </Label>
                     <Input
@@ -165,16 +165,16 @@ const CalorieCalculator = () => {
                       value={age}
                       onChange={(e) => setAge(e.target.value)}
                       placeholder="25"
-                      className="w-full p-6 text-xl rounded-2xl backdrop-blur-xl bg-white/10 border border-white/30 text-white placeholder:text-white/60 focus:bg-white/20 transition-all duration-300 shadow-lg"
+                      className="w-full p-6 text-xl rounded-2xl glass-input text-gray-800 dark:text-white placeholder:text-gray-500 dark:placeholder:text-white/60 transition-all duration-300 shadow-lg"
                     />
                   </div>
 
                   <div className="space-y-3">
-                    <Label className="text-xl font-semibold text-white drop-shadow-sm">
+                    <Label className="text-xl font-semibold text-gray-800 dark:text-white drop-shadow-sm">
                       Gender
                     </Label>
                     <Select value={gender} onValueChange={setGender}>
-                      <SelectTrigger className="w-full p-6 text-xl rounded-2xl backdrop-blur-xl bg-white/10 border border-white/30 text-white hover:bg-white/20 transition-all duration-300 shadow-lg">
+                      <SelectTrigger className="w-full p-6 text-xl rounded-2xl glass-input text-gray-800 dark:text-white hover:bg-white/30 dark:hover:bg-white/20 transition-all duration-300 shadow-lg">
                         <SelectValue placeholder="Select gender" />
                       </SelectTrigger>
                       <SelectContent className="backdrop-blur-xl bg-white/90 dark:bg-gray-800/90 border border-white/30 rounded-xl z-50">
@@ -187,7 +187,7 @@ const CalorieCalculator = () => {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <div className="space-y-3">
-                    <Label htmlFor="height" className="text-xl font-semibold text-white drop-shadow-sm">
+                    <Label htmlFor="height" className="text-xl font-semibold text-gray-800 dark:text-white drop-shadow-sm">
                       Height (cm)
                     </Label>
                     <Input
@@ -196,12 +196,12 @@ const CalorieCalculator = () => {
                       value={height}
                       onChange={(e) => setHeight(e.target.value)}
                       placeholder="175"
-                      className="w-full p-6 text-xl rounded-2xl backdrop-blur-xl bg-white/10 border border-white/30 text-white placeholder:text-white/60 focus:bg-white/20 transition-all duration-300 shadow-lg"
+                      className="w-full p-6 text-xl rounded-2xl glass-input text-gray-800 dark:text-white placeholder:text-gray-500 dark:placeholder:text-white/60 transition-all duration-300 shadow-lg"
                     />
                   </div>
 
                   <div className="space-y-3">
-                    <Label htmlFor="weight" className="text-xl font-semibold text-white drop-shadow-sm">
+                    <Label htmlFor="weight" className="text-xl font-semibold text-gray-800 dark:text-white drop-shadow-sm">
                       Weight (kg)
                     </Label>
                     <Input
@@ -210,18 +210,18 @@ const CalorieCalculator = () => {
                       value={weight}
                       onChange={(e) => setWeight(e.target.value)}
                       placeholder="70"
-                      className="w-full p-6 text-xl rounded-2xl backdrop-blur-xl bg-white/10 border border-white/30 text-white placeholder:text-white/60 focus:bg-white/20 transition-all duration-300 shadow-lg"
+                      className="w-full p-6 text-xl rounded-2xl glass-input text-gray-800 dark:text-white placeholder:text-gray-500 dark:placeholder:text-white/60 transition-all duration-300 shadow-lg"
                       step="0.1"
                     />
                   </div>
                 </div>
 
                 <div className="space-y-3">
-                  <Label className="text-xl font-semibold text-white drop-shadow-sm">
+                  <Label className="text-xl font-semibold text-gray-800 dark:text-white drop-shadow-sm">
                     Activity Level
                   </Label>
                   <Select value={activityLevel} onValueChange={setActivityLevel}>
-                    <SelectTrigger className="w-full p-6 text-xl rounded-2xl backdrop-blur-xl bg-white/10 border border-white/30 text-white hover:bg-white/20 transition-all duration-300 shadow-lg">
+                    <SelectTrigger className="w-full p-6 text-xl rounded-2xl glass-input text-gray-800 dark:text-white hover:bg-white/30 dark:hover:bg-white/20 transition-all duration-300 shadow-lg">
                       <SelectValue placeholder="Select activity level" />
                     </SelectTrigger>
                     <SelectContent className="backdrop-blur-xl bg-white/90 dark:bg-gray-800/90 border border-white/30 rounded-xl z-50">
@@ -235,11 +235,11 @@ const CalorieCalculator = () => {
                 </div>
 
                 <div className="space-y-3">
-                  <Label className="text-xl font-semibold text-white drop-shadow-sm">
+                  <Label className="text-xl font-semibold text-gray-800 dark:text-white drop-shadow-sm">
                     Goal
                   </Label>
                   <Select value={goal} onValueChange={setGoal}>
-                    <SelectTrigger className="w-full p-6 text-xl rounded-2xl backdrop-blur-xl bg-white/10 border border-white/30 text-white hover:bg-white/20 transition-all duration-300 shadow-lg">
+                    <SelectTrigger className="w-full p-6 text-xl rounded-2xl glass-input text-gray-800 dark:text-white hover:bg-white/30 dark:hover:bg-white/20 transition-all duration-300 shadow-lg">
                       <SelectValue placeholder="Select your goal" />
                     </SelectTrigger>
                     <SelectContent className="backdrop-blur-xl bg-white/90 dark:bg-gray-800/90 border border-white/30 rounded-xl z-50">
@@ -264,44 +264,44 @@ const CalorieCalculator = () => {
           {result && (
             <div className="space-y-6 animate-fadeIn">
               {/* Calorie Breakdown */}
-              <Card className="backdrop-blur-xl bg-white/10 border border-white/20 shadow-2xl rounded-[2rem] overflow-hidden">
+              <Card className="glass-card-light shadow-2xl rounded-[2rem] overflow-hidden">
                 <CardContent className="p-8">
-                  <h3 className="text-3xl font-bold mb-8 text-center text-white drop-shadow-sm">Daily Calorie Needs</h3>
+                  <h3 className="text-3xl font-bold mb-8 text-center text-gray-800 dark:text-white drop-shadow-sm">Daily Calorie Needs</h3>
                   
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-                    <div className="backdrop-blur-xl bg-gradient-to-br from-blue-500/20 to-cyan-500/20 rounded-2xl p-4 text-center border border-white/20">
-                      <div className="text-2xl font-bold text-white mb-1 drop-shadow-sm">
+                    <div className="bg-blue-500/20 dark:bg-blue-500/20 rounded-2xl p-4 text-center border border-blue-200 dark:border-white/20">
+                      <div className="text-2xl font-bold text-gray-800 dark:text-white mb-1 drop-shadow-sm">
                         {result.bmr}
                       </div>
-                      <div className="text-xs text-white/80">BMR</div>
+                      <div className="text-xs text-gray-600 dark:text-white/80">BMR</div>
                     </div>
                     
-                    <div className="backdrop-blur-xl bg-gradient-to-br from-green-500/20 to-emerald-500/20 rounded-2xl p-4 text-center border border-white/20">
-                      <div className="text-2xl font-bold text-white mb-1 drop-shadow-sm">
+                    <div className="bg-green-500/20 dark:bg-green-500/20 rounded-2xl p-4 text-center border border-green-200 dark:border-white/20">
+                      <div className="text-2xl font-bold text-gray-800 dark:text-white mb-1 drop-shadow-sm">
                         {result.maintenance}
                       </div>
-                      <div className="text-xs text-white/80">Maintain</div>
+                      <div className="text-xs text-gray-600 dark:text-white/80">Maintain</div>
                     </div>
                     
-                    <div className="backdrop-blur-xl bg-gradient-to-br from-red-500/20 to-pink-500/20 rounded-2xl p-4 text-center border border-white/20">
-                      <div className="text-2xl font-bold text-white mb-1 drop-shadow-sm">
+                    <div className="bg-red-500/20 dark:bg-red-500/20 rounded-2xl p-4 text-center border border-red-200 dark:border-white/20">
+                      <div className="text-2xl font-bold text-gray-800 dark:text-white mb-1 drop-shadow-sm">
                         {result.weightLoss}
                       </div>
-                      <div className="text-xs text-white/80">Lose Weight</div>
+                      <div className="text-xs text-gray-600 dark:text-white/80">Lose Weight</div>
                     </div>
                     
-                    <div className="backdrop-blur-xl bg-gradient-to-br from-orange-500/20 to-yellow-500/20 rounded-2xl p-4 text-center border border-white/20">
-                      <div className="text-2xl font-bold text-white mb-1 drop-shadow-sm">
+                    <div className="bg-orange-500/20 dark:bg-orange-500/20 rounded-2xl p-4 text-center border border-orange-200 dark:border-white/20">
+                      <div className="text-2xl font-bold text-gray-800 dark:text-white mb-1 drop-shadow-sm">
                         {result.weightGain}
                       </div>
-                      <div className="text-xs text-white/80">Gain Weight</div>
+                      <div className="text-xs text-gray-600 dark:text-white/80">Gain Weight</div>
                     </div>
                   </div>
                   
                   <Button
                     onClick={copyResult}
                     variant="outline"
-                    className="w-full backdrop-blur-xl bg-white/10 border border-white/30 hover:bg-white/20 text-white rounded-full transition-all duration-300 hover:scale-105"
+                    className="w-full glass-button-light text-gray-700 dark:text-white rounded-full transition-all duration-300 hover:scale-105"
                   >
                     {copied ? <Check className="w-4 h-4 mr-2" /> : <Copy className="w-4 h-4 mr-2" />}
                     {copied ? "Copied!" : "Copy Results"}
@@ -310,16 +310,16 @@ const CalorieCalculator = () => {
               </Card>
 
               {/* Recommendations */}
-              <Card className="backdrop-blur-xl bg-white/10 border border-white/20 shadow-2xl rounded-[2rem] overflow-hidden">
+              <Card className="glass-card-light shadow-2xl rounded-[2rem] overflow-hidden">
                 <CardContent className="p-8">
                   <div className="flex items-center mb-4">
-                    <Activity className="w-5 h-5 mr-3 text-white drop-shadow-sm" />
-                    <h4 className="text-lg font-bold text-white drop-shadow-sm">Nutrition Recommendations</h4>
+                    <Activity className="w-5 h-5 mr-3 text-gray-700 dark:text-white drop-shadow-sm" />
+                    <h4 className="text-lg font-bold text-gray-800 dark:text-white drop-shadow-sm">Nutrition Recommendations</h4>
                   </div>
                   
                   <ul className="space-y-3">
                     {result.recommendations.map((tip, index) => (
-                      <li key={index} className="flex items-start text-white/80">
+                      <li key={index} className="flex items-start text-gray-600 dark:text-white/80">
                         <div className="w-2 h-2 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full mr-3 mt-2 flex-shrink-0"></div>
                         {tip}
                       </li>
