@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { useScrollToTop } from './hooks/useScrollToTop';
 import './index.css';
 
 import Navbar from './components/Navbar';
@@ -22,6 +23,32 @@ import PregnancyCalculator from './pages/PregnancyCalculator';
 import NotFound from './pages/NotFound';
 
 const queryClient = new QueryClient();
+
+function AppContent() {
+  useScrollToTop();
+  
+  return (
+    <div className="min-h-screen transition-colors duration-300">
+      <Navbar />
+      <main className="relative z-10">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/age" element={<AgeCalculator />} />
+          <Route path="/bmi" element={<BMICalculator />} />
+          <Route path="/currency" element={<CurrencyConverter />} />
+          <Route path="/days" element={<DaysCalculator />} />
+          <Route path="/countdown" element={<CountdownTimer />} />
+          <Route path="/gpa" element={<GPACalculator />} />
+          <Route path="/calorie" element={<CalorieCalculator />} />
+          <Route path="/sleep" element={<SleepCalculator />} />
+          <Route path="/pregnancy" element={<PregnancyCalculator />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </main>
+      <Footer />
+    </div>
+  );
+}
 
 export function App() {
   const [theme, setTheme] = useState<'light' | 'dark'>(() => {
@@ -46,24 +73,8 @@ export function App() {
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <Router>
-          <div className={`min-h-screen transition-colors duration-300 ${theme}`}>
-            <Navbar />
-            <main className="relative z-10">
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/age" element={<AgeCalculator />} />
-                <Route path="/bmi" element={<BMICalculator />} />
-                <Route path="/currency" element={<CurrencyConverter />} />
-                <Route path="/days" element={<DaysCalculator />} />
-                <Route path="/countdown" element={<CountdownTimer />} />
-                <Route path="/gpa" element={<GPACalculator />} />
-                <Route path="/calorie" element={<CalorieCalculator />} />
-                <Route path="/sleep" element={<SleepCalculator />} />
-                <Route path="/pregnancy" element={<PregnancyCalculator />} />
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </main>
-            <Footer />
+          <div className={theme}>
+            <AppContent />
             
             {/* Theme Toggle Button */}
             <button
