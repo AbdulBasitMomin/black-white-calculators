@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useToast } from "@/hooks/use-toast";
+import { useToast } from "@/components/ui/use-toast";
 
 const CountdownTimer = () => {
   const navigate = useNavigate();
@@ -40,6 +40,7 @@ const CountdownTimer = () => {
           });
         } else {
           setIsActive(false);
+          setTimeRemaining({ days: 0, hours: 0, minutes: 0, seconds: 0 });
           toast({
             title: "Time's up!",
             description: `${eventName || 'Your event'} has arrived!`,
@@ -61,6 +62,19 @@ const CountdownTimer = () => {
       });
       return;
     }
+    
+    const target = new Date(`${targetDate}T${targetTime}`).getTime();
+    const now = new Date().getTime();
+    
+    if (target <= now) {
+      toast({
+        title: "Invalid time",
+        description: "Please select a future date and time",
+        variant: "destructive",
+      });
+      return;
+    }
+    
     setIsActive(true);
   };
 
@@ -208,7 +222,7 @@ const CountdownTimer = () => {
                     </div>
                     <div className="text-gray-600 dark:text-white/80">Hours</div>
                   </div>
-                  <div className="bg-pink-500/20 dark:bg-pink-500/20 rounded-2xl p-6 border border-blue-200 dark:border-white/20">
+                  <div className="bg-pink-500/20 dark:bg-pink-500/20 rounded-2xl p-6 border border-pink-200 dark:border-white/20">
                     <div className="text-4xl font-bold text-gray-800 dark:text-white mb-2 drop-shadow-sm">
                       {timeRemaining.minutes}
                     </div>

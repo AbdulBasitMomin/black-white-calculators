@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useToast } from "@/hooks/use-toast";
+import { useToast } from "@/components/ui/use-toast";
 
 const AgeCalculator = () => {
   const navigate = useNavigate();
@@ -66,10 +66,14 @@ const AgeCalculator = () => {
       months += 12;
     }
 
-    // Calculate hours and minutes
-    const diffMs = today.getTime() - birth.getTime();
-    const hours = Math.floor((diffMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
+    // Calculate total time difference
+    const diffMs = Math.abs(today.getTime() - birth.getTime());
+    const totalHours = Math.floor(diffMs / (1000 * 60 * 60));
+    const totalMinutes = Math.floor(diffMs / (1000 * 60));
+    
+    // Get current time components
+    const hours = today.getHours();
+    const minutes = today.getMinutes();
 
     // Get birth season
     const birthSeason = getSeason(birth.getMonth());

@@ -6,8 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { useToast } from "@/hooks/use-toast";
+import { useToast } from "@/components/ui/use-toast";
 
 const BMICalculator = () => {
   const navigate = useNavigate();
@@ -32,14 +31,33 @@ const BMICalculator = () => {
       return;
     }
 
-    let weightKg = parseFloat(weight);
-    let heightM = parseFloat(height);
+    const weightNum = parseFloat(weight);
+    const heightNum = parseFloat(height);
+
+    if (weightNum <= 0 || heightNum <= 0) {
+      toast({
+        title: "Please enter valid positive numbers",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    let weightKg = weightNum;
+    let heightM = heightNum;
 
     if (unit === "imperial") {
-      weightKg = weightKg * 0.453592; // pounds to kg
-      heightM = heightM * 0.0254; // inches to meters
+      weightKg = weightNum * 0.453592; // pounds to kg
+      heightM = heightNum * 0.0254; // inches to meters
     } else {
-      heightM = heightM / 100; // cm to meters
+      heightM = heightNum / 100; // cm to meters
+    }
+
+    if (heightM <= 0) {
+      toast({
+        title: "Invalid height",
+        variant: "destructive",
+      });
+      return;
     }
 
     const bmi = weightKg / (heightM * heightM);
@@ -63,7 +81,15 @@ const BMICalculator = () => {
     // Calculate ideal weight range (BMI 18.5-24.9)
     const idealWeightMin = 18.5 * (heightM * heightM);
     const idealWeightMax = 24.9 * (heightM * heightM);
-    const idealWeight = `${Math.round(idealWeightMin)}-${Math.round(idealWeightMax)} kg`;
+    
+    let idealWeight: string;
+    if (unit === "imperial") {
+      const minLbs = Math.round(idealWeightMin * 2.20462);
+      const maxLbs = Math.round(idealWeightMax * 2.20462);
+      idealWeight = `${minLbs}-${maxLbs} lbs`;
+    } else {
+      idealWeight = `${Math.round(idealWeightMin)}-${Math.round(idealWeightMax)} kg`;
+    }
 
     setResult({
       bmi: Math.round(bmi * 10) / 10,
@@ -176,7 +202,9 @@ const BMICalculator = () => {
                       value={weight}
                       onChange={(e) => setWeight(e.target.value)}
                       placeholder={unit === "metric" ? "70" : "154"}
-                      className="w-full p-6 text-xl rounded-2xl glass-input text-gray-800 dark:text-white placeholder:text-gray-500 dark:placeholder:text-white/60 transition-all duration-300 shadow-lg"
+                      min="0"
+                      step="0.1"
+                      className="w-full p-6 text-xl rounded-2xl glass-button-light text-gray-800 dark:text-white placeholder:text-gray-500 dark:placeholder:text-white/60 transition-all duration-300 shadow-lg"
                     />
                   </div>
 
@@ -190,12 +218,14 @@ const BMICalculator = () => {
                       value={height}
                       onChange={(e) => setHeight(e.target.value)}
                       placeholder={unit === "metric" ? "175" : "69"}
-                      className="w-full p-6 text-xl rounded-2xl glass-input text-gray-800 dark:text-white placeholder:text-gray-500 dark:placeholder:text-white/60 transition-all duration-300 shadow-lg"
+                      min="0"
+                      step="0.1"
+                      className="w-full p-6 text-xl rounded-2xl glass-button-light text-gray-800 dark:text-white placeholder:text-gray-500 dark:placeholder:text-white/60 transition-all duration-300 shadow-lg"
                     />
                   </div>
                 </div>
 
-                <div className="glass-info-card rounded-2xl p-6">
+                <div className="glass-card-light rounded-2xl p-6 border border-blue-200/30 dark:border-white/20">
                   <h4 className="font-semibold text-gray-800 dark:text-white mb-2 drop-shadow-sm">What is BMI?</h4>
                   <p className="text-sm text-gray-600 dark:text-white/80">
                     Body Mass Index (BMI) is a measure of body fat based on height and weight. It's a useful screening tool for weight categories.
