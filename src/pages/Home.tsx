@@ -138,42 +138,47 @@ const Home = () => {
               {calculatorTools.map((tool, index) => (
                 <Card
                   key={tool.title}
-                  className="group cursor-pointer glass-card-light shadow-2xl hover:shadow-3xl transition-all duration-500 hover:scale-[1.02] rounded-xl sm:rounded-2xl lg:rounded-[2rem] overflow-hidden"
+                  className="group cursor-pointer glass-card backdrop-blur-2xl bg-white/10 dark:bg-white/5 border border-white/20 dark:border-white/10 shadow-2xl hover:shadow-3xl transition-all duration-500 hover:scale-[1.02] hover:bg-white/20 dark:hover:bg-white/10 rounded-xl sm:rounded-2xl lg:rounded-[2rem] overflow-hidden"
                   onClick={() => navigate(tool.path)}
                   style={{ animationDelay: `${index * 100}ms` }}
                 >
-                  <CardContent className="p-4 sm:p-6 lg:p-8">
-                    <div className="mb-4 sm:mb-6">
-                      <div className={`w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 bg-gradient-to-br ${tool.color} rounded-xl sm:rounded-2xl flex items-center justify-center shadow-2xl mb-3 sm:mb-4 backdrop-blur-xl border border-white/20 group-hover:scale-110 transition-transform duration-300`}>
-                        <tool.icon className="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 text-white drop-shadow-sm" />
-                      </div>
-                    </div>
+                  <CardContent className="p-4 sm:p-6 lg:p-8 relative">
+                    {/* Glass overlay effect */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-white/20 via-white/10 to-transparent dark:from-white/10 dark:via-white/5 dark:to-transparent opacity-50 group-hover:opacity-75 transition-opacity duration-300 rounded-xl sm:rounded-2xl lg:rounded-[2rem]"></div>
                     
-                    <h3 className="text-lg sm:text-xl lg:text-2xl font-bold mb-3 sm:mb-4 text-gray-800 dark:text-white drop-shadow-sm group-hover:text-purple-600 dark:group-hover:text-purple-100 transition-colors duration-300">
-                      {tool.title}
-                    </h3>
-                    
-                    <p className="text-sm sm:text-base text-gray-600 dark:text-white/80 mb-4 sm:mb-6 leading-relaxed">
-                      {tool.description}
-                    </p>
-                    
-                    <div className="space-y-2 sm:space-y-3 mb-6 sm:mb-8">
-                      {tool.features.map((feature, idx) => (
-                        <div key={idx} className="flex items-center text-xs sm:text-sm text-gray-500 dark:text-white/70">
-                          <div className="w-1.5 h-1.5 bg-gradient-to-r from-purple-500 to-pink-500 dark:from-purple-400 dark:to-pink-400 rounded-full mr-2 sm:mr-3 flex-shrink-0"></div>
-                          {feature}
+                    <div className="relative z-10">
+                      <div className="mb-4 sm:mb-6">
+                        <div className={`w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 bg-gradient-to-br ${tool.color} rounded-xl sm:rounded-2xl flex items-center justify-center shadow-2xl mb-3 sm:mb-4 backdrop-blur-xl border border-white/30 group-hover:scale-110 transition-transform duration-300`}>
+                          <tool.icon className="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 text-white drop-shadow-sm" />
                         </div>
-                      ))}
+                      </div>
+                      
+                      <h3 className="text-lg sm:text-xl lg:text-2xl font-bold mb-3 sm:mb-4 text-gray-800 dark:text-white drop-shadow-sm group-hover:text-purple-600 dark:group-hover:text-purple-100 transition-colors duration-300">
+                        {tool.title}
+                      </h3>
+                      
+                      <p className="text-sm sm:text-base text-gray-600 dark:text-white/80 mb-4 sm:mb-6 leading-relaxed">
+                        {tool.description}
+                      </p>
+                      
+                      <div className="space-y-2 sm:space-y-3 mb-6 sm:mb-8">
+                        {tool.features.map((feature, idx) => (
+                          <div key={idx} className="flex items-center text-xs sm:text-sm text-gray-500 dark:text-white/70">
+                            <div className="w-1.5 h-1.5 bg-gradient-to-r from-purple-500 to-pink-500 dark:from-purple-400 dark:to-pink-400 rounded-full mr-2 sm:mr-3 flex-shrink-0"></div>
+                            {feature}
+                          </div>
+                        ))}
+                      </div>
+                      
+                      <Button 
+                        className={`w-full bg-gradient-to-r ${tool.color} hover:opacity-90 text-white border-0 rounded-xl sm:rounded-2xl py-3 sm:py-4 font-semibold text-sm sm:text-base lg:text-lg shadow-lg backdrop-blur-xl border border-white/30 transition-all duration-300 group-hover:scale-105 touch-target glass-button`}
+                      >
+                        {tool.title.includes('Calculator') ? tool.title.replace(' Calculator', '').includes('Calorie') ? 'Calculate Calories' : `Calculate ${tool.title.replace(' Calculator', '')}` : 
+                         tool.title.includes('Converter') ? 'Convert Currency' : 
+                         tool.title.includes('Timer') ? 'Start Countdown' : 
+                         `Use ${tool.title}`}
+                      </Button>
                     </div>
-                    
-                    <Button 
-                      className={`w-full bg-gradient-to-r ${tool.color} hover:opacity-90 text-white border-0 rounded-xl sm:rounded-2xl py-3 sm:py-4 font-semibold text-sm sm:text-base lg:text-lg shadow-lg backdrop-blur-xl border border-white/20 transition-all duration-300 group-hover:scale-105 touch-target`}
-                    >
-                      {tool.title.includes('Calculator') ? tool.title.replace(' Calculator', '').includes('Calorie') ? 'Calculate Calories' : `Calculate ${tool.title.replace(' Calculator', '')}` : 
-                       tool.title.includes('Converter') ? 'Convert Currency' : 
-                       tool.title.includes('Timer') ? 'Start Countdown' : 
-                       `Use ${tool.title}`}
-                    </Button>
                   </CardContent>
                 </Card>
               ))}
