@@ -89,24 +89,24 @@ const Home = () => {
       <div className="fixed inset-0 bg-gradient-to-tr from-blue-300/20 via-transparent to-purple-300/20 dark:from-blue-600/10 dark:via-transparent dark:to-purple-600/10"></div>
       <div className="fixed inset-0 bg-gradient-to-bl from-pink-300/10 via-transparent to-cyan-300/10 dark:from-pink-500/5 dark:via-transparent dark:to-cyan-500/5"></div>
       
-      {/* Floating Orbs */}
-      <div className="fixed top-20 left-10 w-32 h-32 bg-gradient-to-r from-purple-300/60 to-pink-300/60 dark:from-purple-400 dark:to-pink-400 rounded-full blur-3xl opacity-40 dark:opacity-20 animate-float"></div>
-      <div className="fixed bottom-32 right-20 w-24 h-24 bg-gradient-to-r from-blue-300/70 to-cyan-300/70 dark:from-blue-400 dark:to-cyan-400 rounded-full blur-2xl opacity-50 dark:opacity-30 animate-float" style={{ animationDelay: "2s" }}></div>
-      <div className="fixed top-1/2 left-1/4 w-16 h-16 bg-gradient-to-r from-pink-300/60 to-purple-300/60 dark:from-pink-400 dark:to-purple-400 rounded-full blur-xl opacity-45 dark:opacity-25 animate-float" style={{ animationDelay: "4s" }}></div>
-      <div className="fixed top-1/3 right-1/3 w-20 h-20 bg-gradient-to-r from-cyan-300/60 to-blue-300/60 dark:from-cyan-400 dark:to-blue-400 rounded-full blur-2xl opacity-40 dark:opacity-20 animate-float" style={{ animationDelay: "1s" }}></div>
-      <div className="fixed bottom-1/4 left-1/2 w-12 h-12 bg-gradient-to-r from-emerald-300/70 to-teal-300/70 dark:from-emerald-400 dark:to-teal-400 rounded-full blur-xl opacity-50 dark:opacity-30 animate-float" style={{ animationDelay: "3s" }}></div>
+      {/* Floating Orbs - Hidden on small screens for better performance */}
+      <div className="hidden sm:block fixed top-20 left-10 w-32 h-32 bg-gradient-to-r from-purple-300/60 to-pink-300/60 dark:from-purple-400 dark:to-pink-400 rounded-full blur-3xl opacity-40 dark:opacity-20 animate-float"></div>
+      <div className="hidden sm:block fixed bottom-32 right-20 w-24 h-24 bg-gradient-to-r from-blue-300/70 to-cyan-300/70 dark:from-blue-400 dark:to-cyan-400 rounded-full blur-2xl opacity-50 dark:opacity-30 animate-float" style={{ animationDelay: "2s" }}></div>
+      <div className="hidden md:block fixed top-1/2 left-1/4 w-16 h-16 bg-gradient-to-r from-pink-300/60 to-purple-300/60 dark:from-pink-400 dark:to-purple-400 rounded-full blur-xl opacity-45 dark:opacity-25 animate-float" style={{ animationDelay: "4s" }}></div>
+      <div className="hidden md:block fixed top-1/3 right-1/3 w-20 h-20 bg-gradient-to-r from-cyan-300/60 to-blue-300/60 dark:from-cyan-400 dark:to-blue-400 rounded-full blur-2xl opacity-40 dark:opacity-20 animate-float" style={{ animationDelay: "1s" }}></div>
+      <div className="hidden lg:block fixed bottom-1/4 left-1/2 w-12 h-12 bg-gradient-to-r from-emerald-300/70 to-teal-300/70 dark:from-emerald-400 dark:to-teal-400 rounded-full blur-xl opacity-50 dark:opacity-30 animate-float" style={{ animationDelay: "3s" }}></div>
 
-      <div className="relative z-10 min-h-screen backdrop-blur-[2px] pt-20">
+      <div className="relative z-10 min-h-screen backdrop-blur-[2px] pt-16 sm:pt-20">
         {/* Hero Section */}
-        <section className="py-16 px-6">
+        <section className="py-8 sm:py-12 md:py-16 px-4 sm:px-6">
           <div className="max-w-6xl mx-auto text-center">
-            <div className="flex items-center justify-center mb-8">
-              <div className="w-24 h-24 bg-gradient-to-br from-purple-500/80 to-pink-600/80 rounded-[2rem] flex items-center justify-center shadow-2xl backdrop-blur-xl border border-white/20 dark:border-white/20">
-                <Calculator className="w-12 h-12 text-white drop-shadow-sm" />
+            <div className="flex items-center justify-center mb-6 sm:mb-8">
+              <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 bg-gradient-to-br from-purple-500/80 to-pink-600/80 rounded-2xl sm:rounded-[2rem] flex items-center justify-center shadow-2xl backdrop-blur-xl border border-white/20 dark:border-white/20">
+                <Calculator className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-white drop-shadow-sm" />
               </div>
             </div>
             
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold mb-6">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-4 sm:mb-6">
               <span className="bg-gradient-to-r from-gray-800 via-purple-600 to-pink-600 dark:from-white dark:via-purple-100 dark:to-pink-100 bg-clip-text text-transparent drop-shadow-sm">
                 Lion
               </span>
@@ -116,58 +116,58 @@ const Home = () => {
               </span>
             </h1>
             
-            <p className="text-xl md:text-2xl text-gray-700 dark:text-white/80 mb-12 max-w-3xl mx-auto leading-relaxed drop-shadow-sm">
+            <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-700 dark:text-white/80 mb-8 sm:mb-12 max-w-3xl mx-auto leading-relaxed drop-shadow-sm px-4">
               Experience the next generation of calculation tools. Precision meets elegance in our collection of premium calculators designed for the modern world.
             </p>
           </div>
         </section>
 
         {/* Calculators Grid */}
-        <section className="px-6 pb-20">
+        <section className="px-4 sm:px-6 pb-16 sm:pb-20">
           <div className="max-w-7xl mx-auto">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-gray-800 via-purple-600 to-pink-600 dark:from-white dark:via-purple-100 dark:to-pink-100 bg-clip-text text-transparent mb-4 drop-shadow-sm">
+            <div className="text-center mb-12 sm:mb-16">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold bg-gradient-to-r from-gray-800 via-purple-600 to-pink-600 dark:from-white dark:via-purple-100 dark:to-pink-100 bg-clip-text text-transparent mb-4 drop-shadow-sm">
                 Premium Calculator Suite
               </h2>
-              <p className="text-lg text-gray-600 dark:text-white/70 max-w-2xl mx-auto">
+              <p className="text-base sm:text-lg text-gray-600 dark:text-white/70 max-w-2xl mx-auto px-4">
                 Discover our collection of meticulously crafted calculators, each designed with precision and elegance in mind.
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
               {calculatorTools.map((tool, index) => (
                 <Card
                   key={tool.title}
-                  className="group cursor-pointer glass-card-light shadow-2xl hover:shadow-3xl transition-all duration-500 hover:scale-[1.02] rounded-[2rem] overflow-hidden"
+                  className="group cursor-pointer glass-card-light shadow-2xl hover:shadow-3xl transition-all duration-500 hover:scale-[1.02] rounded-xl sm:rounded-2xl lg:rounded-[2rem] overflow-hidden"
                   onClick={() => navigate(tool.path)}
                   style={{ animationDelay: `${index * 100}ms` }}
                 >
-                  <CardContent className="p-8">
-                    <div className="mb-6">
-                      <div className={`w-16 h-16 bg-gradient-to-br ${tool.color} rounded-2xl flex items-center justify-center shadow-2xl mb-4 backdrop-blur-xl border border-white/20 group-hover:scale-110 transition-transform duration-300`}>
-                        <tool.icon className="w-8 h-8 text-white drop-shadow-sm" />
+                  <CardContent className="p-4 sm:p-6 lg:p-8">
+                    <div className="mb-4 sm:mb-6">
+                      <div className={`w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 bg-gradient-to-br ${tool.color} rounded-xl sm:rounded-2xl flex items-center justify-center shadow-2xl mb-3 sm:mb-4 backdrop-blur-xl border border-white/20 group-hover:scale-110 transition-transform duration-300`}>
+                        <tool.icon className="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 text-white drop-shadow-sm" />
                       </div>
                     </div>
                     
-                    <h3 className="text-2xl font-bold mb-4 text-gray-800 dark:text-white drop-shadow-sm group-hover:text-purple-600 dark:group-hover:text-purple-100 transition-colors duration-300">
+                    <h3 className="text-lg sm:text-xl lg:text-2xl font-bold mb-3 sm:mb-4 text-gray-800 dark:text-white drop-shadow-sm group-hover:text-purple-600 dark:group-hover:text-purple-100 transition-colors duration-300">
                       {tool.title}
                     </h3>
                     
-                    <p className="text-gray-600 dark:text-white/80 mb-6 leading-relaxed">
+                    <p className="text-sm sm:text-base text-gray-600 dark:text-white/80 mb-4 sm:mb-6 leading-relaxed">
                       {tool.description}
                     </p>
                     
-                    <div className="space-y-3 mb-8">
+                    <div className="space-y-2 sm:space-y-3 mb-6 sm:mb-8">
                       {tool.features.map((feature, idx) => (
-                        <div key={idx} className="flex items-center text-sm text-gray-500 dark:text-white/70">
-                          <div className="w-1.5 h-1.5 bg-gradient-to-r from-purple-500 to-pink-500 dark:from-purple-400 dark:to-pink-400 rounded-full mr-3"></div>
+                        <div key={idx} className="flex items-center text-xs sm:text-sm text-gray-500 dark:text-white/70">
+                          <div className="w-1.5 h-1.5 bg-gradient-to-r from-purple-500 to-pink-500 dark:from-purple-400 dark:to-pink-400 rounded-full mr-2 sm:mr-3 flex-shrink-0"></div>
                           {feature}
                         </div>
                       ))}
                     </div>
                     
                     <Button 
-                      className={`w-full bg-gradient-to-r ${tool.color} hover:opacity-90 text-white border-0 rounded-2xl py-4 font-semibold text-lg shadow-lg backdrop-blur-xl border border-white/20 transition-all duration-300 group-hover:scale-105`}
+                      className={`w-full bg-gradient-to-r ${tool.color} hover:opacity-90 text-white border-0 rounded-xl sm:rounded-2xl py-3 sm:py-4 font-semibold text-sm sm:text-base lg:text-lg shadow-lg backdrop-blur-xl border border-white/20 transition-all duration-300 group-hover:scale-105 touch-target`}
                     >
                       {tool.title.includes('Calculator') ? tool.title.replace(' Calculator', '').includes('Calorie') ? 'Calculate Calories' : `Calculate ${tool.title.replace(' Calculator', '')}` : 
                        tool.title.includes('Converter') ? 'Convert Currency' : 
@@ -177,24 +177,6 @@ const Home = () => {
                   </CardContent>
                 </Card>
               ))}
-            </div>
-
-            {/* Call to Action */}
-            <div className="text-center mt-20">
-              <div className="glass-card-light rounded-[3rem] p-12 shadow-3xl max-w-4xl mx-auto">
-                <h3 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-gray-800 via-purple-600 to-pink-600 dark:from-white dark:via-purple-100 dark:to-pink-100 bg-clip-text text-transparent mb-4 drop-shadow-sm">
-                  Ready to Calculate?
-                </h3>
-                <p className="text-lg text-gray-600 dark:text-white/80 mb-8 max-w-2xl mx-auto">
-                  Join thousands of users who trust Lion Calculator for their daily computational needs. Experience precision like never before.
-                </p>
-                <Button 
-                  onClick={() => navigate('/age')}
-                  className="bg-gradient-to-r from-purple-500/80 to-pink-600/80 hover:from-purple-600/80 hover:to-pink-700/80 text-white px-12 py-4 text-lg rounded-full shadow-2xl backdrop-blur-xl border border-white/20 transition-all duration-300 hover:scale-105"
-                >
-                  Get Started
-                </Button>
-              </div>
             </div>
           </div>
         </section>
