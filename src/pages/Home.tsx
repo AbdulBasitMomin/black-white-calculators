@@ -170,8 +170,9 @@ const Home = () => {
                         ))}
                       </div>
                       
+                      {/* UPDATED BUTTON COLOUR TO PROMINENT PURPLE/PINK GRADIENT */}
                       <Button 
-                        className={`w-full bg-gradient-to-r ${tool.color} hover:opacity-90 text-white border-0 rounded-xl sm:rounded-2xl py-3 sm:py-4 font-semibold text-sm sm:text-base lg:text-lg shadow-lg backdrop-blur-xl border border-white/30 transition-all duration-300 group-hover:scale-105 touch-target glass-button`}
+                        className={`w-full bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-600 hover:to-pink-700 text-white border-0 rounded-xl sm:rounded-2xl py-3 sm:py-4 font-semibold text-sm sm:text-base lg:text-lg shadow-lg backdrop-blur-xl border border-white/30 transition-all duration-300 group-hover:scale-105 touch-target glass-button`}
                       >
                         {tool.title.includes('Calculator') ? tool.title.replace(' Calculator', '').includes('Calorie') ? 'Calculate Calories' : `Calculate ${tool.title.replace(' Calculator', '')}` : 
                          tool.title.includes('Converter') ? 'Convert Currency' : 
@@ -191,3 +192,4 @@ const Home = () => {
 };
 
 export default Home;
+
