@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { ArrowLeft, Copy, Check, Calendar } from "lucide-react";
+import { ArrowLeft, Copy, Check, Calendar, Clock } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -12,12 +12,18 @@ const DaysCalculator = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const [startDate, setStartDate] = useState("");
+  const [startTime, setStartTime] = useState("00:00");
   const [endDate, setEndDate] = useState("");
+  const [endTime, setEndTime] = useState("00:00");
   const [result, setResult] = useState<{
     totalDays: number;
+    totalHours: number;
+    totalMinutes: number;
     years: number;
     months: number;
     days: number;
+    hours: number;
+    minutes: number;
   } | null>(null);
   const [copied, setCopied] = useState(false);
 
@@ -30,25 +36,41 @@ const DaysCalculator = () => {
       return;
     }
 
-    const start = new Date(startDate);
-    const end = new Date(endDate);
+    // Combine date and time for precise calculations
+    const start = new Date(`${startDate}T${startTime}`);
+    const end = new Date(`${endDate}T${endTime}`);
 
     if (start > end) {
       toast({
-        title: "Start date must be before end date",
+        title: "Start date/time must be before end date/time",
         variant: "destructive",
       });
       return;
     }
 
-    // Calculate total days
+    // Calculate total time difference
     const timeDiff = end.getTime() - start.getTime();
-    const totalDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+    const totalMinutes = Math.floor(timeDiff / (1000 * 60));
+    const totalHours = Math.floor(timeDiff / (1000 * 3600));
+    const totalDays = Math.floor(timeDiff / (1000 * 3600 * 24));
 
-    // Calculate years, months, days breakdown
+    // Calculate detailed breakdown
     let years = end.getFullYear() - start.getFullYear();
     let months = end.getMonth() - start.getMonth();
     let days = end.getDate() - start.getDate();
+    let hours = end.getHours() - start.getHours();
+    let minutes = end.getMinutes() - start.getMinutes();
+
+    // Adjust for negative values
+    if (minutes < 0) {
+      hours--;
+      minutes += 60;
+    }
+
+    if (hours < 0) {
+      days--;
+      hours += 24;
+    }
 
     if (days < 0) {
       months--;
@@ -63,16 +85,20 @@ const DaysCalculator = () => {
 
     setResult({
       totalDays,
+      totalHours,
+      totalMinutes,
       years,
       months,
-      days
+      days,
+      hours,
+      minutes
     });
   };
 
   const copyResult = async () => {
     if (!result) return;
     
-    const text = `Days between dates: ${result.totalDays} days (${result.years} years, ${result.months} months, ${result.days} days)`;
+    const text = `Time between dates: ${result.totalDays} days, ${result.totalHours} hours, ${result.totalMinutes} minutes (${result.years} years, ${result.months} months, ${result.days} days, ${result.hours} hours, ${result.minutes} minutes)`;
     
     try {
       await navigator.clipboard.writeText(text);
@@ -126,39 +152,61 @@ const DaysCalculator = () => {
           <Card className="glass-card-light shadow-2xl mb-8 rounded-[2rem] overflow-hidden">
             <CardContent className="p-8">
               <div className="space-y-8">
-                {/* Start Date */}
-                <div className="space-y-3">
-                  <Label htmlFor="startdate" className="text-xl font-semibold text-gray-800 dark:text-white drop-shadow-sm">
-                    Start Date
+                {/* Start Date & Time */}
+                <div className="space-y-4">
+                  <Label className="text-xl font-semibold text-gray-800 dark:text-white drop-shadow-sm flex items-center gap-2">
+                    <Calendar className="w-5 h-5" />
+                    Start Date & Time
                   </Label>
-                  <Input
-                    id="startdate"
-                    type="date"
-                    value={startDate}
-                    onChange={(e) => setStartDate(e.target.value)}
-                    className="w-full p-6 text-xl rounded-2xl glass-input text-gray-800 dark:text-white placeholder:text-gray-500 dark:placeholder:text-white/60 transition-all duration-300 shadow-lg"
-                  />
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <Input
+                      type="date"
+                      value={startDate}
+                      onChange={(e) => setStartDate(e.target.value)}
+                      className="w-full p-4 text-lg rounded-2xl glass-input text-gray-800 dark:text-white"
+                    />
+                    <div className="relative">
+                      <Clock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-500 dark:text-white/60" />
+                      <Input
+                        type="time"
+                        value={startTime}
+                        onChange={(e) => setStartTime(e.target.value)}
+                        className="w-full p-4 pl-12 text-lg rounded-2xl glass-input text-gray-800 dark:text-white"
+                      />
+                    </div>
+                  </div>
                 </div>
 
-                {/* End Date */}
-                <div className="space-y-3">
-                  <Label htmlFor="enddate" className="text-xl font-semibold text-gray-800 dark:text-white drop-shadow-sm">
-                    End Date
+                {/* End Date & Time */}
+                <div className="space-y-4">
+                  <Label className="text-xl font-semibold text-gray-800 dark:text-white drop-shadow-sm flex items-center gap-2">
+                    <Calendar className="w-5 h-5" />
+                    End Date & Time
                   </Label>
-                  <Input
-                    id="enddate"
-                    type="date"
-                    value={endDate}
-                    onChange={(e) => setEndDate(e.target.value)}
-                    className="w-full p-6 text-xl rounded-2xl glass-input text-gray-800 dark:text-white placeholder:text-gray-500 dark:placeholder:text-white/60 transition-all duration-300 shadow-lg"
-                  />
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <Input
+                      type="date"
+                      value={endDate}
+                      onChange={(e) => setEndDate(e.target.value)}
+                      className="w-full p-4 text-lg rounded-2xl glass-input text-gray-800 dark:text-white"
+                    />
+                    <div className="relative">
+                      <Clock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-500 dark:text-white/60" />
+                      <Input
+                        type="time"
+                        value={endTime}
+                        onChange={(e) => setEndTime(e.target.value)}
+                        className="w-full p-4 pl-12 text-lg rounded-2xl glass-input text-gray-800 dark:text-white"
+                      />
+                    </div>
+                  </div>
                 </div>
 
                 <Button
                   onClick={calculateDays}
                   className="w-full bg-gradient-to-r from-purple-500/80 to-pink-600/80 hover:from-purple-600/80 hover:to-pink-700/80 text-white font-bold py-6 text-xl rounded-full transition-all duration-300 hover:scale-105 shadow-2xl backdrop-blur-xl border border-white/20"
                 >
-                  Calculate Days
+                  Calculate Time Difference
                 </Button>
               </div>
             </CardContent>
@@ -168,29 +216,54 @@ const DaysCalculator = () => {
           {result && (
             <Card className="glass-card-light shadow-2xl animate-fadeIn rounded-[2rem] overflow-hidden">
               <CardContent className="p-8 text-center">
-                <h3 className="text-3xl font-bold mb-8 text-gray-800 dark:text-white drop-shadow-sm">Time Difference</h3>
+                <h3 className="text-3xl font-bold mb-8 text-gray-800 dark:text-white drop-shadow-sm">Time Difference (Inclusive)</h3>
                 
-                {/* Total Days */}
-                <div className="mb-8 glass-info-card rounded-2xl p-6 border border-purple-200/30 dark:border-white/20">
-                  <div className="text-5xl font-bold bg-gradient-to-r from-gray-800 via-purple-600 to-pink-600 dark:from-white dark:via-purple-100 dark:to-pink-100 bg-clip-text text-transparent mb-3 drop-shadow-sm">
-                    {result.totalDays.toLocaleString()}
+                {/* Total Time Cards */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+                  <div className="glass-info-card rounded-2xl p-6 border border-purple-200/30 dark:border-white/20">
+                    <div className="text-3xl font-bold bg-gradient-to-r from-gray-800 via-purple-600 to-pink-600 dark:from-white dark:via-purple-100 dark:to-pink-100 bg-clip-text text-transparent mb-2">
+                      {result.totalDays.toLocaleString()}
+                    </div>
+                    <div className="text-gray-600 dark:text-white/80">Total Days</div>
                   </div>
-                  <div className="text-gray-600 dark:text-white/80 text-xl">Total Days</div>
+                  <div className="glass-info-card rounded-2xl p-6 border border-blue-200/30 dark:border-white/20">
+                    <div className="text-3xl font-bold bg-gradient-to-r from-gray-800 via-blue-600 to-cyan-600 dark:from-white dark:via-blue-100 dark:to-cyan-100 bg-clip-text text-transparent mb-2">
+                      {result.totalHours.toLocaleString()}
+                    </div>
+                    <div className="text-gray-600 dark:text-white/80">Total Hours</div>
+                  </div>
+                  <div className="glass-info-card rounded-2xl p-6 border border-pink-200/30 dark:border-white/20">
+                    <div className="text-3xl font-bold bg-gradient-to-r from-gray-800 via-pink-600 to-rose-600 dark:from-white dark:via-pink-100 dark:to-rose-100 bg-clip-text text-transparent mb-2">
+                      {result.totalMinutes.toLocaleString()}
+                    </div>
+                    <div className="text-gray-600 dark:text-white/80">Total Minutes</div>
+                  </div>
                 </div>
 
-                {/* Breakdown */}
-                <div className="grid grid-cols-3 gap-4 mb-8">
-                  <div className="bg-purple-500/20 dark:bg-purple-500/20 rounded-2xl p-6 border border-purple-200 dark:border-white/20">
-                    <div className="text-3xl font-bold text-gray-800 dark:text-white mb-2">{result.years}</div>
-                    <div className="text-gray-600 dark:text-white/80">Years</div>
-                  </div>
-                  <div className="bg-blue-500/20 dark:bg-blue-500/20 rounded-2xl p-6 border border-blue-200 dark:border-white/20">
-                    <div className="text-3xl font-bold text-gray-800 dark:text-white mb-2">{result.months}</div>
-                    <div className="text-gray-600 dark:text-white/80">Months</div>
-                  </div>
-                  <div className="bg-pink-500/20 dark:bg-pink-500/20 rounded-2xl p-6 border border-pink-200 dark:border-white/20">
-                    <div className="text-3xl font-bold text-gray-800 dark:text-white mb-2">{result.days}</div>
-                    <div className="text-gray-600 dark:text-white/80">Days</div>
+                {/* Detailed Breakdown */}
+                <div className="mb-8">
+                  <h4 className="text-xl font-semibold mb-4 text-gray-800 dark:text-white">Detailed Breakdown</h4>
+                  <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
+                    <div className="bg-purple-500/20 dark:bg-purple-500/20 rounded-xl p-4 border border-purple-200 dark:border-white/20">
+                      <div className="text-2xl font-bold text-gray-800 dark:text-white mb-1">{result.years}</div>
+                      <div className="text-sm text-gray-600 dark:text-white/80">Years</div>
+                    </div>
+                    <div className="bg-blue-500/20 dark:bg-blue-500/20 rounded-xl p-4 border border-blue-200 dark:border-white/20">
+                      <div className="text-2xl font-bold text-gray-800 dark:text-white mb-1">{result.months}</div>
+                      <div className="text-sm text-gray-600 dark:text-white/80">Months</div>
+                    </div>
+                    <div className="bg-pink-500/20 dark:bg-pink-500/20 rounded-xl p-4 border border-pink-200 dark:border-white/20">
+                      <div className="text-2xl font-bold text-gray-800 dark:text-white mb-1">{result.days}</div>
+                      <div className="text-sm text-gray-600 dark:text-white/80">Days</div>
+                    </div>
+                    <div className="bg-green-500/20 dark:bg-green-500/20 rounded-xl p-4 border border-green-200 dark:border-white/20">
+                      <div className="text-2xl font-bold text-gray-800 dark:text-white mb-1">{result.hours}</div>
+                      <div className="text-sm text-gray-600 dark:text-white/80">Hours</div>
+                    </div>
+                    <div className="bg-yellow-500/20 dark:bg-yellow-500/20 rounded-xl p-4 border border-yellow-200 dark:border-white/20">
+                      <div className="text-2xl font-bold text-gray-800 dark:text-white mb-1">{result.minutes}</div>
+                      <div className="text-sm text-gray-600 dark:text-white/80">Minutes</div>
+                    </div>
                   </div>
                 </div>
 
