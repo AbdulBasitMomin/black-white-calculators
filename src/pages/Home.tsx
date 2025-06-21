@@ -134,7 +134,7 @@ const Home = () => {
               {calculatorTools.map((tool, index) => (
                 <Card
                   key={tool.title}
-                  className="group cursor-pointer backdrop-blur-md bg-white/90 dark:bg-white/10 border border-gray-200/50 dark:border-white/20 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-[1.02] hover:bg-white/95 dark:hover:bg-white/15 rounded-xl sm:rounded-2xl lg:rounded-[2rem] overflow-hidden"
+                  className="group cursor-pointer glass-card-light border-0 shadow-glass hover:shadow-3xl transition-all duration-300 hover:scale-[1.02] rounded-xl sm:rounded-2xl lg:rounded-[2rem] overflow-hidden"
                   onClick={() => navigate(tool.path)}
                 >
                   <CardContent className="p-4 sm:p-6 lg:p-8 relative">
@@ -162,9 +162,8 @@ const Home = () => {
                         ))}
                       </div>
                       
-                      {/* HIGH CONTRAST BUTTON FOR MAXIMUM VISIBILITY */}
                       <Button 
-                        className="w-full bg-gradient-to-r from-slate-800 to-slate-900 hover:from-slate-900 hover:to-black dark:from-purple-600 dark:to-pink-600 dark:hover:from-purple-700 dark:hover:to-pink-700 text-white font-bold border-0 rounded-xl sm:rounded-2xl py-3 sm:py-4 text-sm sm:text-base lg:text-lg shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl"
+                        className="w-full glass-button-light text-gray-800 dark:text-white font-bold border-0 rounded-xl sm:rounded-2xl py-3 sm:py-4 text-sm sm:text-base lg:text-lg transition-all duration-300 hover:scale-105"
                       >
                         {tool.title.includes('Calculator') ? tool.title.replace(' Calculator', '').includes('Calorie') ? 'Calculate Calories' : `Calculate ${tool.title.replace(' Calculator', '')}` : 
                          tool.title.includes('Converter') ? 'Convert Currency' : 
