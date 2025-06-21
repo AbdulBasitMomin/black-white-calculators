@@ -253,7 +253,7 @@ const GPACalculator = () => {
             variant="ghost"
             size="icon"
             onClick={() => navigate("/")}
-            className="mr-4 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 w-12 h-12 backdrop-blur-sm bg-white/10 border border-white/20 transition-all duration-300 hover:scale-110"
+            className="mr-4 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 w-12 h-12 glass-button transition-all duration-300 hover:scale-110"
           >
             <ArrowLeft className="w-6 h-6" />
           </Button>
@@ -269,7 +269,7 @@ const GPACalculator = () => {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Calculator Card */}
-          <Card className="bg-white/70 dark:bg-gray-800/70 backdrop-blur-xl border-0 shadow-2xl rounded-3xl">
+          <Card className="glass-card-light shadow-glass rounded-3xl border-0">
             <CardContent className="p-8">
               <div className="space-y-6">
                 {/* Region Selection */}
@@ -279,15 +279,15 @@ const GPACalculator = () => {
                     Select Region
                   </Label>
                   <Select value={selectedRegion} onValueChange={setSelectedRegion}>
-                    <SelectTrigger className="w-full p-4 text-lg rounded-2xl border-gray-200 dark:border-gray-700 bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm">
+                    <SelectTrigger className="w-full p-4 text-lg rounded-2xl glass-input border-0">
                       <SelectValue />
                     </SelectTrigger>
-                    <SelectContent className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-xl border-gray-200 dark:border-gray-700 rounded-2xl">
+                    <SelectContent className="glass-card-light border-0 rounded-2xl z-50 bg-white/95 dark:bg-gray-800/95 backdrop-blur-xl shadow-glass">
                       {regions.map((region) => (
-                        <SelectItem key={region.code} value={region.code}>
-                          <div className="flex items-center space-x-2">
-                            <span>{region.flag}</span>
-                            <span>{region.name}</span>
+                        <SelectItem key={region.code} value={region.code} className="rounded-xl">
+                          <div className="flex items-center space-x-3">
+                            <span className="text-lg">{region.flag}</span>
+                            <span className="font-medium">{region.name}</span>
                           </div>
                         </SelectItem>
                       ))}
@@ -302,13 +302,13 @@ const GPACalculator = () => {
                     Grading Scale
                   </Label>
                   <Select value={selectedScale} onValueChange={setSelectedScale}>
-                    <SelectTrigger className="w-full p-4 text-lg rounded-2xl border-gray-200 dark:border-gray-700 bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm">
+                    <SelectTrigger className="w-full p-4 text-lg rounded-2xl glass-input border-0">
                       <SelectValue />
                     </SelectTrigger>
-                    <SelectContent className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-xl border-gray-200 dark:border-gray-700 rounded-2xl">
+                    <SelectContent className="glass-card-light border-0 rounded-2xl z-50 bg-white/95 dark:bg-gray-800/95 backdrop-blur-xl shadow-glass">
                       {Object.entries(gradeScales).map(([key, scale]) => (
-                        <SelectItem key={key} value={key}>
-                          {scale.name}
+                        <SelectItem key={key} value={key} className="rounded-xl">
+                          <span className="font-medium">{scale.name}</span>
                         </SelectItem>
                       ))}
                     </SelectContent>
@@ -326,29 +326,29 @@ const GPACalculator = () => {
                     value={gpa}
                     onChange={(e) => setGpa(e.target.value)}
                     placeholder={`Enter GPA (0 - ${gradeScales[selectedScale].max})`}
-                    className="w-full p-4 text-lg rounded-2xl border-gray-200 dark:border-gray-700 bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm"
+                    className="w-full p-4 text-lg rounded-2xl glass-input border-0"
                     step="0.01"
                     max={gradeScales[selectedScale].max}
                   />
                 </div>
 
                 {/* Formula Toggle */}
-                <div className="flex items-center justify-between p-4 bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 rounded-2xl backdrop-blur-sm">
+                <div className="flex items-center justify-between p-4 glass-info-card rounded-2xl">
                   <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Show Formula</span>
                   <Button
                     variant="outline"
                     size="sm"
                     onClick={() => setShowFormula(!showFormula)}
-                    className="rounded-full"
+                    className="rounded-full glass-button-light border-0"
                   >
                     <Info className="w-4 h-4" />
                   </Button>
                 </div>
 
                 {showFormula && (
-                  <div className="p-4 bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 rounded-2xl backdrop-blur-sm animate-fadeIn">
-                    <h4 className="font-semibold text-blue-700 dark:text-blue-300 mb-2">Formula Used:</h4>
-                    <p className="text-sm text-blue-600 dark:text-blue-400 font-mono">
+                  <div className="p-4 glass-info-card rounded-2xl animate-fadeIn">
+                    <h4 className="font-semibold text-purple-700 dark:text-purple-300 mb-2">Formula Used:</h4>
+                    <p className="text-sm text-purple-600 dark:text-purple-400 font-mono">
                       {gradeScales[selectedScale].formula}
                     </p>
                   </div>
@@ -357,7 +357,7 @@ const GPACalculator = () => {
                 <Button
                   onClick={convertGPA}
                   disabled={isCalculating}
-                  className="w-full bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-600 hover:to-pink-700 text-white font-bold py-4 text-lg rounded-full transition-all duration-300 hover:scale-105 shadow-2xl disabled:opacity-50"
+                  className="w-full bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-600 hover:to-pink-700 text-white font-bold py-4 text-lg rounded-full transition-all duration-300 hover:scale-105 shadow-2xl disabled:opacity-50 border-0"
                 >
                   {isCalculating ? (
                     <>
@@ -376,7 +376,7 @@ const GPACalculator = () => {
           {result && (
             <div className="space-y-6 animate-fadeIn">
               {/* Main Result */}
-              <Card className="bg-white/70 dark:bg-gray-800/70 backdrop-blur-xl border-0 shadow-2xl rounded-3xl">
+              <Card className="glass-card-light shadow-glass rounded-3xl border-0">
                 <CardContent className="p-8 text-center">
                   <h3 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white flex items-center justify-center">
                     <Check className="w-6 h-6 mr-2 text-green-500" />
@@ -384,22 +384,22 @@ const GPACalculator = () => {
                   </h3>
                   
                   <div className="grid grid-cols-1 gap-6 mb-6">
-                    <div className="bg-gradient-to-br from-purple-100 to-purple-200 dark:from-purple-900/30 dark:to-purple-800/30 rounded-2xl p-6 backdrop-blur-sm">
+                    <div className="glass-info-card rounded-2xl p-6">
                       <div className="text-4xl font-bold text-purple-600 dark:text-purple-400 mb-2">
                         {result.percentage}%
                       </div>
                       <div className="text-gray-600 dark:text-gray-300">Percentage</div>
                     </div>
                     
-                    <div className="bg-gradient-to-br from-blue-100 to-blue-200 dark:from-blue-900/30 dark:to-blue-800/30 rounded-2xl p-6 backdrop-blur-sm">
-                      <div className="text-3xl font-bold text-blue-600 dark:text-blue-400 mb-2">
+                    <div className="glass-info-card rounded-2xl p-6">
+                      <div className="text-3xl font-bold text-purple-600 dark:text-purple-400 mb-2">
                         {result.letterGrade}
                       </div>
                       <div className="text-gray-600 dark:text-gray-300">Letter Grade</div>
                     </div>
                     
-                    <div className="bg-gradient-to-br from-pink-100 to-pink-200 dark:from-pink-900/30 dark:to-pink-800/30 rounded-2xl p-6 backdrop-blur-sm">
-                      <div className="text-lg font-bold text-pink-600 dark:text-pink-400 mb-2">
+                    <div className="glass-info-card rounded-2xl p-6">
+                      <div className="text-lg font-bold text-purple-600 dark:text-purple-400 mb-2">
                         {result.classification}
                       </div>
                       <div className="text-gray-600 dark:text-gray-300">Classification</div>
@@ -409,7 +409,7 @@ const GPACalculator = () => {
                   <Button
                     onClick={copyResult}
                     variant="outline"
-                    className="border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full px-6 py-3 backdrop-blur-sm bg-white/20 transition-all duration-300 hover:scale-105"
+                    className="glass-button-light border-0 rounded-full px-6 py-3 transition-all duration-300 hover:scale-105"
                   >
                     {copied ? <Check className="w-4 h-4 mr-2 text-green-500" /> : <Copy className="w-4 h-4 mr-2" />}
                     {copied ? "Copied!" : "Copy Result"}
@@ -418,14 +418,14 @@ const GPACalculator = () => {
               </Card>
 
               {/* Academic Guidance */}
-              <Card className="bg-white/70 dark:bg-gray-800/70 backdrop-blur-xl border-0 shadow-2xl rounded-3xl">
+              <Card className="glass-card-light shadow-glass rounded-3xl border-0">
                 <CardContent className="p-8">
                   <div className="flex items-center mb-4">
                     <BookOpen className="w-5 h-5 mr-3 text-purple-500" />
                     <h4 className="text-lg font-bold text-gray-900 dark:text-white">Academic Guidance</h4>
                   </div>
                   
-                  <div className="p-4 bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 rounded-2xl backdrop-blur-sm">
+                  <div className="p-4 glass-info-card rounded-2xl">
                     <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
                       {result.interpretation}
                     </p>
