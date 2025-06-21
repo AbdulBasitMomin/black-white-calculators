@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { ArrowLeft, Copy, Check, Heart, Scale } from "lucide-react";
 import { useNavigate } from "react-router-dom";
@@ -5,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useToast } from "@/components/ui/use-toast";
+import { useToast } from "@/hooks/use-toast";
 
 const BMICalculator = () => {
   const navigate = useNavigate();
@@ -45,10 +46,10 @@ const BMICalculator = () => {
     let heightM = heightNum;
 
     if (unit === "imperial") {
-      weightKg = weightNum * 0.453592; // pounds to kg
-      heightM = heightNum * 0.0254; // inches to meters
+      weightKg = weightNum * 0.453592;
+      heightM = heightNum * 0.0254;
     } else {
-      heightM = heightNum / 100; // cm to meters
+      heightM = heightNum / 100;
     }
 
     if (heightM <= 0) {
@@ -77,7 +78,6 @@ const BMICalculator = () => {
       healthStatus = "Consult with a healthcare provider";
     }
 
-    // Calculate ideal weight range (BMI 18.5-24.9)
     const idealWeightMin = 18.5 * (heightM * heightM);
     const idealWeightMax = 24.9 * (heightM * heightM);
     
@@ -137,16 +137,16 @@ const BMICalculator = () => {
       <div className="fixed top-1/2 left-1/4 w-16 h-16 bg-gradient-to-r from-pink-300/60 to-purple-300/60 dark:from-pink-400 dark:to-purple-400 rounded-full blur-xl opacity-45 dark:opacity-25 animate-float" style={{ animationDelay: "4s" }}></div>
 
       <div className="relative z-10 min-h-screen backdrop-blur-[2px] pt-20">
-        <div className="max-w-2xl mx-auto px-6 py-8">
+        <div className="max-w-4xl mx-auto px-6 py-8">
           {/* Glass Header */}
           <div className="flex items-center mb-8">
             <Button
               variant="ghost"
               size="icon"
               onClick={() => navigate("/")}
-              className="mr-4 rounded-full w-12 h-12 glass-button-light text-gray-700 dark:text-white hover:scale-110 shadow-lg"
+              className="mr-4 rounded-full w-12 h-12 glass-button-light hover:scale-110 transition-all duration-300 shadow-lg"
             >
-              <ArrowLeft className="w-6 h-6" />
+              <ArrowLeft className="w-6 h-6 text-gray-700 dark:text-white drop-shadow-sm" />
             </Button>
             <div className="flex items-center space-x-4">
               <div className="w-14 h-14 bg-gradient-to-br from-purple-500/80 to-pink-600/80 rounded-3xl flex items-center justify-center shadow-2xl backdrop-blur-xl border border-white/20">
@@ -224,16 +224,9 @@ const BMICalculator = () => {
                   </div>
                 </div>
 
-                <div className="glass-card-light rounded-2xl p-6 border border-blue-200/30 dark:border-white/20">
-                  <h4 className="font-semibold text-gray-800 dark:text-white mb-2 drop-shadow-sm">What is BMI?</h4>
-                  <p className="text-sm text-gray-600 dark:text-white/80">
-                    Body Mass Index (BMI) is a measure of body fat based on height and weight. It's a useful screening tool for weight categories.
-                  </p>
-                </div>
-
                 <Button
                   onClick={calculateBMI}
-                  className="w-full bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-600 hover:to-pink-700 text-white font-bold py-6 text-xl rounded-full transition-all duration-300 hover:scale-105 shadow-2xl backdrop-blur-xl border border-white/20"
+                  className="w-full bg-gradient-to-r from-purple-500/80 to-pink-600/80 hover:from-purple-600/80 hover:to-pink-700/80 text-white font-bold py-6 text-xl rounded-full transition-all duration-300 hover:scale-105 shadow-2xl backdrop-blur-xl border border-white/20"
                 >
                   Calculate BMI
                 </Button>
@@ -258,14 +251,14 @@ const BMICalculator = () => {
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                    <div className="glass-card-light rounded-2xl p-6 border border-green-200/30 dark:border-green-500/30">
+                    <div className="bg-green-500/20 dark:bg-green-500/20 rounded-2xl p-6 border border-green-200 dark:border-white/20">
                       <div className="text-lg font-bold text-gray-800 dark:text-white mb-2 drop-shadow-sm">
                         Ideal Weight Range
                       </div>
                       <div className="text-gray-600 dark:text-white/80">{result.idealWeight}</div>
                     </div>
                     
-                    <div className="glass-card-light rounded-2xl p-6 border border-blue-200/30 dark:border-blue-500/30">
+                    <div className="bg-blue-500/20 dark:bg-blue-500/20 rounded-2xl p-6 border border-blue-200 dark:border-white/20">
                       <div className="text-lg font-bold text-gray-800 dark:text-white mb-2 drop-shadow-sm">
                         Category
                       </div>
@@ -290,19 +283,19 @@ const BMICalculator = () => {
                   <h4 className="text-lg font-bold mb-4 text-gray-800 dark:text-white drop-shadow-sm">BMI Scale Reference</h4>
                   
                   <div className="space-y-3">
-                    <div className="flex justify-between items-center p-3 glass-card-light rounded-lg border border-blue-200/30 dark:border-blue-500/30">
+                    <div className="flex justify-between items-center p-3 bg-blue-500/20 dark:bg-blue-500/20 rounded-xl border border-blue-200 dark:border-white/20">
                       <span className="font-medium text-gray-800 dark:text-white">Underweight</span>
                       <span className="text-gray-600 dark:text-white/80">Below 18.5</span>
                     </div>
-                    <div className="flex justify-between items-center p-3 glass-card-light rounded-lg border border-green-200/30 dark:border-green-500/30">
+                    <div className="flex justify-between items-center p-3 bg-green-500/20 dark:bg-green-500/20 rounded-xl border border-green-200 dark:border-white/20">
                       <span className="font-medium text-gray-800 dark:text-white">Normal weight</span>
                       <span className="text-gray-600 dark:text-white/80">18.5 - 24.9</span>
                     </div>
-                    <div className="flex justify-between items-center p-3 glass-card-light rounded-lg border border-yellow-200/30 dark:border-yellow-500/30">
+                    <div className="flex justify-between items-center p-3 bg-orange-500/20 dark:bg-orange-500/20 rounded-xl border border-orange-200 dark:border-white/20">
                       <span className="font-medium text-gray-800 dark:text-white">Overweight</span>
                       <span className="text-gray-600 dark:text-white/80">25.0 - 29.9</span>
                     </div>
-                    <div className="flex justify-between items-center p-3 glass-card-light rounded-lg border border-red-200/30 dark:border-red-500/30">
+                    <div className="flex justify-between items-center p-3 bg-red-500/20 dark:bg-red-500/20 rounded-xl border border-red-200 dark:border-white/20">
                       <span className="font-medium text-gray-800 dark:text-white">Obese</span>
                       <span className="text-gray-600 dark:text-white/80">30.0 and above</span>
                     </div>

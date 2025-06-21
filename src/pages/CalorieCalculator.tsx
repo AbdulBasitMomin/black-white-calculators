@@ -40,7 +40,6 @@ const CalorieCalculator = () => {
     const heightNum = parseFloat(height);
     const weightNum = parseFloat(weight);
 
-    // Calculate BMR using Mifflin-St Jeor Equation
     let bmr: number;
     if (gender === "male") {
       bmr = 88.362 + (13.397 * weightNum) + (4.799 * heightNum) - (5.677 * ageNum);
@@ -48,7 +47,6 @@ const CalorieCalculator = () => {
       bmr = 447.593 + (9.247 * weightNum) + (3.098 * heightNum) - (4.330 * ageNum);
     }
 
-    // Activity multipliers
     const activityMultipliers = {
       sedentary: 1.2,
       light: 1.375,
@@ -58,8 +56,8 @@ const CalorieCalculator = () => {
     };
 
     const maintenance = bmr * activityMultipliers[activityLevel as keyof typeof activityMultipliers];
-    const weightLoss = maintenance - 500; // 500 calorie deficit for 1lb/week loss
-    const weightGain = maintenance + 500; // 500 calorie surplus for 1lb/week gain
+    const weightLoss = maintenance - 500;
+    const weightGain = maintenance + 500;
 
     let recommendations: string[] = [];
     
@@ -128,16 +126,16 @@ const CalorieCalculator = () => {
       <div className="fixed top-1/2 left-1/4 w-16 h-16 bg-gradient-to-r from-pink-300/60 to-purple-300/60 dark:from-pink-400 dark:to-purple-400 rounded-full blur-xl opacity-45 dark:opacity-25 animate-float" style={{ animationDelay: "4s" }}></div>
 
       <div className="relative z-10 min-h-screen backdrop-blur-[2px] pt-20">
-        <div className="max-w-2xl mx-auto px-6 py-8">
+        <div className="max-w-4xl mx-auto px-6 py-8">
           {/* Glass Header */}
           <div className="flex items-center mb-8">
             <Button
               variant="ghost"
               size="icon"
               onClick={() => navigate("/")}
-              className="mr-4 rounded-full w-12 h-12 glass-button-light text-gray-700 dark:text-white hover:scale-110 shadow-lg"
+              className="mr-4 rounded-full w-12 h-12 glass-button-light hover:scale-110 transition-all duration-300 shadow-lg"
             >
-              <ArrowLeft className="w-6 h-6" />
+              <ArrowLeft className="w-6 h-6 text-gray-700 dark:text-white drop-shadow-sm" />
             </Button>
             <div className="flex items-center space-x-4">
               <div className="w-14 h-14 bg-gradient-to-br from-purple-500/80 to-pink-600/80 rounded-3xl flex items-center justify-center shadow-2xl backdrop-blur-xl border border-white/20">
@@ -165,7 +163,7 @@ const CalorieCalculator = () => {
                       value={age}
                       onChange={(e) => setAge(e.target.value)}
                       placeholder="25"
-                      className="w-full p-6 text-xl rounded-2xl glass-input text-gray-800 dark:text-white placeholder:text-gray-500 dark:placeholder:text-white/60 transition-all duration-300 shadow-lg"
+                      className="w-full p-6 text-xl rounded-2xl glass-button-light text-gray-800 dark:text-white placeholder:text-gray-500 dark:placeholder:text-white/60 transition-all duration-300 shadow-lg"
                     />
                   </div>
 
@@ -174,7 +172,7 @@ const CalorieCalculator = () => {
                       Gender
                     </Label>
                     <Select value={gender} onValueChange={setGender}>
-                      <SelectTrigger className="w-full p-6 text-xl rounded-2xl glass-input text-gray-800 dark:text-white hover:bg-white/30 dark:hover:bg-white/20 transition-all duration-300 shadow-lg">
+                      <SelectTrigger className="w-full p-6 text-xl rounded-2xl glass-button-light text-gray-800 dark:text-white transition-all duration-300 shadow-lg">
                         <SelectValue placeholder="Select gender" />
                       </SelectTrigger>
                       <SelectContent className="backdrop-blur-xl bg-white/90 dark:bg-gray-800/90 border border-white/30 rounded-xl z-50">
@@ -196,7 +194,7 @@ const CalorieCalculator = () => {
                       value={height}
                       onChange={(e) => setHeight(e.target.value)}
                       placeholder="175"
-                      className="w-full p-6 text-xl rounded-2xl glass-input text-gray-800 dark:text-white placeholder:text-gray-500 dark:placeholder:text-white/60 transition-all duration-300 shadow-lg"
+                      className="w-full p-6 text-xl rounded-2xl glass-button-light text-gray-800 dark:text-white placeholder:text-gray-500 dark:placeholder:text-white/60 transition-all duration-300 shadow-lg"
                     />
                   </div>
 
@@ -210,7 +208,7 @@ const CalorieCalculator = () => {
                       value={weight}
                       onChange={(e) => setWeight(e.target.value)}
                       placeholder="70"
-                      className="w-full p-6 text-xl rounded-2xl glass-input text-gray-800 dark:text-white placeholder:text-gray-500 dark:placeholder:text-white/60 transition-all duration-300 shadow-lg"
+                      className="w-full p-6 text-xl rounded-2xl glass-button-light text-gray-800 dark:text-white placeholder:text-gray-500 dark:placeholder:text-white/60 transition-all duration-300 shadow-lg"
                       step="0.1"
                     />
                   </div>
@@ -221,7 +219,7 @@ const CalorieCalculator = () => {
                     Activity Level
                   </Label>
                   <Select value={activityLevel} onValueChange={setActivityLevel}>
-                    <SelectTrigger className="w-full p-6 text-xl rounded-2xl glass-input text-gray-800 dark:text-white hover:bg-white/30 dark:hover:bg-white/20 transition-all duration-300 shadow-lg">
+                    <SelectTrigger className="w-full p-6 text-xl rounded-2xl glass-button-light text-gray-800 dark:text-white transition-all duration-300 shadow-lg">
                       <SelectValue placeholder="Select activity level" />
                     </SelectTrigger>
                     <SelectContent className="backdrop-blur-xl bg-white/90 dark:bg-gray-800/90 border border-white/30 rounded-xl z-50">
@@ -239,7 +237,7 @@ const CalorieCalculator = () => {
                     Goal
                   </Label>
                   <Select value={goal} onValueChange={setGoal}>
-                    <SelectTrigger className="w-full p-6 text-xl rounded-2xl glass-input text-gray-800 dark:text-white hover:bg-white/30 dark:hover:bg-white/20 transition-all duration-300 shadow-lg">
+                    <SelectTrigger className="w-full p-6 text-xl rounded-2xl glass-button-light text-gray-800 dark:text-white transition-all duration-300 shadow-lg">
                       <SelectValue placeholder="Select your goal" />
                     </SelectTrigger>
                     <SelectContent className="backdrop-blur-xl bg-white/90 dark:bg-gray-800/90 border border-white/30 rounded-xl z-50">
