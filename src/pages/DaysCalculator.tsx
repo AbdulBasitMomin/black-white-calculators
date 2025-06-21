@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { ArrowLeft, Copy, Check, Calendar, Clock } from "lucide-react";
+import { ArrowLeft, Copy, Check, Calendar, Clock, Plus } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -12,9 +12,11 @@ const DaysCalculator = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const [startDate, setStartDate] = useState("");
-  const [startTime, setStartTime] = useState("00:00");
+  const [startTime, setStartTime] = useState("");
   const [endDate, setEndDate] = useState("");
-  const [endTime, setEndTime] = useState("00:00");
+  const [endTime, setEndTime] = useState("");
+  const [showStartTime, setShowStartTime] = useState(false);
+  const [showEndTime, setShowEndTime] = useState(false);
   const [result, setResult] = useState<{
     totalDays: number;
     totalHours: number;
@@ -36,9 +38,13 @@ const DaysCalculator = () => {
       return;
     }
 
+    // Use time if selected, otherwise default to 00:00
+    const startTimeValue = showStartTime && startTime ? startTime : "00:00";
+    const endTimeValue = showEndTime && endTime ? endTime : "00:00";
+
     // Combine date and time for precise calculations
-    const start = new Date(`${startDate}T${startTime}`);
-    const end = new Date(`${endDate}T${endTime}`);
+    const start = new Date(`${startDate}T${startTimeValue}`);
+    const end = new Date(`${endDate}T${endTimeValue}`);
 
     if (start > end) {
       toast({
@@ -156,24 +162,36 @@ const DaysCalculator = () => {
                 <div className="space-y-4">
                   <Label className="text-xl font-semibold text-gray-800 dark:text-white drop-shadow-sm flex items-center gap-2">
                     <Calendar className="w-5 h-5" />
-                    Start Date & Time
+                    Start Date
                   </Label>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-4">
                     <Input
                       type="date"
                       value={startDate}
                       onChange={(e) => setStartDate(e.target.value)}
                       className="w-full p-4 text-lg rounded-2xl glass-input text-gray-800 dark:text-white"
                     />
-                    <div className="relative">
-                      <Clock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-500 dark:text-white/60" />
-                      <Input
-                        type="time"
-                        value={startTime}
-                        onChange={(e) => setStartTime(e.target.value)}
-                        className="w-full p-4 pl-12 text-lg rounded-2xl glass-input text-gray-800 dark:text-white"
-                      />
-                    </div>
+                    {!showStartTime && (
+                      <Button
+                        variant="outline"
+                        onClick={() => setShowStartTime(true)}
+                        className="flex items-center gap-2 rounded-full glass-button-light text-gray-700 dark:text-white"
+                      >
+                        <Plus className="w-4 h-4" />
+                        Add Time
+                      </Button>
+                    )}
+                    {showStartTime && (
+                      <div className="relative">
+                        <Clock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-500 dark:text-white/60" />
+                        <Input
+                          type="time"
+                          value={startTime}
+                          onChange={(e) => setStartTime(e.target.value)}
+                          className="w-full p-4 pl-12 text-lg rounded-2xl glass-input text-gray-800 dark:text-white"
+                        />
+                      </div>
+                    )}
                   </div>
                 </div>
 
@@ -181,24 +199,36 @@ const DaysCalculator = () => {
                 <div className="space-y-4">
                   <Label className="text-xl font-semibold text-gray-800 dark:text-white drop-shadow-sm flex items-center gap-2">
                     <Calendar className="w-5 h-5" />
-                    End Date & Time
+                    End Date
                   </Label>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-4">
                     <Input
                       type="date"
                       value={endDate}
                       onChange={(e) => setEndDate(e.target.value)}
                       className="w-full p-4 text-lg rounded-2xl glass-input text-gray-800 dark:text-white"
                     />
-                    <div className="relative">
-                      <Clock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-500 dark:text-white/60" />
-                      <Input
-                        type="time"
-                        value={endTime}
-                        onChange={(e) => setEndTime(e.target.value)}
-                        className="w-full p-4 pl-12 text-lg rounded-2xl glass-input text-gray-800 dark:text-white"
-                      />
-                    </div>
+                    {!showEndTime && (
+                      <Button
+                        variant="outline"
+                        onClick={() => setShowEndTime(true)}
+                        className="flex items-center gap-2 rounded-full glass-button-light text-gray-700 dark:text-white"
+                      >
+                        <Plus className="w-4 h-4" />
+                        Add Time
+                      </Button>
+                    )}
+                    {showEndTime && (
+                      <div className="relative">
+                        <Clock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-500 dark:text-white/60" />
+                        <Input
+                          type="time"
+                          value={endTime}
+                          onChange={(e) => setEndTime(e.target.value)}
+                          className="w-full p-4 pl-12 text-lg rounded-2xl glass-input text-gray-800 dark:text-white"
+                        />
+                      </div>
+                    )}
                   </div>
                 </div>
 
@@ -216,7 +246,7 @@ const DaysCalculator = () => {
           {result && (
             <Card className="glass-card-light shadow-2xl animate-fadeIn rounded-[2rem] overflow-hidden">
               <CardContent className="p-8 text-center">
-                <h3 className="text-3xl font-bold mb-8 text-gray-800 dark:text-white drop-shadow-sm">Time Difference (Inclusive)</h3>
+                <h3 className="text-3xl font-bold mb-8 text-gray-800 dark:text-white drop-shadow-sm">Time Difference</h3>
                 
                 {/* Total Time Cards */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
@@ -260,7 +290,7 @@ const DaysCalculator = () => {
                       <div className="text-2xl font-bold text-gray-800 dark:text-white mb-1">{result.hours}</div>
                       <div className="text-sm text-gray-600 dark:text-white/80">Hours</div>
                     </div>
-                    <div className="bg-yellow-500/20 dark:bg-yellow-500/20 rounded-xl p-4 border border-yellow-200 dark:border-white/20">
+                    <div className="bg-cyan-500/20 dark:bg-cyan-500/20 rounded-xl p-4 border border-cyan-200 dark:border-white/20">
                       <div className="text-2xl font-bold text-gray-800 dark:text-white mb-1">{result.minutes}</div>
                       <div className="text-sm text-gray-600 dark:text-white/80">Minutes</div>
                     </div>

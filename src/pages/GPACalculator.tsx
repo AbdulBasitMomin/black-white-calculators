@@ -239,10 +239,10 @@ const GPACalculator = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-amber-50 dark:from-gray-900 dark:via-gray-800 dark:to-amber-900 pt-16 relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-pink-50 dark:from-gray-900 dark:via-purple-900 dark:to-gray-900 pt-16 relative overflow-hidden">
       {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-amber-400/20 to-orange-500/20 rounded-full blur-3xl animate-float"></div>
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-purple-400/20 to-pink-500/20 rounded-full blur-3xl animate-float"></div>
         <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-br from-blue-400/20 to-purple-500/20 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }}></div>
       </div>
 
@@ -258,10 +258,10 @@ const GPACalculator = () => {
             <ArrowLeft className="w-6 h-6" />
           </Button>
           <div className="flex items-center space-x-4">
-            <div className="w-12 h-12 bg-gradient-to-br from-amber-500 to-orange-600 rounded-2xl flex items-center justify-center shadow-2xl">
+            <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-600 rounded-2xl flex items-center justify-center shadow-2xl">
               <GraduationCap className="w-6 h-6 text-white" />
             </div>
-            <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-amber-600 to-orange-600 bg-clip-text text-transparent">
+            <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
               GPA to Percentage Calculator
             </h1>
           </div>
@@ -333,7 +333,7 @@ const GPACalculator = () => {
                 </div>
 
                 {/* Formula Toggle */}
-                <div className="flex items-center justify-between p-4 bg-gradient-to-r from-amber-50 to-orange-50 dark:from-amber-900/20 dark:to-orange-900/20 rounded-2xl backdrop-blur-sm">
+                <div className="flex items-center justify-between p-4 bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 rounded-2xl backdrop-blur-sm">
                   <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Show Formula</span>
                   <Button
                     variant="outline"
@@ -357,7 +357,7 @@ const GPACalculator = () => {
                 <Button
                   onClick={convertGPA}
                   disabled={isCalculating}
-                  className="w-full bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white font-bold py-4 text-lg rounded-full transition-all duration-300 hover:scale-105 shadow-2xl disabled:opacity-50"
+                  className="w-full bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-600 hover:to-pink-700 text-white font-bold py-4 text-lg rounded-full transition-all duration-300 hover:scale-105 shadow-2xl disabled:opacity-50"
                 >
                   {isCalculating ? (
                     <>
@@ -384,8 +384,8 @@ const GPACalculator = () => {
                   </h3>
                   
                   <div className="grid grid-cols-1 gap-6 mb-6">
-                    <div className="bg-gradient-to-br from-amber-100 to-amber-200 dark:from-amber-900/30 dark:to-amber-800/30 rounded-2xl p-6 backdrop-blur-sm">
-                      <div className="text-4xl font-bold text-amber-600 dark:text-amber-400 mb-2">
+                    <div className="bg-gradient-to-br from-purple-100 to-purple-200 dark:from-purple-900/30 dark:to-purple-800/30 rounded-2xl p-6 backdrop-blur-sm">
+                      <div className="text-4xl font-bold text-purple-600 dark:text-purple-400 mb-2">
                         {result.percentage}%
                       </div>
                       <div className="text-gray-600 dark:text-gray-300">Percentage</div>
@@ -398,8 +398,8 @@ const GPACalculator = () => {
                       <div className="text-gray-600 dark:text-gray-300">Letter Grade</div>
                     </div>
                     
-                    <div className="bg-gradient-to-br from-green-100 to-green-200 dark:from-green-900/30 dark:to-green-800/30 rounded-2xl p-6 backdrop-blur-sm">
-                      <div className="text-lg font-bold text-green-600 dark:text-green-400 mb-2">
+                    <div className="bg-gradient-to-br from-pink-100 to-pink-200 dark:from-pink-900/30 dark:to-pink-800/30 rounded-2xl p-6 backdrop-blur-sm">
+                      <div className="text-lg font-bold text-pink-600 dark:text-pink-400 mb-2">
                         {result.classification}
                       </div>
                       <div className="text-gray-600 dark:text-gray-300">Classification</div>
@@ -421,7 +421,7 @@ const GPACalculator = () => {
               <Card className="bg-white/70 dark:bg-gray-800/70 backdrop-blur-xl border-0 shadow-2xl rounded-3xl">
                 <CardContent className="p-8">
                   <div className="flex items-center mb-4">
-                    <BookOpen className="w-5 h-5 mr-3 text-amber-500" />
+                    <BookOpen className="w-5 h-5 mr-3 text-purple-500" />
                     <h4 className="text-lg font-bold text-gray-900 dark:text-white">Academic Guidance</h4>
                   </div>
                   
