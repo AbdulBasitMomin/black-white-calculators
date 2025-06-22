@@ -22,6 +22,7 @@ export default {
 			fontFamily: {
 				'neue-haas': ['Neue Haas Grotesk', 'SF Pro Display', 'Inter', 'sans-serif'],
 				'sf-pro': ['SF Pro Display', 'Inter', 'sans-serif'],
+				'inter': ['Inter', 'sans-serif'],
 			},
 			colors: {
 				border: 'hsl(var(--border))',
@@ -115,6 +116,22 @@ export default {
 						transform: 'translateY(0) scale(1)'
 					}
 				},
+				'float': {
+					'0%, 100%': {
+						transform: 'translateY(0px)'
+					},
+					'50%': {
+						transform: 'translateY(-20px)'
+					}
+				},
+				'gradientMove': {
+					'0%, 100%': {
+						backgroundPosition: '0% 50%'
+					},
+					'50%': {
+						backgroundPosition: '100% 50%'
+					}
+				},
 				'electric-pulse': {
 					'0%, 100%': {
 						boxShadow: '0 0 20px rgba(0, 255, 255, 0.3)'
@@ -136,6 +153,9 @@ export default {
 				'accordion-down': 'accordion-down 0.2s ease-out',
 				'accordion-up': 'accordion-up 0.2s ease-out',
 				'fade-in': 'fade-in 0.5s ease-out',
+				'fadeIn': 'fade-in 0.6s ease-out forwards',
+				'float': 'float 6s ease-in-out infinite',
+				'gradientMove': 'gradientMove 15s ease infinite',
 				'electric-pulse': 'electric-pulse 2s ease-in-out infinite',
 				'electric-glow': 'electric-glow 0.3s ease-out forwards'
 			}
