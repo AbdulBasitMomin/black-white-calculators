@@ -1,17 +1,20 @@
 
 import { useState } from "react";
-import { ArrowLeft, Copy, Check, Calendar, Gift } from "lucide-react";
+import { ArrowLeft, Copy, Check, Calendar, Gift, CalendarIcon } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/components/ui/use-toast";
+import { Calendar as CalendarComponent } from "@/components/ui/calendar";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { format } from "date-fns";
+import { cn } from "@/lib/utils";
 
 const AgeCalculator = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
-  const [birthDate, setBirthDate] = useState("");
+  const [birthDate, setBirthDate] = useState<Date | undefined>(undefined);
   const [result, setResult] = useState<{
     years: number;
     months: number;
@@ -33,7 +36,7 @@ const AgeCalculator = () => {
   const calculateAge = () => {
     if (!birthDate) {
       toast({
-        title: "Please enter your birth date",
+        title: "Please select your birth date",
         variant: "destructive",
       });
       return;
@@ -155,16 +158,34 @@ const AgeCalculator = () => {
               <div className="space-y-8">
                 <div className="space-y-3">
                   <Label htmlFor="birthdate" className="text-xl font-semibold text-gray-800 dark:text-white drop-shadow-sm">
-                    Enter your birth date
+                    Select your birth date
                   </Label>
-                  <Input
-                    id="birthdate"
-                    type="date"
-                    value={birthDate}
-                    onChange={(e) => setBirthDate(e.target.value)}
-                    className="w-full p-6 text-xl rounded-2xl glass-button-light text-gray-800 dark:text-white placeholder:text-gray-500 dark:placeholder:text-white/60 transition-all duration-300 shadow-lg"
-                    max={new Date().toISOString().split('T')[0]}
-                  />
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button
+                        variant="outline"
+                        className={cn(
+                          "w-full p-6 text-xl rounded-2xl glass-button-light text-gray-800 dark:text-white justify-start font-normal transition-all duration-300 shadow-lg",
+                          !birthDate && "text-gray-500 dark:text-white/60"
+                        )}
+                      >
+                        <CalendarIcon className="mr-4 h-6 w-6" />
+                        {birthDate ? format(birthDate, "PPP") : <span>Pick your birth date</span>}
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0 glass-card-light border-white/20" align="start">
+                      <CalendarComponent
+                        mode="single"
+                        selected={birthDate}
+                        onSelect={setBirthDate}
+                        disabled={(date) =>
+                          date > new Date() || date < new Date("1900-01-01")
+                        }
+                        initialFocus
+                        className={cn("p-3 pointer-events-auto")}
+                      />
+                    </PopoverContent>
+                  </Popover>
                 </div>
 
                 <Button
