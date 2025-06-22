@@ -89,7 +89,7 @@ const Home = () => {
       
       {/* Optimized Floating Orbs - Fewer and hidden on mobile */}
       <div className="hidden lg:block fixed top-20 left-10 w-24 h-24 bg-gradient-to-r from-purple-300/40 to-pink-300/40 dark:from-purple-400/20 dark:to-pink-400/20 rounded-full blur-2xl opacity-30 animate-float"></div>
-      <div className="hidden lg:block fixed bottom-32 right-20 w-20 h-20 bg-gradient-to-r from-blue-300/40 to-cyan-300/40 dark:from-blue-400/20 dark:to-cyan-400/20 rounded-full blur-xl opacity-40 animate-float" style={{ animationDelay: "2s" }}></div>
+      <div className="hidden lg:block fixed bottom-32 right-20 w-20 h-20 bg-gradient-to-r from-blue-300/40 to-cyan-300/40 dark:from-blue-400/20 dark:to-cyan-400/40 rounded-full blur-xl opacity-40 animate-float" style={{ animationDelay: "2s" }}></div>
 
       <div className="relative z-10 min-h-screen pt-16 sm:pt-20">
         {/* Hero Section */}
@@ -153,7 +153,13 @@ const Home = () => {
                       </div>
                       
                       <Button 
-                        className="w-full glass-button-light text-gray-800 dark:text-white font-bold border-0 rounded-xl sm:rounded-2xl py-3 sm:py-4 text-sm sm:text-base lg:text-lg transition-all duration-300 hover:scale-105"
+                        className={`w-full font-bold border-0 rounded-xl sm:rounded-2xl py-3 sm:py-4 text-sm sm:text-base lg:text-lg transition-all duration-300 hover:scale-105 ${
+                          tool.title === 'Age Calculator' 
+                            ? 'bg-gradient-to-r from-blue-500/80 to-cyan-600/80 hover:from-blue-600/80 hover:to-cyan-700/80 text-white'
+                            : tool.title === 'BMI Calculator'
+                            ? 'bg-gradient-to-r from-green-500/80 to-emerald-600/80 hover:from-green-600/80 hover:to-emerald-700/80 text-white'
+                            : 'glass-button-light text-gray-800 dark:text-white'
+                        }`}
                       >
                         {tool.title.includes('Calculator') ? tool.title.replace(' Calculator', '').includes('Calorie') ? 'Calculate Calories' : `Calculate ${tool.title.replace(' Calculator', '')}` : 
                          tool.title.includes('Converter') ? 'Convert Currency' : 
