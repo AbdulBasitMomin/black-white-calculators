@@ -1,4 +1,3 @@
-
 import { Calculator, Heart, DollarSign, Calendar, Clock, GraduationCap, Moon, Baby } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -121,15 +120,6 @@ const Home = () => {
         {/* Calculators Grid */}
         <section className="px-4 sm:px-6 pb-16 sm:pb-20">
           <div className="max-w-7xl mx-auto">
-            <div className="text-center mb-12 sm:mb-16">
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold bg-gradient-to-r from-gray-800 via-purple-600 to-pink-600 dark:from-white dark:via-purple-100 dark:to-pink-100 bg-clip-text text-transparent mb-4">
-                Premium Calculator Suite
-              </h2>
-              <p className="text-base sm:text-lg text-gray-600 dark:text-white/70 max-w-2xl mx-auto px-4">
-                Discover our collection of meticulously crafted calculators, each designed with precision and elegance in mind.
-              </p>
-            </div>
-
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
               {calculatorTools.map((tool, index) => (
                 <Card
