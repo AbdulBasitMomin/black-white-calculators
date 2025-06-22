@@ -6,15 +6,12 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/components/ui/use-toast";
-import { Calendar as CalendarComponent } from "@/components/ui/calendar";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { format } from "date-fns";
-import { cn } from "@/lib/utils";
+import { Input } from "@/components/ui/input";
 
 const AgeCalculator = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
-  const [birthDate, setBirthDate] = useState<Date | undefined>(undefined);
+  const [birthDate, setBirthDate] = useState<string>("");
   const [result, setResult] = useState<{
     years: number;
     months: number;
@@ -160,32 +157,18 @@ const AgeCalculator = () => {
                   <Label htmlFor="birthdate" className="text-xl font-semibold text-gray-800 dark:text-white drop-shadow-sm">
                     Select your birth date
                   </Label>
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <Button
-                        variant="outline"
-                        className={cn(
-                          "w-full p-6 text-xl rounded-2xl glass-button-light text-gray-800 dark:text-white justify-start font-normal transition-all duration-300 shadow-lg",
-                          !birthDate && "text-gray-500 dark:text-white/60"
-                        )}
-                      >
-                        <CalendarIcon className="mr-4 h-6 w-6" />
-                        {birthDate ? format(birthDate, "PPP") : <span>Pick your birth date</span>}
-                      </Button>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0 glass-card-light border-white/20" align="start">
-                      <CalendarComponent
-                        mode="single"
-                        selected={birthDate}
-                        onSelect={setBirthDate}
-                        disabled={(date) =>
-                          date > new Date() || date < new Date("1900-01-01")
-                        }
-                        initialFocus
-                        className={cn("p-3 pointer-events-auto")}
-                      />
-                    </PopoverContent>
-                  </Popover>
+                  <div className="relative">
+                    <Input
+                      type="date"
+                      id="birthdate"
+                      value={birthDate}
+                      onChange={(e) => setBirthDate(e.target.value)}
+                      max={new Date().toISOString().split('T')[0]}
+                      min="1900-01-01"
+                      className="w-full p-6 text-xl rounded-2xl glass-button-light text-gray-800 dark:text-white border-white/20 focus:border-purple-500/50 transition-all duration-300 shadow-lg"
+                    />
+                    <CalendarIcon className="absolute right-4 top-1/2 transform -translate-y-1/2 h-6 w-6 text-gray-500 dark:text-white/60 pointer-events-none" />
+                  </div>
                 </div>
 
                 <Button
