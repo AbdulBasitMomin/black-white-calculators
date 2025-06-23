@@ -1,3 +1,4 @@
+
 import { Calculator, Heart, DollarSign, Calendar, Clock, GraduationCap, Moon, Baby } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -9,7 +10,8 @@ const calculatorTools = [
     description: "Calculate your exact age in years, months, days, hours, and minutes. Find out when your next birthday is!",
     icon: Calculator,
     path: "/age",
-    color: "from-blue-500/80 to-cyan-600/80",
+    color: "from-blue-500 to-cyan-600",
+    hoverColor: "from-blue-600 to-cyan-700",
     features: ["Precise calculations", "Next birthday countdown"]
   },
   {
@@ -17,7 +19,8 @@ const calculatorTools = [
     description: "Calculate your Body Mass Index with visual BMI scale chart and health category analysis.",
     icon: Heart,
     path: "/bmi",
-    color: "from-green-500/80 to-emerald-600/80",
+    color: "from-green-500 to-emerald-600",
+    hoverColor: "from-green-600 to-emerald-700",
     features: ["Visual BMI scale", "Health insights"]
   },
   {
@@ -25,7 +28,8 @@ const calculatorTools = [
     description: "Convert between world currencies with real-time exchange rates. Perfect for travel and business.",
     icon: DollarSign,
     path: "/currency",
-    color: "from-purple-500/80 to-violet-600/80",
+    color: "from-purple-500 to-violet-600",
+    hoverColor: "from-purple-600 to-violet-700",
     features: ["Real-time rates", "180+ currencies"]
   },
   {
@@ -33,7 +37,8 @@ const calculatorTools = [
     description: "Calculate the difference between two dates. Perfect for project planning and event management.",
     icon: Calendar,
     path: "/days",
-    color: "from-orange-500/80 to-amber-600/80",
+    color: "from-orange-500 to-amber-600",
+    hoverColor: "from-orange-600 to-amber-700",
     features: ["Detailed breakdowns", "Time-inclusive calculations"]
   },
   {
@@ -41,7 +46,8 @@ const calculatorTools = [
     description: "Create countdown timers for special events, deadlines, or any important date you're anticipating.",
     icon: Clock,
     path: "/countdown",
-    color: "from-red-500/80 to-rose-600/80",
+    color: "from-red-500 to-rose-600",
+    hoverColor: "from-red-600 to-rose-700",
     features: ["Real-time updates", "Audio alerts"]
   },
   {
@@ -49,7 +55,8 @@ const calculatorTools = [
     description: "Convert GPA to percentage using various international grading systems.",
     icon: GraduationCap,
     path: "/gpa",
-    color: "from-amber-500/80 to-yellow-600/80",
+    color: "from-amber-500 to-yellow-600",
+    hoverColor: "from-amber-600 to-yellow-700",
     features: ["Multiple systems", "Academic guidance"]
   },
   {
@@ -57,7 +64,8 @@ const calculatorTools = [
     description: "Calculate daily calorie needs for weight maintenance, loss, and gain goals.",
     icon: Heart,
     path: "/calorie",
-    color: "from-teal-500/80 to-cyan-600/80",
+    color: "from-teal-500 to-cyan-600",
+    hoverColor: "from-teal-600 to-cyan-700",
     features: ["BMR calculation", "Activity levels"]
   },
   {
@@ -65,7 +73,8 @@ const calculatorTools = [
     description: "Find optimal sleep and wake times based on 90-minute sleep cycles for better rest.",
     icon: Moon,
     path: "/sleep",
-    color: "from-indigo-500/80 to-purple-600/80",
+    color: "from-indigo-500 to-purple-600",
+    hoverColor: "from-indigo-600 to-purple-700",
     features: ["Sleep cycles", "Recovery optimization"]
   },
   {
@@ -73,7 +82,8 @@ const calculatorTools = [
     description: "Calculate due date and track pregnancy milestones with detailed timeline information.",
     icon: Baby,
     path: "/pregnancy",
-    color: "from-pink-500/80 to-rose-600/80",
+    color: "from-pink-500 to-rose-600",
+    hoverColor: "from-pink-600 to-rose-700",
     features: ["Due date prediction", "Milestone tracking"]
   }
 ];
@@ -130,7 +140,7 @@ const Home = () => {
                   <CardContent className="p-4 sm:p-6 lg:p-8 relative">
                     <div className="relative z-10">
                       <div className="mb-4 sm:mb-6">
-                        <div className={`w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 bg-gradient-to-br ${tool.color} rounded-xl sm:rounded-2xl flex items-center justify-center shadow-lg mb-3 sm:mb-4 group-hover:scale-110 transition-transform duration-300`}>
+                        <div className={`w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 bg-gradient-to-br ${tool.color}/80 rounded-xl sm:rounded-2xl flex items-center justify-center shadow-lg mb-3 sm:mb-4 group-hover:scale-110 transition-transform duration-300`}>
                           <tool.icon className="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 text-white" />
                         </div>
                       </div>
@@ -153,7 +163,7 @@ const Home = () => {
                       </div>
                       
                       <Button 
-                        className={`w-full font-bold border-0 rounded-xl sm:rounded-2xl py-3 sm:py-4 text-sm sm:text-base lg:text-lg transition-all duration-300 hover:scale-105 bg-gradient-to-r ${tool.color.replace('/80', '')} hover:${tool.color.replace('from-', 'from-').replace('to-', 'to-').replace('/80', '/90')} text-white`}
+                        className={`w-full font-bold border-0 rounded-xl sm:rounded-2xl py-3 sm:py-4 text-sm sm:text-base lg:text-lg transition-all duration-300 hover:scale-105 bg-gradient-to-r ${tool.color} hover:bg-gradient-to-r hover:${tool.hoverColor} text-white`}
                       >
                         {tool.title.includes('Calculator') ? tool.title.replace(' Calculator', '').includes('Calorie') ? 'Calculate Calories' : `Calculate ${tool.title.replace(' Calculator', '')}` : 
                          tool.title.includes('Converter') ? 'Convert Currency' : 
