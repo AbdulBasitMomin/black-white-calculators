@@ -153,13 +153,7 @@ const Home = () => {
                       </div>
                       
                       <Button 
-                        className={`w-full font-bold border-0 rounded-xl sm:rounded-2xl py-3 sm:py-4 text-sm sm:text-base lg:text-lg transition-all duration-300 hover:scale-105 ${
-                          tool.title === 'Age Calculator' 
-                            ? 'bg-gradient-to-r from-blue-500/80 to-cyan-600/80 hover:from-blue-600/80 hover:to-cyan-700/80 text-white'
-                            : tool.title === 'BMI Calculator'
-                            ? 'bg-gradient-to-r from-green-500/80 to-emerald-600/80 hover:from-green-600/80 hover:to-emerald-700/80 text-white'
-                            : 'glass-button-light text-gray-800 dark:text-white'
-                        }`}
+                        className={`w-full font-bold border-0 rounded-xl sm:rounded-2xl py-3 sm:py-4 text-sm sm:text-base lg:text-lg transition-all duration-300 hover:scale-105 bg-gradient-to-r ${tool.color.replace('/80', '')} hover:${tool.color.replace('from-', 'from-').replace('to-', 'to-').replace('/80', '/90')} text-white`}
                       >
                         {tool.title.includes('Calculator') ? tool.title.replace(' Calculator', '').includes('Calorie') ? 'Calculate Calories' : `Calculate ${tool.title.replace(' Calculator', '')}` : 
                          tool.title.includes('Converter') ? 'Convert Currency' : 
