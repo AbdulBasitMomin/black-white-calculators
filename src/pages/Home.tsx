@@ -129,10 +129,10 @@ const Home = () => {
           </div>
         </section>
 
-        {/* Enhanced Calculators Grid */}
+        {/* Enhanced Calculators Grid - Made Bigger */}
         <section className="px-4 sm:px-6 pb-16 sm:pb-20">
-          <div className="max-w-7xl mx-auto">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
+          <div className="max-w-8xl mx-auto">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-10 xl:gap-12">
               {calculatorTools.map((tool, index) => (
                 <Card
                   key={tool.title}
@@ -140,38 +140,38 @@ const Home = () => {
                   onClick={() => navigate(tool.path)}
                   style={{ animationDelay: `${index * 100}ms` }}
                 >
-                  <CardContent className="p-4 sm:p-6 lg:p-8 relative overflow-hidden">
+                  <CardContent className="p-6 sm:p-8 lg:p-10 xl:p-12 relative overflow-hidden">
                     {/* Shimmer effect on hover */}
                     <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
                       <div className="absolute inset-0 animate-shimmer"></div>
                     </div>
                     
                     <div className="relative z-10">
-                      <div className="mb-4 sm:mb-6">
-                        <div className={`w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 bg-gradient-to-br ${tool.color} rounded-xl sm:rounded-2xl flex items-center justify-center shadow-lg mb-3 sm:mb-4 group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 backdrop-blur-xl border border-white/20`}>
-                          <tool.icon className="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 text-white drop-shadow-lg" />
+                      <div className="mb-6 sm:mb-8">
+                        <div className={`w-16 h-16 sm:w-18 sm:h-18 lg:w-20 lg:h-20 xl:w-24 xl:h-24 bg-gradient-to-br ${tool.color} rounded-xl sm:rounded-2xl flex items-center justify-center shadow-lg mb-4 sm:mb-6 group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 backdrop-blur-xl border border-white/20`}>
+                          <tool.icon className="w-8 h-8 sm:w-9 sm:h-9 lg:w-10 lg:h-10 xl:w-12 xl:h-12 text-white drop-shadow-lg" />
                         </div>
                       </div>
                       
-                      <h3 className="text-lg sm:text-xl lg:text-2xl font-bold mb-3 sm:mb-4 text-gray-800 dark:text-white group-hover:text-purple-600 dark:group-hover:text-purple-300 transition-all duration-500 text-shadow">
+                      <h3 className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-bold mb-4 sm:mb-6 text-gray-800 dark:text-white group-hover:text-purple-600 dark:group-hover:text-purple-300 transition-all duration-500 text-shadow">
                         {tool.title}
                       </h3>
                       
-                      <p className="text-sm sm:text-base text-gray-600 dark:text-white/80 mb-4 sm:mb-6 leading-relaxed transition-all duration-300 group-hover:text-gray-700 dark:group-hover:text-white/90">
+                      <p className="text-base sm:text-lg lg:text-xl text-gray-600 dark:text-white/80 mb-6 sm:mb-8 leading-relaxed transition-all duration-300 group-hover:text-gray-700 dark:group-hover:text-white/90">
                         {tool.description}
                       </p>
                       
-                      <div className="space-y-2 sm:space-y-3 mb-6 sm:mb-8">
+                      <div className="space-y-3 sm:space-y-4 mb-8 sm:mb-10">
                         {tool.features.map((feature, idx) => (
-                          <div key={idx} className="flex items-center text-xs sm:text-sm text-gray-500 dark:text-white/70 transition-all duration-300 group-hover:text-gray-600 dark:group-hover:text-white/80">
-                            <div className={`w-1.5 h-1.5 bg-gradient-to-r ${tool.color} rounded-full mr-2 sm:mr-3 flex-shrink-0 group-hover:scale-125 transition-transform duration-300`}></div>
+                          <div key={idx} className="flex items-center text-sm sm:text-base lg:text-lg text-gray-500 dark:text-white/70 transition-all duration-300 group-hover:text-gray-600 dark:group-hover:text-white/80">
+                            <div className={`w-2 h-2 bg-gradient-to-r ${tool.color} rounded-full mr-3 sm:mr-4 flex-shrink-0 group-hover:scale-125 transition-transform duration-300`}></div>
                             {feature}
                           </div>
                         ))}
                       </div>
                       
                       <Button 
-                        className={`w-full font-bold border-0 rounded-xl sm:rounded-2xl py-3 sm:py-4 text-sm sm:text-base lg:text-lg transition-all duration-500 hover:scale-105 bg-gradient-to-r ${tool.color} hover:${tool.hoverColor} text-white shadow-lg hover:shadow-xl backdrop-blur-xl`}
+                        className={`w-full font-bold border-0 rounded-xl sm:rounded-2xl py-4 sm:py-5 lg:py-6 text-base sm:text-lg lg:text-xl transition-all duration-500 hover:scale-105 bg-gradient-to-r ${tool.color} hover:${tool.hoverColor} text-white shadow-lg hover:shadow-xl backdrop-blur-xl`}
                       >
                         {tool.title.includes('Calculator') ? tool.title.replace(' Calculator', '').includes('Calorie') ? 'Calculate Calories' : `Calculate ${tool.title.replace(' Calculator', '')}` : 
                          tool.title.includes('Converter') ? 'Convert Currency' : 
