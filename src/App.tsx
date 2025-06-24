@@ -17,7 +17,6 @@ import CalorieCalculator from "@/pages/CalorieCalculator";
 import SleepCalculator from "@/pages/SleepCalculator";
 import PregnancyCalculator from "@/pages/PregnancyCalculator";
 import NotFound from "@/pages/NotFound";
-import TestRunner from "@/components/TestRunner";
 import "./App.css";
 
 const queryClient = new QueryClient({
@@ -30,8 +29,6 @@ const queryClient = new QueryClient({
 });
 
 function App() {
-  const showTesting = process.env.NODE_ENV === 'development' || window.location.search.includes('test=true');
-
   return (
     <QueryClientProvider client={queryClient}>
       <ErrorBoundary>
@@ -39,11 +36,6 @@ function App() {
           <div className="min-h-screen flex flex-col">
             <Navbar />
             <main className="flex-1">
-              {showTesting && (
-                <div className="fixed top-20 right-4 z-50 w-96">
-                  <TestRunner />
-                </div>
-              )}
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/age" element={<AgeCalculator />} />
