@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { ArrowLeft, Copy, Check, Heart, Activity } from "lucide-react";
 import { useNavigate } from "react-router-dom";
@@ -8,8 +7,10 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
+import useScrollToTop from "@/hooks/useScrollToTop";
 
 const CalorieCalculator = () => {
+  useScrollToTop();
   const navigate = useNavigate();
   const { toast } = useToast();
   const [age, setAge] = useState("");

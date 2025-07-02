@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { ArrowLeft, Copy, Check, Heart, Scale } from "lucide-react";
 import { useNavigate } from "react-router-dom";
@@ -7,8 +6,10 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
+import useScrollToTop from "@/hooks/useScrollToTop";
 
 const BMICalculator = () => {
+  useScrollToTop();
   const navigate = useNavigate();
   const { toast } = useToast();
   const [weight, setWeight] = useState("");

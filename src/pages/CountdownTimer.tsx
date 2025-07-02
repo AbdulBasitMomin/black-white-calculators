@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { ArrowLeft, Play, Pause, RotateCcw, Clock } from "lucide-react";
 import { useNavigate } from "react-router-dom";
@@ -7,8 +6,10 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
+import useScrollToTop from "@/hooks/useScrollToTop";
 
 const CountdownTimer = () => {
+  useScrollToTop();
   const navigate = useNavigate();
   const { toast } = useToast();
   const [eventName, setEventName] = useState("");

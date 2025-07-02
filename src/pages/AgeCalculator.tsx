@@ -6,8 +6,10 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { Input } from "@/components/ui/input";
+import useScrollToTop from "@/hooks/useScrollToTop";
 
 const AgeCalculator = () => {
+  useScrollToTop();
   const navigate = useNavigate();
   const { toast } = useToast();
   const [birthDate, setBirthDate] = useState<string>("");
