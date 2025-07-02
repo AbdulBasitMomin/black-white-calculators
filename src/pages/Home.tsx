@@ -128,55 +128,71 @@ const Home = () => {
           </div>
         </section>
 
-        {/* Enhanced Calculators Grid with Equal Height Cards */}
+        {/* Uniform Cards Grid with Perfect Alignment */}
         <section className="px-4 sm:px-6 pb-16 sm:pb-20">
           <div className="max-w-8xl mx-auto">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-10 xl:gap-12">
               {calculatorTools.map((tool, index) => (
                 <Card
                   key={tool.title}
-                  className="group cursor-pointer h-full flex flex-col glass-card-light border-0 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02] rounded-xl sm:rounded-2xl lg:rounded-[2rem] overflow-hidden animate-slide-up backdrop-blur-2xl border border-white/20"
+                  className="group cursor-pointer h-[520px] sm:h-[580px] lg:h-[620px] xl:h-[680px] flex flex-col glass-card-light border-0 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02] rounded-xl sm:rounded-2xl lg:rounded-[2rem] overflow-hidden animate-slide-up backdrop-blur-2xl border border-white/20"
                   onClick={() => navigate(tool.path)}
                   style={{ animationDelay: `${index * 100}ms` }}
                 >
-                  <CardContent className="p-6 sm:p-8 lg:p-10 xl:p-12 relative overflow-hidden flex-1 flex flex-col">
+                  <CardContent className="p-6 sm:p-8 lg:p-10 xl:p-12 flex flex-col h-full relative overflow-hidden">
                     {/* Shimmer effect on hover */}
                     <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
                       <div className="absolute inset-0 animate-shimmer"></div>
                     </div>
                     
-                    <div className="relative z-10 flex-1 flex flex-col">
-                      <div className="mb-6 sm:mb-8">
-                        <div className={`w-16 h-16 sm:w-18 sm:h-18 lg:w-20 lg:h-20 xl:w-24 xl:h-24 bg-gradient-to-br ${tool.color} rounded-xl sm:rounded-2xl flex items-center justify-center shadow-lg mb-4 sm:mb-6 group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 backdrop-blur-xl border border-white/20`}>
+                    <div className="relative z-10 flex flex-col h-full">
+                      {/* Icon Section - Fixed Height */}
+                      <div className="h-20 sm:h-24 lg:h-28 xl:h-32 mb-4 sm:mb-6 flex-shrink-0">
+                        <div className={`w-16 h-16 sm:w-18 sm:h-18 lg:w-20 lg:h-20 xl:w-24 xl:h-24 bg-gradient-to-br ${tool.color} rounded-xl sm:rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 backdrop-blur-xl border border-white/20`}>
                           <tool.icon className="w-8 h-8 sm:w-9 sm:h-9 lg:w-10 lg:h-10 xl:w-12 xl:h-12 text-white drop-shadow-lg" />
                         </div>
                       </div>
                       
-                      <h3 className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-bold mb-4 sm:mb-6 text-gray-800 dark:text-white group-hover:text-purple-600 dark:group-hover:text-purple-300 transition-all duration-500 text-shadow">
-                        {tool.title}
-                      </h3>
-                      
-                      <p className="text-base sm:text-lg lg:text-xl text-gray-600 dark:text-white/80 mb-6 sm:mb-8 leading-relaxed transition-all duration-300 group-hover:text-gray-700 dark:group-hover:text-white/90 flex-grow">
-                        {tool.description}
-                      </p>
-                      
-                      <div className="space-y-3 sm:space-y-4 mb-8 sm:mb-10">
-                        {tool.features.map((feature, idx) => (
-                          <div key={idx} className="flex items-center text-sm sm:text-base lg:text-lg text-gray-500 dark:text-white/70 transition-all duration-300 group-hover:text-gray-600 dark:group-hover:text-white/80">
-                            <div className={`w-2 h-2 bg-gradient-to-r ${tool.color} rounded-full mr-3 sm:mr-4 flex-shrink-0 group-hover:scale-125 transition-transform duration-300`}></div>
-                            {feature}
-                          </div>
-                        ))}
+                      {/* Title Section - Fixed Height */}
+                      <div className="h-16 sm:h-20 lg:h-24 xl:h-28 mb-4 sm:mb-6 flex-shrink-0 flex items-start">
+                        <h3 className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-bold text-gray-800 dark:text-white group-hover:text-purple-600 dark:group-hover:text-purple-300 transition-all duration-500 text-shadow leading-tight">
+                          {tool.title}
+                        </h3>
                       </div>
                       
-                      <Button 
-                        className={`w-full font-bold border-0 rounded-xl sm:rounded-2xl py-4 sm:py-5 lg:py-6 text-base sm:text-lg lg:text-xl transition-all duration-500 hover:scale-105 bg-gradient-to-r ${tool.color} hover:${tool.hoverColor} text-white shadow-lg hover:shadow-xl backdrop-blur-xl mt-auto`}
-                      >
-                        {tool.title.includes('Calculator') ? tool.title.replace(' Calculator', '').includes('Calorie') ? 'Calculate Calories' : `Calculate ${tool.title.replace(' Calculator', '')}` : 
-                         tool.title.includes('Converter') ? 'Convert Currency' : 
-                         tool.title.includes('Timer') ? 'Start Countdown' : 
-                         `Use ${tool.title}`}
-                      </Button>
+                      {/* Description Section - Fixed Height with Overflow */}
+                      <div className="h-20 sm:h-24 lg:h-28 xl:h-32 mb-6 sm:mb-8 flex-shrink-0">
+                        <p className="text-base sm:text-lg lg:text-xl text-gray-600 dark:text-white/80 leading-relaxed transition-all duration-300 group-hover:text-gray-700 dark:group-hover:text-white/90 line-clamp-3 sm:line-clamp-4">
+                          {tool.description}
+                        </p>
+                      </div>
+                      
+                      {/* Features Section - Fixed Height */}
+                      <div className="h-20 sm:h-24 lg:h-28 xl:h-32 mb-6 sm:mb-8 flex-shrink-0">
+                        <div className="space-y-2 sm:space-y-3">
+                          {tool.features.slice(0, 2).map((feature, idx) => (
+                            <div key={idx} className="flex items-center text-sm sm:text-base lg:text-lg text-gray-500 dark:text-white/70 transition-all duration-300 group-hover:text-gray-600 dark:group-hover:text-white/80">
+                              <div className={`w-2 h-2 bg-gradient-to-r ${tool.color} rounded-full mr-3 sm:mr-4 flex-shrink-0 group-hover:scale-125 transition-transform duration-300`}></div>
+                              <span className="line-clamp-1">{feature}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                      
+                      {/* Spacer to push button to bottom */}
+                      <div className="flex-grow"></div>
+                      
+                      {/* Button Section - Fixed at Bottom */}
+                      <div className="flex-shrink-0 mt-auto">
+                        <Button 
+                          className={`w-full font-bold border-0 rounded-xl sm:rounded-2xl py-4 sm:py-5 lg:py-6 text-base sm:text-lg lg:text-xl transition-all duration-500 hover:scale-105 bg-gradient-to-r ${tool.color} hover:${tool.hoverColor} text-white shadow-lg hover:shadow-xl backdrop-blur-xl`}
+                        >
+                          {tool.title.includes('Calculator') ? tool.title.replace(' Calculator', '').includes('Calorie') ? 'Calculate Calories' : `Calculate ${tool.title.replace(' Calculator', '')}` : 
+                           tool.title.includes('Converter') ? 'Convert Currency' : 
+                           tool.title.includes('Timer') ? 'Start Countdown' : 
+                           `Use ${tool.title}`}
+                        </Button>
+                      </div>
                     </div>
                   </CardContent>
                 </Card>
