@@ -1,4 +1,3 @@
-
 import { Calculator, Heart, DollarSign, Calendar, Clock, GraduationCap, Moon, Baby } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -129,24 +128,24 @@ const Home = () => {
           </div>
         </section>
 
-        {/* Enhanced Calculators Grid - Made Bigger */}
+        {/* Enhanced Calculators Grid with Equal Height Cards */}
         <section className="px-4 sm:px-6 pb-16 sm:pb-20">
           <div className="max-w-8xl mx-auto">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-10 xl:gap-12">
               {calculatorTools.map((tool, index) => (
                 <Card
                   key={tool.title}
-                  className="group cursor-pointer glass-card-light border-0 shadow-glass hover:shadow-3xl transition-all duration-500 hover-lift rounded-xl sm:rounded-2xl lg:rounded-[2rem] overflow-hidden animate-slide-up backdrop-blur-2xl"
+                  className="group cursor-pointer h-full flex flex-col glass-card-light border-0 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02] rounded-xl sm:rounded-2xl lg:rounded-[2rem] overflow-hidden animate-slide-up backdrop-blur-2xl border border-white/20"
                   onClick={() => navigate(tool.path)}
                   style={{ animationDelay: `${index * 100}ms` }}
                 >
-                  <CardContent className="p-6 sm:p-8 lg:p-10 xl:p-12 relative overflow-hidden">
+                  <CardContent className="p-6 sm:p-8 lg:p-10 xl:p-12 relative overflow-hidden flex-1 flex flex-col">
                     {/* Shimmer effect on hover */}
                     <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
                       <div className="absolute inset-0 animate-shimmer"></div>
                     </div>
                     
-                    <div className="relative z-10">
+                    <div className="relative z-10 flex-1 flex flex-col">
                       <div className="mb-6 sm:mb-8">
                         <div className={`w-16 h-16 sm:w-18 sm:h-18 lg:w-20 lg:h-20 xl:w-24 xl:h-24 bg-gradient-to-br ${tool.color} rounded-xl sm:rounded-2xl flex items-center justify-center shadow-lg mb-4 sm:mb-6 group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 backdrop-blur-xl border border-white/20`}>
                           <tool.icon className="w-8 h-8 sm:w-9 sm:h-9 lg:w-10 lg:h-10 xl:w-12 xl:h-12 text-white drop-shadow-lg" />
@@ -157,7 +156,7 @@ const Home = () => {
                         {tool.title}
                       </h3>
                       
-                      <p className="text-base sm:text-lg lg:text-xl text-gray-600 dark:text-white/80 mb-6 sm:mb-8 leading-relaxed transition-all duration-300 group-hover:text-gray-700 dark:group-hover:text-white/90">
+                      <p className="text-base sm:text-lg lg:text-xl text-gray-600 dark:text-white/80 mb-6 sm:mb-8 leading-relaxed transition-all duration-300 group-hover:text-gray-700 dark:group-hover:text-white/90 flex-grow">
                         {tool.description}
                       </p>
                       
@@ -171,7 +170,7 @@ const Home = () => {
                       </div>
                       
                       <Button 
-                        className={`w-full font-bold border-0 rounded-xl sm:rounded-2xl py-4 sm:py-5 lg:py-6 text-base sm:text-lg lg:text-xl transition-all duration-500 hover:scale-105 bg-gradient-to-r ${tool.color} hover:${tool.hoverColor} text-white shadow-lg hover:shadow-xl backdrop-blur-xl`}
+                        className={`w-full font-bold border-0 rounded-xl sm:rounded-2xl py-4 sm:py-5 lg:py-6 text-base sm:text-lg lg:text-xl transition-all duration-500 hover:scale-105 bg-gradient-to-r ${tool.color} hover:${tool.hoverColor} text-white shadow-lg hover:shadow-xl backdrop-blur-xl mt-auto`}
                       >
                         {tool.title.includes('Calculator') ? tool.title.replace(' Calculator', '').includes('Calorie') ? 'Calculate Calories' : `Calculate ${tool.title.replace(' Calculator', '')}` : 
                          tool.title.includes('Converter') ? 'Convert Currency' : 
