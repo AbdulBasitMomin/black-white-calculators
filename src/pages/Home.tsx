@@ -135,11 +135,11 @@ const Home = () => {
               {calculatorTools.map((tool, index) => (
                 <Card
                   key={tool.title}
-                  className="group cursor-pointer h-[520px] sm:h-[580px] lg:h-[620px] xl:h-[680px] flex flex-col glass-card-light border-0 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02] rounded-xl sm:rounded-2xl lg:rounded-[2rem] overflow-hidden animate-slide-up backdrop-blur-2xl border border-white/20"
+                  className="group cursor-pointer h-[560px] sm:h-[620px] lg:h-[660px] xl:h-[720px] flex flex-col glass-card-light border-0 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02] rounded-xl sm:rounded-2xl lg:rounded-[2rem] overflow-hidden animate-slide-up backdrop-blur-2xl border border-white/20"
                   onClick={() => navigate(tool.path)}
                   style={{ animationDelay: `${index * 100}ms` }}
                 >
-                  <CardContent className="p-6 sm:p-8 lg:p-10 xl:p-12 flex flex-col h-full relative overflow-hidden">
+                  <CardContent className="p-6 sm:p-8 lg:p-10 xl:p-12 pb-8 sm:pb-10 lg:pb-12 xl:pb-14 flex flex-col h-full relative overflow-hidden">
                     {/* Shimmer effect on hover */}
                     <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
                       <div className="absolute inset-0 animate-shimmer"></div>
@@ -182,7 +182,7 @@ const Home = () => {
                       {/* Spacer to push button to bottom */}
                       <div className="flex-grow"></div>
                       
-                      {/* Button Section - Fixed at Bottom */}
+                      {/* Button Section - Fixed at Bottom with Extra Padding */}
                       <div className="flex-shrink-0 mt-auto">
                         <Button 
                           className={`w-full font-bold border-0 rounded-xl sm:rounded-2xl py-4 sm:py-5 lg:py-6 text-base sm:text-lg lg:text-xl transition-all duration-500 hover:scale-105 bg-gradient-to-r ${tool.color} hover:${tool.hoverColor} text-white shadow-lg hover:shadow-xl backdrop-blur-xl`}
