@@ -1,31 +1,27 @@
-
 import { useState } from "react";
-import { ArrowLeft, Copy, Check, Calendar, Clock, Plus } from "lucide-react";
+import { ArrowLeft, Copy, Check, Calendar, Clock } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
+import useScrollToTop from "@/hooks/useScrollToTop";
 
 const DaysCalculator = () => {
+  useScrollToTop();
+  
   const navigate = useNavigate();
   const { toast } = useToast();
   const [startDate, setStartDate] = useState("");
-  const [startTime, setStartTime] = useState("");
   const [endDate, setEndDate] = useState("");
-  const [endTime, setEndTime] = useState("");
-  const [showStartTime, setShowStartTime] = useState(false);
-  const [showEndTime, setShowEndTime] = useState(false);
   const [result, setResult] = useState<{
-    totalDays: number;
-    totalHours: number;
-    totalMinutes: number;
+    days: number;
+    workingDays: number;
+    weekends: number;
     years: number;
     months: number;
-    days: number;
-    hours: number;
-    minutes: number;
+    weeks: number;
   } | null>(null);
   const [copied, setCopied] = useState(false);
 
@@ -38,73 +34,51 @@ const DaysCalculator = () => {
       return;
     }
 
-    // Use time if selected, otherwise default to 00:00
-    const startTimeValue = showStartTime && startTime ? startTime : "00:00";
-    const endTimeValue = showEndTime && endTime ? endTime : "00:00";
+    const start = new Date(startDate);
+    const end = new Date(endDate);
 
-    // Combine date and time for precise calculations
-    const start = new Date(`${startDate}T${startTimeValue}`);
-    const end = new Date(`${endDate}T${endTimeValue}`);
-
-    if (start > end) {
+    if (start >= end) {
       toast({
-        title: "Start date/time must be before end date/time",
+        title: "End date must be after start date",
         variant: "destructive",
       });
       return;
     }
 
-    // Calculate total time difference
     const timeDiff = end.getTime() - start.getTime();
-    const totalMinutes = Math.floor(timeDiff / (1000 * 60));
-    const totalHours = Math.floor(timeDiff / (1000 * 3600));
-    const totalDays = Math.floor(timeDiff / (1000 * 3600 * 24));
-
-    // Calculate detailed breakdown
-    let years = end.getFullYear() - start.getFullYear();
-    let months = end.getMonth() - start.getMonth();
-    let days = end.getDate() - start.getDate();
-    let hours = end.getHours() - start.getHours();
-    let minutes = end.getMinutes() - start.getMinutes();
-
-    // Adjust for negative values
-    if (minutes < 0) {
-      hours--;
-      minutes += 60;
+    const days = Math.ceil(timeDiff / (1000 * 3600 * 24));
+    
+    // Calculate working days (excluding weekends)
+    let workingDays = 0;
+    let weekends = 0;
+    
+    for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
+      const dayOfWeek = d.getDay();
+      if (dayOfWeek === 0 || dayOfWeek === 6) {
+        weekends++;
+      } else {
+        workingDays++;
+      }
     }
 
-    if (hours < 0) {
-      days--;
-      hours += 24;
-    }
-
-    if (days < 0) {
-      months--;
-      const lastMonth = new Date(end.getFullYear(), end.getMonth(), 0);
-      days += lastMonth.getDate();
-    }
-
-    if (months < 0) {
-      years--;
-      months += 12;
-    }
+    const years = Math.floor(days / 365);
+    const months = Math.floor(days / 30);
+    const weeks = Math.floor(days / 7);
 
     setResult({
-      totalDays,
-      totalHours,
-      totalMinutes,
+      days,
+      workingDays,
+      weekends,
       years,
       months,
-      days,
-      hours,
-      minutes
+      weeks
     });
   };
 
   const copyResult = async () => {
     if (!result) return;
     
-    const text = `Time between dates: ${result.totalDays} days, ${result.totalHours} hours, ${result.totalMinutes} minutes (${result.years} years, ${result.months} months, ${result.days} days, ${result.hours} hours, ${result.minutes} minutes)`;
+    const text = `Days between ${startDate} and ${endDate}: ${result.days} days (${result.workingDays} working days)`;
     
     try {
       await navigator.clipboard.writeText(text);
@@ -122,202 +96,141 @@ const DaysCalculator = () => {
   };
 
   return (
-    <div className="min-h-screen relative overflow-hidden bg-gradient-to-br from-purple-50 via-blue-50 to-pink-50 dark:from-gray-900 dark:via-purple-900 dark:to-gray-900">
-      {/* Animated Background */}
-      <div className="fixed inset-0 bg-gradient-to-br from-purple-200/30 via-pink-200/30 to-blue-200/30 dark:from-purple-400/20 dark:via-pink-300/20 dark:to-blue-400/20 animate-gradientMove"></div>
-      <div className="fixed inset-0 bg-gradient-to-tr from-blue-300/20 via-transparent to-purple-300/20 dark:from-blue-600/10 dark:via-transparent dark:to-purple-600/10"></div>
-      
-      {/* Floating Orbs */}
-      <div className="fixed top-20 left-10 w-32 h-32 bg-gradient-to-r from-purple-300/60 to-pink-300/60 dark:from-purple-400 dark:to-pink-400 rounded-full blur-3xl opacity-40 dark:opacity-20 animate-float"></div>
-      <div className="fixed bottom-32 right-20 w-24 h-24 bg-gradient-to-r from-blue-300/70 to-cyan-300/70 dark:from-blue-400 dark:to-cyan-400 rounded-full blur-2xl opacity-50 dark:opacity-30 animate-float" style={{ animationDelay: "2s" }}></div>
-      <div className="fixed top-1/2 left-1/4 w-16 h-16 bg-gradient-to-r from-pink-300/60 to-purple-300/60 dark:from-pink-400 dark:to-purple-400 rounded-full blur-xl opacity-45 dark:opacity-25 animate-float" style={{ animationDelay: "4s" }}></div>
-
-      <div className="relative z-10 min-h-screen backdrop-blur-[2px] pt-20">
-        <div className="max-w-2xl mx-auto px-6 py-8">
-          {/* Glass Header */}
-          <div className="flex items-center mb-8">
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => navigate("/")}
-              className="mr-4 rounded-full w-12 h-12 glass-button-light text-gray-700 dark:text-white hover:scale-110 shadow-lg"
-            >
-              <ArrowLeft className="w-6 h-6" />
-            </Button>
-            <div className="flex items-center space-x-4">
-              <div className="w-14 h-14 bg-gradient-to-br from-purple-500/80 to-pink-600/80 rounded-3xl flex items-center justify-center shadow-2xl backdrop-blur-xl border border-white/20">
-                <Calendar className="w-7 h-7 text-white drop-shadow-sm" />
-              </div>
-              <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-gray-800 via-purple-600 to-pink-600 dark:from-white dark:via-purple-100 dark:to-pink-100 bg-clip-text text-transparent drop-shadow-sm">
-                Days Calculator
-              </h1>
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-blue-50 dark:from-gray-900 dark:via-gray-800 dark:to-blue-900 pt-16">
+      <div className="max-w-2xl mx-auto px-4 py-8">
+        {/* Header */}
+        <div className="flex items-center mb-8">
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => navigate("/")}
+            className="mr-4 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 w-12 h-12"
+          >
+            <ArrowLeft className="w-6 h-6" />
+          </Button>
+          <div className="flex items-center space-x-4">
+            <div className="w-12 h-12 bg-blue-500 rounded-2xl flex items-center justify-center">
+              <Calendar className="w-6 h-6 text-white" />
             </div>
+            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">Days Calculator</h1>
           </div>
+        </div>
 
-          {/* Main Glass Calculator Card */}
-          <Card className="glass-card-light shadow-2xl mb-8 rounded-[2rem] overflow-hidden">
-            <CardContent className="p-8">
-              <div className="space-y-8">
-                {/* Start Date & Time */}
-                <div className="space-y-4">
-                  <Label className="text-xl font-semibold text-gray-800 dark:text-white drop-shadow-sm flex items-center gap-2">
-                    <Calendar className="w-5 h-5" />
-                    Start Date
-                  </Label>
-                  <div className="space-y-4">
-                    <Input
-                      type="date"
-                      value={startDate}
-                      onChange={(e) => setStartDate(e.target.value)}
-                      className="w-full p-4 text-lg rounded-2xl glass-input text-gray-800 dark:text-white"
-                    />
-                    {!showStartTime && (
-                      <Button
-                        variant="outline"
-                        onClick={() => setShowStartTime(true)}
-                        className="flex items-center gap-2 rounded-full glass-button-light text-gray-700 dark:text-white"
-                      >
-                        <Plus className="w-4 h-4" />
-                        Add Time
-                      </Button>
-                    )}
-                    {showStartTime && (
-                      <div className="relative">
-                        <Clock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-500 dark:text-white/60" />
-                        <Input
-                          type="time"
-                          value={startTime}
-                          onChange={(e) => setStartTime(e.target.value)}
-                          className="w-full p-4 pl-12 text-lg rounded-2xl glass-input text-gray-800 dark:text-white"
-                        />
-                      </div>
-                    )}
-                  </div>
-                </div>
-
-                {/* End Date & Time */}
-                <div className="space-y-4">
-                  <Label className="text-xl font-semibold text-gray-800 dark:text-white drop-shadow-sm flex items-center gap-2">
-                    <Calendar className="w-5 h-5" />
-                    End Date
-                  </Label>
-                  <div className="space-y-4">
-                    <Input
-                      type="date"
-                      value={endDate}
-                      onChange={(e) => setEndDate(e.target.value)}
-                      className="w-full p-4 text-lg rounded-2xl glass-input text-gray-800 dark:text-white"
-                    />
-                    {!showEndTime && (
-                      <Button
-                        variant="outline"
-                        onClick={() => setShowEndTime(true)}
-                        className="flex items-center gap-2 rounded-full glass-button-light text-gray-700 dark:text-white"
-                      >
-                        <Plus className="w-4 h-4" />
-                        Add Time
-                      </Button>
-                    )}
-                    {showEndTime && (
-                      <div className="relative">
-                        <Clock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-500 dark:text-white/60" />
-                        <Input
-                          type="time"
-                          value={endTime}
-                          onChange={(e) => setEndTime(e.target.value)}
-                          className="w-full p-4 pl-12 text-lg rounded-2xl glass-input text-gray-800 dark:text-white"
-                        />
-                      </div>
-                    )}
-                  </div>
-                </div>
-
-                <Button
-                  onClick={calculateDays}
-                  className="w-full bg-gradient-to-r from-purple-500/80 to-pink-600/80 hover:from-purple-600/80 hover:to-pink-700/80 text-white font-bold py-6 text-xl rounded-full transition-all duration-300 hover:scale-105 shadow-2xl backdrop-blur-xl border border-white/20"
-                >
-                  Calculate Time Difference
-                </Button>
+        {/* Calculator Card */}
+        <Card className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border-0 shadow-xl mb-8">
+          <CardContent className="p-8">
+            <div className="space-y-6">
+              <div>
+                <Label htmlFor="startDate" className="text-lg font-semibold mb-3 block text-gray-900 dark:text-white">
+                  Start Date
+                </Label>
+                <Input
+                  id="startDate"
+                  type="date"
+                  value={startDate}
+                  onChange={(e) => setStartDate(e.target.value)}
+                  className="w-full p-4 text-lg rounded-xl border-gray-200 dark:border-gray-700"
+                />
               </div>
-            </CardContent>
-          </Card>
 
-          {/* Results Glass Card */}
-          {result && (
-            <Card className="glass-card-light shadow-2xl animate-fadeIn rounded-[2rem] overflow-hidden">
-              <CardContent className="p-8 text-center">
-                <h3 className="text-3xl font-bold mb-8 text-gray-800 dark:text-white drop-shadow-sm">Time Difference</h3>
+              <div>
+                <Label htmlFor="endDate" className="text-lg font-semibold mb-3 block text-gray-900 dark:text-white">
+                  End Date
+                </Label>
+                <Input
+                  id="endDate"
+                  type="date"
+                  value={endDate}
+                  onChange={(e) => setEndDate(e.target.value)}
+                  className="w-full p-4 text-lg rounded-xl border-gray-200 dark:border-gray-700"
+                />
+              </div>
+
+              <div className="bg-blue-50 dark:bg-blue-900/20 rounded-2xl p-6">
+                <h4 className="font-semibold text-blue-700 dark:text-blue-300 mb-2">Calculate</h4>
+                <p className="text-sm text-blue-600 dark:text-blue-400">
+                  Find the exact number of days, working days, and time periods between two dates.
+                </p>
+              </div>
+
+              <Button
+                onClick={calculateDays}
+                className="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-4 text-lg rounded-full transition-all duration-300 hover:scale-105 shadow-lg"
+              >
+                Calculate Days
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Results */}
+        {result && (
+          <div className="space-y-6 animate-fadeIn">
+            <Card className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border-0 shadow-xl">
+              <CardContent className="p-8">
+                <h3 className="text-2xl font-bold mb-6 text-center text-gray-900 dark:text-white flex items-center justify-center">
+                  <Clock className="w-6 h-6 mr-2" />
+                  Time Difference
+                </h3>
                 
-                {/* Total Time Cards */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-                  <div className="glass-info-card rounded-2xl p-6 border border-purple-200/30 dark:border-white/20">
-                    <div className="text-3xl font-bold bg-gradient-to-r from-gray-800 via-purple-600 to-pink-600 dark:from-white dark:via-purple-100 dark:to-pink-100 bg-clip-text text-transparent mb-2">
-                      {result.totalDays.toLocaleString()}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                  <div className="bg-gradient-to-br from-blue-100 to-blue-200 dark:from-blue-900/30 dark:to-blue-800/30 rounded-2xl p-6 text-center">
+                    <div className="text-3xl font-bold text-blue-600 dark:text-blue-400 mb-2">
+                      {result.days}
                     </div>
-                    <div className="text-gray-600 dark:text-white/80">Total Days</div>
+                    <div className="text-gray-600 dark:text-gray-300">Total Days</div>
                   </div>
-                  <div className="glass-info-card rounded-2xl p-6 border border-blue-200/30 dark:border-white/20">
-                    <div className="text-3xl font-bold bg-gradient-to-r from-gray-800 via-blue-600 to-cyan-600 dark:from-white dark:via-blue-100 dark:to-cyan-100 bg-clip-text text-transparent mb-2">
-                      {result.totalHours.toLocaleString()}
+                  
+                  <div className="bg-gradient-to-br from-green-100 to-green-200 dark:from-green-900/30 dark:to-green-800/30 rounded-2xl p-6 text-center">
+                    <div className="text-3xl font-bold text-green-600 dark:text-green-400 mb-2">
+                      {result.workingDays}
                     </div>
-                    <div className="text-gray-600 dark:text-white/80">Total Hours</div>
-                  </div>
-                  <div className="glass-info-card rounded-2xl p-6 border border-pink-200/30 dark:border-white/20">
-                    <div className="text-3xl font-bold bg-gradient-to-r from-gray-800 via-pink-600 to-rose-600 dark:from-white dark:via-pink-100 dark:to-rose-100 bg-clip-text text-transparent mb-2">
-                      {result.totalMinutes.toLocaleString()}
-                    </div>
-                    <div className="text-gray-600 dark:text-white/80">Total Minutes</div>
+                    <div className="text-gray-600 dark:text-gray-300">Working Days</div>
                   </div>
                 </div>
 
-                {/* Detailed Breakdown */}
-                <div className="mb-8">
-                  <h4 className="text-xl font-semibold mb-4 text-gray-800 dark:text-white">Detailed Breakdown</h4>
-                  <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
-                    <div className="bg-purple-500/20 dark:bg-purple-500/20 rounded-xl p-4 border border-purple-200 dark:border-white/20">
-                      <div className="text-2xl font-bold text-gray-800 dark:text-white mb-1">{result.years}</div>
-                      <div className="text-sm text-gray-600 dark:text-white/80">Years</div>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                  <div className="bg-gradient-to-br from-purple-100 to-purple-200 dark:from-purple-900/30 dark:to-purple-800/30 rounded-xl p-4 text-center">
+                    <div className="text-xl font-bold text-purple-600 dark:text-purple-400 mb-1">
+                      {result.years}
                     </div>
-                    <div className="bg-blue-500/20 dark:bg-blue-500/20 rounded-xl p-4 border border-blue-200 dark:border-white/20">
-                      <div className="text-2xl font-bold text-gray-800 dark:text-white mb-1">{result.months}</div>
-                      <div className="text-sm text-gray-600 dark:text-white/80">Months</div>
+                    <div className="text-sm text-gray-600 dark:text-gray-300">Years</div>
+                  </div>
+                  
+                  <div className="bg-gradient-to-br from-pink-100 to-pink-200 dark:from-pink-900/30 dark:to-pink-800/30 rounded-xl p-4 text-center">
+                    <div className="text-xl font-bold text-pink-600 dark:text-pink-400 mb-1">
+                      {result.months}
                     </div>
-                    <div className="bg-pink-500/20 dark:bg-pink-500/20 rounded-xl p-4 border border-pink-200 dark:border-white/20">
-                      <div className="text-2xl font-bold text-gray-800 dark:text-white mb-1">{result.days}</div>
-                      <div className="text-sm text-gray-600 dark:text-white/80">Days</div>
+                    <div className="text-sm text-gray-600 dark:text-gray-300">Months</div>
+                  </div>
+                  
+                  <div className="bg-gradient-to-br from-yellow-100 to-yellow-200 dark:from-yellow-900/30 dark:to-yellow-800/30 rounded-xl p-4 text-center">
+                    <div className="text-xl font-bold text-yellow-600 dark:text-yellow-400 mb-1">
+                      {result.weeks}
                     </div>
-                    <div className="bg-green-500/20 dark:bg-green-500/20 rounded-xl p-4 border border-green-200 dark:border-white/20">
-                      <div className="text-2xl font-bold text-gray-800 dark:text-white mb-1">{result.hours}</div>
-                      <div className="text-sm text-gray-600 dark:text-white/80">Hours</div>
+                    <div className="text-sm text-gray-600 dark:text-gray-300">Weeks</div>
+                  </div>
+                  
+                  <div className="bg-gradient-to-br from-red-100 to-red-200 dark:from-red-900/30 dark:to-red-800/30 rounded-xl p-4 text-center">
+                    <div className="text-xl font-bold text-red-600 dark:text-red-400 mb-1">
+                      {result.weekends}
                     </div>
-                    <div className="bg-cyan-500/20 dark:bg-cyan-500/20 rounded-xl p-4 border border-cyan-200 dark:border-white/20">
-                      <div className="text-2xl font-bold text-gray-800 dark:text-white mb-1">{result.minutes}</div>
-                      <div className="text-sm text-gray-600 dark:text-white/80">Minutes</div>
-                    </div>
+                    <div className="text-sm text-gray-600 dark:text-gray-300">Weekends</div>
                   </div>
                 </div>
-
+                
                 <Button
                   onClick={copyResult}
                   variant="outline"
-                  className="glass-button-light text-gray-700 dark:text-white rounded-full px-6 py-3 transition-all duration-300 hover:scale-105"
+                  className="w-full border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full"
                 >
-                  {copied ? (
-                    <>
-                      <Check className="w-4 h-4 mr-2" />
-                      Copied!
-                    </>
-                  ) : (
-                    <>
-                      <Copy className="w-4 h-4 mr-2" />
-                      Copy Result
-                    </>
-                  )}
+                  {copied ? <Check className="w-4 h-4 mr-2" /> : <Copy className="w-4 h-4 mr-2" />}
+                  {copied ? "Copied!" : "Copy Results"}
                 </Button>
               </CardContent>
             </Card>
-          )}
-        </div>
+          </div>
+        )}
       </div>
     </div>
   );

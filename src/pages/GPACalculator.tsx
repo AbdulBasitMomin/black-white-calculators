@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { ArrowLeft, Copy, Check, GraduationCap, BookOpen, Calculator, Info, Globe, Sparkles } from "lucide-react";
 import { useNavigate } from "react-router-dom";
@@ -8,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
+import useScrollToTop from "@/hooks/useScrollToTop";
 
 interface GradeScale {
   name: string;
@@ -62,6 +62,8 @@ const regions = [
 ];
 
 const GPACalculator = () => {
+  useScrollToTop();
+  
   const navigate = useNavigate();
   const { toast } = useToast();
   const [gpa, setGpa] = useState("");
@@ -249,7 +251,7 @@ const GPACalculator = () => {
       <div className="fixed bottom-32 right-20 w-24 h-24 bg-gradient-to-r from-blue-300/70 to-cyan-300/70 dark:from-blue-400 dark:to-cyan-400 rounded-full blur-2xl opacity-50 dark:opacity-30 animate-float" style={{ animationDelay: "2s" }}></div>
       <div className="fixed top-1/2 left-1/4 w-16 h-16 bg-gradient-to-r from-pink-300/60 to-purple-300/60 dark:from-pink-400 dark:to-purple-400 rounded-full blur-xl opacity-45 dark:opacity-25 animate-float" style={{ animationDelay: "4s" }}></div>
 
-      <div className="relative z-10 min-h-screen backdrop-blur-[2px] pt-24">
+      <div className="relative z-10 min-h-screen backdrop-blur-[2px] pt-20">
         <div className="max-w-6xl mx-auto px-6 py-8">
           {/* Glass Header */}
           <div className="flex items-center mb-8 justify-center lg:justify-start">

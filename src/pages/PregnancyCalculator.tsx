@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { ArrowLeft, Copy, Check, Baby, Calendar } from "lucide-react";
 import { useNavigate } from "react-router-dom";
@@ -7,8 +6,11 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
+import useScrollToTop from "@/hooks/useScrollToTop";
 
 const PregnancyCalculator = () => {
+  useScrollToTop();
+  
   const navigate = useNavigate();
   const { toast } = useToast();
   const [lastPeriodDate, setLastPeriodDate] = useState("");
@@ -98,7 +100,7 @@ const PregnancyCalculator = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-pink-50 dark:from-gray-900 dark:via-gray-800 dark:to-pink-900 pt-16">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-pink-50 dark:from-gray-900 dark:via-gray-800 dark:to-pink-900 pt-20">
       <div className="max-w-2xl mx-auto px-4 py-8">
         {/* Header */}
         <div className="flex items-center mb-8">
