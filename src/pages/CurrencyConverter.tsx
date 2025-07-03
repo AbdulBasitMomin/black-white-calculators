@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { ArrowLeft, RefreshCw, TrendingUp, DollarSign, Loader2, Copy, CheckCircle } from "lucide-react";
 import { useNavigate } from "react-router-dom";
@@ -8,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { CurrencyCombobox } from "@/components/CurrencyCombobox";
 import { useToast } from "@/hooks/use-toast";
+import useScrollToTop from "@/hooks/useScrollToTop";
 
 const currencies = [
   { code: "USD", name: "US Dollar", symbol: "$", flag: "🇺🇸" },
@@ -77,6 +77,7 @@ const currencies = [
 ];
 
 const CurrencyConverter = () => {
+  useScrollToTop();
   const navigate = useNavigate();
   const { toast } = useToast();
   const [amount, setAmount] = useState("1");
