@@ -27,7 +27,7 @@ const ShareModal = ({ isOpen, onClose }: ShareModalProps) => {
       <div className="bg-white dark:bg-gray-800 rounded-lg p-6 w-full max-w-md">
         <div className="flex items-center justify-between mb-4">
           <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-            Share Everyday Tools Hub
+            Share Lion Calculator
           </h3>
           <button
             onClick={onClose}
