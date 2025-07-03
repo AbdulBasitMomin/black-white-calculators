@@ -1,6 +1,7 @@
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ThemeProvider } from "next-themes";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as SonnerToaster } from "@/components/ui/sonner";
 import Navbar from "@/components/Navbar";
@@ -31,31 +32,33 @@ const queryClient = new QueryClient({
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <ErrorBoundary>
-        <Router>
-          <div className="min-h-screen flex flex-col">
-            <Navbar />
-            <main className="flex-1">
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/age" element={<AgeCalculator />} />
-                <Route path="/bmi" element={<BMICalculator />} />
-                <Route path="/currency" element={<CurrencyConverter />} />
-                <Route path="/days" element={<DaysCalculator />} />
-                <Route path="/countdown" element={<CountdownTimer />} />
-                <Route path="/gpa" element={<GPACalculator />} />
-                <Route path="/calorie" element={<CalorieCalculator />} />
-                <Route path="/sleep" element={<SleepCalculator />} />
-                <Route path="/pregnancy" element={<PregnancyCalculator />} />
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </main>
-            <Footer />
-          </div>
-          <Toaster />
-          <SonnerToaster />
-        </Router>
-      </ErrorBoundary>
+      <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+        <ErrorBoundary>
+          <Router>
+            <div className="min-h-screen flex flex-col">
+              <Navbar />
+              <main className="flex-1">
+                <Routes>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/age" element={<AgeCalculator />} />
+                  <Route path="/bmi" element={<BMICalculator />} />
+                  <Route path="/currency" element={<CurrencyConverter />} />
+                  <Route path="/days" element={<DaysCalculator />} />
+                  <Route path="/countdown" element={<CountdownTimer />} />
+                  <Route path="/gpa" element={<GPACalculator />} />
+                  <Route path="/calorie" element={<CalorieCalculator />} />
+                  <Route path="/sleep" element={<SleepCalculator />} />
+                  <Route path="/pregnancy" element={<PregnancyCalculator />} />
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+              </main>
+              <Footer />
+            </div>
+            <Toaster />
+            <SonnerToaster />
+          </Router>
+        </ErrorBoundary>
+      </ThemeProvider>
     </QueryClientProvider>
   );
 }
