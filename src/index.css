@@ -1,3 +1,4 @@
+
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 @tailwind base;
 @tailwind components;
@@ -172,6 +173,11 @@
   
   .scroll-smooth {
     scroll-behavior: smooth;
+  }
+
+  /* Better line height for readability */
+  .line-height-relaxed {
+    line-height: 1.6;
   }
 
   /* Line Clamp Utilities for Text Overflow */

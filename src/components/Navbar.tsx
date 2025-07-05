@@ -23,12 +23,12 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-white/90 dark:bg-gray-900/90 backdrop-blur-lg border-b border-gray-200/50 dark:border-gray-700/50">
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-white/95 dark:bg-gray-900/95 backdrop-blur-lg border-b border-gray-200/50 dark:border-gray-700/50 shadow-lg">
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
             <NavLink to="/" className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center">
+              <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg">
                 <Calculator className="w-5 h-5 text-white" />
               </div>
               <div className="hidden sm:block">
@@ -80,7 +80,7 @@ const Navbar = () => {
 
           {/* Mobile Menu */}
           {isMenuOpen && (
-            <div className="lg:hidden absolute top-16 left-0 right-0 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 shadow-lg">
+            <div className="lg:hidden absolute top-16 left-0 right-0 bg-white/95 dark:bg-gray-900/95 backdrop-blur-lg border-b border-gray-200 dark:border-gray-700 shadow-lg">
               <div className="grid grid-cols-2 gap-2 p-4">
                 {navItems.map((item) => (
                   <NavLink

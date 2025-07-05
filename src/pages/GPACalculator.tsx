@@ -251,9 +251,9 @@ const GPACalculator = () => {
       <div className="fixed bottom-32 right-20 w-24 h-24 bg-gradient-to-r from-blue-300/70 to-cyan-300/70 dark:from-blue-400 dark:to-cyan-400 rounded-full blur-2xl opacity-50 dark:opacity-30 animate-float" style={{ animationDelay: "2s" }}></div>
       <div className="fixed top-1/2 left-1/4 w-16 h-16 bg-gradient-to-r from-pink-300/60 to-purple-300/60 dark:from-pink-400 dark:to-purple-400 rounded-full blur-xl opacity-45 dark:opacity-25 animate-float" style={{ animationDelay: "4s" }}></div>
 
-      <div className="relative z-10 min-h-screen backdrop-blur-[2px] pt-20">
-        <div className="max-w-6xl mx-auto px-6 py-8">
-          {/* Glass Header */}
+      <div className="relative z-10 min-h-screen backdrop-blur-[2px] pt-20 pb-8">
+        <div className="max-w-6xl mx-auto px-6">
+          {/* Header */}
           <div className="flex items-center mb-8 justify-center lg:justify-start">
             <Button
               variant="ghost"
@@ -273,175 +273,178 @@ const GPACalculator = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 xl:grid-cols-2 gap-8 items-start justify-center">
-            {/* Calculator Card */}
-            <div className="w-full max-w-2xl mx-auto xl:mx-0">
-              <Card className="glass-card-light shadow-2xl rounded-[2rem] overflow-hidden">
-                <CardContent className="p-8">
-                  <div className="space-y-8">
-                    {/* Region Selection */}
-                    <div>
-                      <Label className="text-lg font-semibold mb-3 block text-gray-800 dark:text-white flex items-center drop-shadow-sm">
-                        <Globe className="w-5 h-5 mr-2" />
-                        Select Region
-                      </Label>
-                      <Select value={selectedRegion} onValueChange={setSelectedRegion}>
-                        <SelectTrigger className="w-full p-6 text-lg rounded-2xl glass-button-light transition-all duration-300 shadow-lg">
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent className="glass-card-light rounded-2xl shadow-2xl backdrop-blur-xl border border-white/20">
-                          {regions.map((region) => (
-                            <SelectItem key={region.code} value={region.code} className="rounded-xl p-4">
-                              <div className="flex items-center space-x-3">
-                                <span className="text-lg">{region.flag}</span>
-                                <span className="font-medium">{region.name}</span>
-                              </div>
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </div>
-
-                    {/* Scale Selection */}
-                    <div>
-                      <Label className="text-lg font-semibold mb-3 block text-gray-800 dark:text-white flex items-center drop-shadow-sm">
-                        <Calculator className="w-5 h-5 mr-2" />
-                        Grading Scale
-                      </Label>
-                      <Select value={selectedScale} onValueChange={setSelectedScale}>
-                        <SelectTrigger className="w-full p-6 text-lg rounded-2xl glass-button-light transition-all duration-300 shadow-lg">
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent className="glass-card-light rounded-2xl shadow-2xl backdrop-blur-xl border border-white/20">
-                          {Object.entries(gradeScales).map(([key, scale]) => (
-                            <SelectItem key={key} value={key} className="rounded-xl p-4">
-                              <span className="font-medium">{scale.name}</span>
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </div>
-
-                    {/* GPA Input */}
-                    <div>
-                      <Label htmlFor="gpa" className="text-lg font-semibold mb-3 block text-gray-800 dark:text-white drop-shadow-sm">
-                        Your GPA
-                      </Label>
-                      <Input
-                        id="gpa"
-                        type="number"
-                        value={gpa}
-                        onChange={(e) => setGpa(e.target.value)}
-                        placeholder={`Enter GPA (0 - ${gradeScales[selectedScale].max})`}
-                        className="w-full p-6 text-xl rounded-2xl glass-button-light text-gray-800 dark:text-white placeholder:text-gray-500 dark:placeholder:text-white/60 transition-all duration-300 shadow-lg"
-                        step="0.01"
-                        max={gradeScales[selectedScale].max}
-                      />
-                    </div>
-
-                    {/* Formula Toggle */}
-                    <div className="flex items-center justify-between p-6 glass-info-card rounded-2xl">
-                      <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Show Formula</span>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => setShowFormula(!showFormula)}
-                        className="rounded-full glass-button-light hover:scale-110 transition-all duration-300"
-                      >
-                        <Info className="w-4 h-4" />
-                      </Button>
-                    </div>
-
-                    {showFormula && (
-                      <div className="p-6 glass-info-card rounded-2xl animate-fadeIn">
-                        <h4 className="font-semibold text-purple-700 dark:text-purple-300 mb-2 drop-shadow-sm">Formula Used:</h4>
-                        <p className="text-sm text-purple-600 dark:text-purple-400 font-mono">
-                          {gradeScales[selectedScale].formula}
-                        </p>
-                      </div>
-                    )}
-
-                    <Button
-                      onClick={convertGPA}
-                      disabled={isCalculating}
-                      className="w-full bg-gradient-to-r from-purple-500/80 to-pink-600/80 hover:from-purple-600/80 hover:to-pink-700/80 text-white font-bold py-6 text-xl rounded-full transition-all duration-300 hover:scale-105 shadow-2xl backdrop-blur-xl border border-white/20"
-                    >
-                      {isCalculating ? (
-                        <>
-                          <Sparkles className="w-6 h-6 mr-2 animate-spin" />
-                          Calculating...
-                        </>
-                      ) : (
-                        "Calculate GPA"
-                      )}
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-
-            {/* Results Panel */}
-            {result && (
-              <div className="w-full max-w-2xl mx-auto xl:mx-0 space-y-6 animate-fadeIn">
-                {/* Main Result */}
-                <Card className="glass-card-light shadow-2xl rounded-[2rem] overflow-hidden">
-                  <CardContent className="p-8 text-center">
-                    <h3 className="text-2xl font-bold mb-6 text-gray-800 dark:text-white flex items-center justify-center drop-shadow-sm">
-                      <Check className="w-6 h-6 mr-2 text-green-500" />
-                      Conversion Results
-                    </h3>
-                    
-                    <div className="grid grid-cols-1 gap-6 mb-6">
-                      <div className="glass-info-card rounded-2xl p-6">
-                        <div className="text-4xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-2 drop-shadow-sm">
-                          {result.percentage}%
-                        </div>
-                        <div className="text-gray-600 dark:text-gray-300">Percentage</div>
-                      </div>
-                      
-                      <div className="glass-info-card rounded-2xl p-6">
-                        <div className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-2 drop-shadow-sm">
-                          {result.letterGrade}
-                        </div>
-                        <div className="text-gray-600 dark:text-gray-300">Letter Grade</div>
-                      </div>
-                      
-                      <div className="glass-info-card rounded-2xl p-6">
-                        <div className="text-lg font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-2 drop-shadow-sm">
-                          {result.classification}
-                        </div>
-                        <div className="text-gray-600 dark:text-gray-300">Classification</div>
-                      </div>
-                    </div>
-                    
-                    <Button
-                      onClick={copyResult}
-                      variant="outline"
-                      className="glass-button-light rounded-full px-6 py-3 transition-all duration-300 hover:scale-105"
-                    >
-                      {copied ? <Check className="w-4 h-4 mr-2 text-green-500" /> : <Copy className="w-4 h-4 mr-2" />}
-                      {copied ? "Copied!" : "Copy Result"}
-                    </Button>
-                  </CardContent>
-                </Card>
-
-                {/* Academic Guidance */}
+          {/* Center the main content with flexbox */}
+          <div className="flex justify-center">
+            <div className="grid grid-cols-1 xl:grid-cols-2 gap-8 items-start max-w-7xl w-full">
+              {/* Calculator Card */}
+              <div className="w-full max-w-2xl mx-auto xl:mx-0">
                 <Card className="glass-card-light shadow-2xl rounded-[2rem] overflow-hidden">
                   <CardContent className="p-8">
-                    <div className="flex items-center mb-4">
-                      <BookOpen className="w-5 h-5 mr-3 text-purple-500" />
-                      <h4 className="text-lg font-bold text-gray-800 dark:text-white drop-shadow-sm">Academic Guidance</h4>
-                    </div>
-                    
-                    <div className="p-6 glass-info-card rounded-2xl">
-                      <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-                        {result.interpretation}
-                      </p>
+                    <div className="space-y-8">
+                      {/* Region Selection */}
+                      <div>
+                        <Label className="text-lg font-semibold mb-3 block text-gray-800 dark:text-white flex items-center drop-shadow-sm">
+                          <Globe className="w-5 h-5 mr-2" />
+                          Select Region
+                        </Label>
+                        <Select value={selectedRegion} onValueChange={setSelectedRegion}>
+                          <SelectTrigger className="w-full p-6 text-lg rounded-2xl glass-button-light transition-all duration-300 shadow-lg">
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent className="glass-card-light rounded-2xl shadow-2xl backdrop-blur-xl border border-white/20">
+                            {regions.map((region) => (
+                              <SelectItem key={region.code} value={region.code} className="rounded-xl p-4">
+                                <div className="flex items-center space-x-3">
+                                  <span className="text-lg">{region.flag}</span>
+                                  <span className="font-medium">{region.name}</span>
+                                </div>
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
+
+                      {/* Scale Selection */}
+                      <div>
+                        <Label className="text-lg font-semibold mb-3 block text-gray-800 dark:text-white flex items-center drop-shadow-sm">
+                          <Calculator className="w-5 h-5 mr-2" />
+                          Grading Scale
+                        </Label>
+                        <Select value={selectedScale} onValueChange={setSelectedScale}>
+                          <SelectTrigger className="w-full p-6 text-lg rounded-2xl glass-button-light transition-all duration-300 shadow-lg">
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent className="glass-card-light rounded-2xl shadow-2xl backdrop-blur-xl border border-white/20">
+                            {Object.entries(gradeScales).map(([key, scale]) => (
+                              <SelectItem key={key} value={key} className="rounded-xl p-4">
+                                <span className="font-medium">{scale.name}</span>
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
+
+                      {/* GPA Input */}
+                      <div>
+                        <Label htmlFor="gpa" className="text-lg font-semibold mb-3 block text-gray-800 dark:text-white drop-shadow-sm">
+                          Your GPA
+                        </Label>
+                        <Input
+                          id="gpa"
+                          type="number"
+                          value={gpa}
+                          onChange={(e) => setGpa(e.target.value)}
+                          placeholder={`Enter GPA (0 - ${gradeScales[selectedScale].max})`}
+                          className="w-full p-6 text-xl rounded-2xl glass-button-light text-gray-800 dark:text-white placeholder:text-gray-500 dark:placeholder:text-white/60 transition-all duration-300 shadow-lg"
+                          step="0.01"
+                          max={gradeScales[selectedScale].max}
+                        />
+                      </div>
+
+                      {/* Formula Toggle */}
+                      <div className="flex items-center justify-between p-6 glass-info-card rounded-2xl">
+                        <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Show Formula</span>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => setShowFormula(!showFormula)}
+                          className="rounded-full glass-button-light hover:scale-110 transition-all duration-300"
+                        >
+                          <Info className="w-4 h-4" />
+                        </Button>
+                      </div>
+
+                      {showFormula && (
+                        <div className="p-6 glass-info-card rounded-2xl animate-fadeIn">
+                          <h4 className="font-semibold text-purple-700 dark:text-purple-300 mb-2 drop-shadow-sm">Formula Used:</h4>
+                          <p className="text-sm text-purple-600 dark:text-purple-400 font-mono">
+                            {gradeScales[selectedScale].formula}
+                          </p>
+                        </div>
+                      )}
+
+                      <Button
+                        onClick={convertGPA}
+                        disabled={isCalculating}
+                        className="w-full bg-gradient-to-r from-purple-500/80 to-pink-600/80 hover:from-purple-600/80 hover:to-pink-700/80 text-white font-bold py-6 text-xl rounded-full transition-all duration-300 hover:scale-105 shadow-2xl backdrop-blur-xl border border-white/20"
+                      >
+                        {isCalculating ? (
+                          <>
+                            <Sparkles className="w-6 h-6 mr-2 animate-spin" />
+                            Calculating...
+                          </>
+                        ) : (
+                          "Calculate GPA"
+                        )}
+                      </Button>
                     </div>
                   </CardContent>
                 </Card>
               </div>
-            )}
+
+              {/* Results Panel */}
+              {result && (
+                <div className="w-full max-w-2xl mx-auto xl:mx-0 space-y-6 animate-fadeIn">
+                  {/* Main Result */}
+                  <Card className="glass-card-light shadow-2xl rounded-[2rem] overflow-hidden">
+                    <CardContent className="p-8 text-center">
+                      <h3 className="text-2xl font-bold mb-6 text-gray-800 dark:text-white flex items-center justify-center drop-shadow-sm">
+                        <Check className="w-6 h-6 mr-2 text-green-500" />
+                        Conversion Results
+                      </h3>
+                      
+                      <div className="grid grid-cols-1 gap-6 mb-6">
+                        <div className="glass-info-card rounded-2xl p-6">
+                          <div className="text-4xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-2 drop-shadow-sm">
+                            {result.percentage}%
+                          </div>
+                          <div className="text-gray-600 dark:text-gray-300">Percentage</div>
+                        </div>
+                        
+                        <div className="glass-info-card rounded-2xl p-6">
+                          <div className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-2 drop-shadow-sm">
+                            {result.letterGrade}
+                          </div>
+                          <div className="text-gray-600 dark:text-gray-300">Letter Grade</div>
+                        </div>
+                        
+                        <div className="glass-info-card rounded-2xl p-6">
+                          <div className="text-lg font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-2 drop-shadow-sm">
+                            {result.classification}
+                          </div>
+                          <div className="text-gray-600 dark:text-gray-300">Classification</div>
+                        </div>
+                      </div>
+                      
+                      <Button
+                        onClick={copyResult}
+                        variant="outline"
+                        className="glass-button-light rounded-full px-6 py-3 transition-all duration-300 hover:scale-105"
+                      >
+                        {copied ? <Check className="w-4 h-4 mr-2 text-green-500" /> : <Copy className="w-4 h-4 mr-2" />}
+                        {copied ? "Copied!" : "Copy Result"}
+                      </Button>
+                    </CardContent>
+                  </Card>
+
+                  {/* Academic Guidance */}
+                  <Card className="glass-card-light shadow-2xl rounded-[2rem] overflow-hidden">
+                    <CardContent className="p-8">
+                      <div className="flex items-center mb-4">
+                        <BookOpen className="w-5 h-5 mr-3 text-purple-500" />
+                        <h4 className="text-lg font-bold text-gray-800 dark:text-white drop-shadow-sm">Academic Guidance</h4>
+                      </div>
+                      
+                      <div className="p-6 glass-info-card rounded-2xl">
+                        <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
+                          {result.interpretation}
+                        </p>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>
