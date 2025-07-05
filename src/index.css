@@ -175,9 +175,54 @@
     scroll-behavior: smooth;
   }
 
-  /* Better line height for readability */
+  /* Enhanced responsive typography utilities */
   .line-height-relaxed {
     line-height: 1.6;
+  }
+
+  .line-height-loose {
+    line-height: 1.8;
+  }
+
+  /* Responsive font scaling */
+  .text-fluid-sm {
+    font-size: clamp(0.875rem, 2vw, 1rem);
+  }
+
+  .text-fluid-base {
+    font-size: clamp(1rem, 2.5vw, 1.125rem);
+  }
+
+  .text-fluid-lg {
+    font-size: clamp(1.125rem, 3vw, 1.25rem);
+  }
+
+  .text-fluid-xl {
+    font-size: clamp(1.25rem, 3.5vw, 1.5rem);
+  }
+
+  .text-fluid-2xl {
+    font-size: clamp(1.5rem, 4vw, 2rem);
+  }
+
+  .text-fluid-3xl {
+    font-size: clamp(1.875rem, 5vw, 2.25rem);
+  }
+
+  .text-fluid-4xl {
+    font-size: clamp(2.25rem, 6vw, 3rem);
+  }
+
+  .text-fluid-5xl {
+    font-size: clamp(3rem, 7vw, 4rem);
+  }
+
+  .text-fluid-6xl {
+    font-size: clamp(3.75rem, 8vw, 5rem);
+  }
+
+  .text-fluid-7xl {
+    font-size: clamp(4.5rem, 9vw, 6rem);
   }
 
   /* Line Clamp Utilities for Text Overflow */
@@ -207,6 +252,51 @@
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 4;
+  }
+
+  /* Responsive spacing utilities */
+  .space-responsive {
+    gap: clamp(1rem, 3vw, 2rem);
+  }
+
+  /* Better letter spacing for headings */
+  .tracking-tighter {
+    letter-spacing: -0.05em;
+  }
+
+  .tracking-tight {
+    letter-spacing: -0.025em;
+  }
+
+  .tracking-wide {
+    letter-spacing: 0.025em;
+  }
+}
+
+/* Enhanced responsive breakpoints */
+@media (max-width: 480px) {
+  .text-shadow {
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  }
+
+  .glass-card-light {
+    backdrop-filter: blur(8px);
+  }
+}
+
+@media (max-width: 768px) {
+  .animate-float {
+    animation-duration: 6s;
+  }
+
+  .glass-card-light {
+    backdrop-filter: blur(12px);
+  }
+}
+
+@media (max-width: 1024px) {
+  .animate-gradientMove {
+    animation-duration: 15s;
   }
 }
 
@@ -291,6 +381,7 @@
   
   html {
     @apply scroll-smooth;
+    font-size: 16px;
   }
   
   body {
@@ -299,6 +390,24 @@
     -moz-osx-font-smoothing: grayscale;
     font-feature-settings: 'cv11', 'ss01';
     font-variation-settings: 'opsz' 32;
+    line-height: 1.5;
+  }
+
+  /* Responsive base font sizes */
+  @media (max-width: 480px) {
+    html { font-size: 14px; }
+  }
+
+  @media (min-width: 481px) and (max-width: 768px) {
+    html { font-size: 15px; }
+  }
+
+  @media (min-width: 769px) and (max-width: 1024px) {
+    html { font-size: 16px; }
+  }
+
+  @media (min-width: 1025px) {
+    html { font-size: 16px; }
   }
 }
 
