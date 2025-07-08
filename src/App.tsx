@@ -35,9 +35,9 @@ function App() {
       <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
         <ErrorBoundary>
           <Router>
-            <div className="min-h-screen flex flex-col">
+            <div className="min-h-screen flex flex-col bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 dark:from-gray-900 dark:via-slate-900 dark:to-gray-900">
               <Navbar />
-              <main className="flex-1 pt-16">
+              <main className="flex-1 pt-16 sm:pt-20">
                 <Routes>
                   <Route path="/" element={<Home />} />
                   <Route path="/age" element={<AgeCalculator />} />
