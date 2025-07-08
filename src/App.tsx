@@ -37,7 +37,7 @@ function App() {
       <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
         <ErrorBoundary>
           <Router>
-            <SidebarProvider>
+            <SidebarProvider defaultOpen={false}>
               <div className="min-h-screen flex w-full bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 dark:from-gray-900 dark:via-slate-900 dark:to-gray-900">
                 <AppSidebar />
                 <div className="flex-1 flex flex-col">
