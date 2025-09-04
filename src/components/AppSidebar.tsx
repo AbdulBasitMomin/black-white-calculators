@@ -27,11 +27,12 @@ const navItems = [
 ];
 
 export function AppSidebar() {
-  const { state } = useSidebar();
+  const { state, isMobile } = useSidebar();
   const location = useLocation();
   const currentPath = location.pathname;
 
   const isActive = (path: string) => currentPath === path;
+  const isCollapsed = state === "collapsed";
 
   return (
     <Sidebar className="border-r border-border">
@@ -61,7 +62,7 @@ export function AppSidebar() {
                           isActive(item.path) ? 'text-primary' : 'text-muted-foreground'
                         }`} 
                       />
-                      {state === "expanded" && (
+                      {(!isCollapsed || isMobile) && (
                         <span className="text-sm font-medium truncate">
                           {item.name}
                         </span>
