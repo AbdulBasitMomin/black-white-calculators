@@ -35,10 +35,10 @@ export function AppSidebar() {
   const isCollapsed = state === "collapsed";
 
   return (
-    <Sidebar className="border-r border-border">
+    <Sidebar className="border-r border-border backdrop-blur-md bg-background/95">
       <SidebarContent className="pt-4">
         <SidebarGroup>
-          <SidebarGroupLabel className="text-lg font-semibold mb-4 px-4">
+          <SidebarGroupLabel className="text-lg font-semibold mb-4 px-4 bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
             Calculator Tools
           </SidebarGroupLabel>
           <SidebarGroupContent>
@@ -49,17 +49,17 @@ export function AppSidebar() {
                     <NavLink
                       to={item.path}
                       className={({ isActive: navIsActive }) =>
-                        `flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-200 w-full ${
+                        `flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-300 w-full group ${
                           navIsActive
-                            ? 'bg-primary/10 text-primary font-medium border-r-2 border-primary'
-                            : 'text-muted-foreground hover:bg-muted hover:text-foreground'
+                            ? 'bg-gradient-to-r from-primary/10 to-purple-500/10 text-primary font-medium border-r-2 border-primary shadow-md'
+                            : 'text-muted-foreground hover:bg-gradient-to-r hover:from-muted hover:to-muted/50 hover:text-foreground hover:shadow-sm hover:scale-105'
                         }`
                       }
                       aria-label={item.ariaLabel}
                     >
                       <item.icon 
-                        className={`w-5 h-5 flex-shrink-0 ${
-                          isActive(item.path) ? 'text-primary' : 'text-muted-foreground'
+                        className={`w-5 h-5 flex-shrink-0 transition-all duration-300 ${
+                          isActive(item.path) ? 'text-primary animate-pulse' : 'text-muted-foreground group-hover:text-primary group-hover:scale-110'
                         }`} 
                       />
                       {(!isCollapsed || isMobile) && (

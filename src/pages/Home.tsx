@@ -3,6 +3,7 @@ import { Calculator, Heart, DollarSign, Calendar, Clock, GraduationCap, Moon, Ba
 import HeroSection from "@/components/HeroSection";
 import CalculatorCard from "@/components/CalculatorCard";
 import BackgroundElements from "@/components/BackgroundElements";
+import SEOHead from "@/components/SEOHead";
 
 const calculatorTools = [
   {
@@ -90,28 +91,35 @@ const calculatorTools = [
 
 const Home = () => {
   return (
-    <div className="min-h-screen relative overflow-hidden">
-      <BackgroundElements />
-      
-      <div className="relative z-10 min-h-screen">
-        <HeroSection />
+    <>
+      <SEOHead 
+        title="Lion Calculator - Premium Calculator Tools"
+        description="Experience the next generation of calculation tools. Precision meets elegance in our collection of premium calculators designed for the modern world."
+        keywords="calculator, age calculator, BMI calculator, currency converter, days calculator, countdown timer, GPA calculator, calorie calculator, sleep calculator, pregnancy calculator, premium calculators"
+      />
+      <div className="min-h-screen relative overflow-hidden">
+        <BackgroundElements />
+        
+        <div className="relative z-10 min-h-screen">
+          <HeroSection />
 
-        {/* Enhanced Cards Grid */}
-        <section className="px-4 sm:px-6 pb-16 sm:pb-20">
-          <div className="max-w-7xl mx-auto">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-10">
-              {calculatorTools.map((tool, index) => (
-                <CalculatorCard
-                  key={tool.title}
-                  {...tool}
-                  index={index}
-                />
-              ))}
+          {/* Enhanced Cards Grid */}
+          <section className="px-4 sm:px-6 pb-16 sm:pb-20">
+            <div className="max-w-7xl mx-auto">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-10">
+                {calculatorTools.map((tool, index) => (
+                  <CalculatorCard
+                    key={tool.title}
+                    {...tool}
+                    index={index}
+                  />
+                ))}
+              </div>
             </div>
-          </div>
-        </section>
+          </section>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
