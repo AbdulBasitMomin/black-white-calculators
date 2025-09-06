@@ -426,6 +426,45 @@
   .safe-area-inset-right {
     padding-right: env(safe-area-inset-right);
   }
+
+  /* Header stability classes to prevent layout shifts */
+  .header-stable {
+    min-height: 4rem; /* 64px fixed height */
+    height: 4rem;
+    contain: layout style;
+  }
+  
+  .header-icon-stable {
+    width: 2.5rem; /* 40px fixed */
+    height: 2.5rem; /* 40px fixed */
+    min-width: 2.5rem;
+    min-height: 2.5rem;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .header-button-stable {
+    width: 2.5rem; /* 40px fixed */
+    height: 2.5rem; /* 40px fixed */
+    min-width: 2.5rem;
+    min-height: 2.5rem;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    contain: layout;
+  }
+  
+  .header-logo-stable {
+    width: 2.5rem; /* 40px fixed */
+    height: 2.5rem; /* 40px fixed */
+    min-width: 2.5rem;
+    min-height: 2.5rem;
+    flex-shrink: 0;
+    contain: layout;
+  }
 }
 
 body {

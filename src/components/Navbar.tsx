@@ -17,7 +17,7 @@ const Navbar = () => {
           className="flex items-center gap-3 min-w-0 flex-shrink-0 group" 
           aria-label="Home - Lion Calculator"
         >
-          <div className="w-10 h-10 bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600 rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-105 flex-shrink-0">
+          <div className="header-logo-stable bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600 rounded-xl shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-105">
             <Calculator className="w-4 h-4 text-white drop-shadow-sm flex-shrink-0" aria-hidden="true" />
           </div>
           <div className="hidden sm:block min-w-0">
@@ -32,13 +32,13 @@ const Navbar = () => {
           <button
             onClick={() => setIsShareModalOpen(true)}
             aria-label="Share Lion Calculator"
-            className="flex items-center justify-center gap-2 w-10 h-10 sm:w-auto sm:h-10 sm:px-4 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-lg text-sm font-medium flex-shrink-0"
+            className="flex items-center justify-center gap-2 header-button-stable sm:w-auto sm:px-4 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-lg text-sm font-medium"
           >
             <Share2 className="w-4 h-4 flex-shrink-0" aria-hidden="true" />
             <span className="hidden sm:inline whitespace-nowrap">Share</span>
           </button>
           
-          <div className="w-10 h-10 flex items-center justify-center flex-shrink-0">
+          <div className="header-button-stable">
             <ThemeToggle />
           </div>
         </div>
