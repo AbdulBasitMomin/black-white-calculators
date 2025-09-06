@@ -11,23 +11,23 @@ const Navbar = () => {
   return (
     <>
       <nav className="flex items-center justify-between w-full h-full">
-        {/* Logo - Consistent sizing */}
+        {/* Logo - Perfectly aligned */}
         <NavLink 
           to="/" 
           className="flex items-center gap-3 min-w-0 flex-shrink-0 group" 
           aria-label="Home - Lion Calculator"
         >
-          <div className="w-8 h-8 bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600 rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-105 flex-shrink-0">
+          <div className="w-10 h-10 bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600 rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-105 flex-shrink-0">
             <Calculator className="w-4 h-4 text-white drop-shadow-sm flex-shrink-0" aria-hidden="true" />
           </div>
           <div className="hidden sm:block min-w-0">
-            <div className="font-bold text-base bg-gradient-to-r from-gray-900 to-gray-600 dark:from-white dark:to-gray-300 bg-clip-text text-transparent whitespace-nowrap">
+            <div className="font-bold text-base bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent whitespace-nowrap">
               Lion Calculator
             </div>
           </div>
         </NavLink>
 
-        {/* Right side buttons - Consistent sizing and spacing */}
+        {/* Right side buttons - Perfect alignment and spacing */}
         <div className="flex items-center gap-3 flex-shrink-0">
           <button
             onClick={() => setIsShareModalOpen(true)}

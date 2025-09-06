@@ -17,9 +17,9 @@ const ThemeToggle = () => {
       <Button
         variant="ghost"
         size="icon"
-        className="rounded-full w-10 h-10 glass-button-light hover:scale-110 transition-all duration-300 shadow-lg"
+        className="w-10 h-10 flex-shrink-0 rounded-lg hover:bg-accent transition-colors"
       >
-        <Sun className="h-[1.2rem] w-[1.2rem] text-gray-700" />
+        <Sun className="h-4 w-4 flex-shrink-0" />
         <span className="sr-only">Toggle theme</span>
       </Button>
     );
@@ -32,10 +32,10 @@ const ThemeToggle = () => {
       variant="ghost"
       size="icon"
       onClick={() => setTheme(currentTheme === "light" ? "dark" : "light")}
-      className="rounded-full w-10 h-10 glass-button-light hover:scale-110 transition-all duration-300 shadow-lg"
+      className="w-10 h-10 flex-shrink-0 rounded-lg hover:bg-accent transition-colors"
     >
-      <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0 text-gray-700" />
-      <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100 text-white" />
+      <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0 flex-shrink-0" />
+      <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100 flex-shrink-0" />
       <span className="sr-only">Toggle theme</span>
     </Button>
   );

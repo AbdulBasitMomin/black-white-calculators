@@ -48,11 +48,13 @@ const AppContent = () => {
         <AppSidebar />
         <div className="flex-1 flex flex-col">
           <header className="sticky top-0 z-40 border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 safe-area-inset-top">
-            <div className="flex h-16 items-center justify-between px-4 max-w-none">
-              <div className="flex items-center min-w-0">
-                <SidebarTrigger className="w-10 h-10 flex items-center justify-center mr-3 flex-shrink-0" />
-                <div className="flex-1 min-w-0">
-                  <Navbar />
+            <div className="flex h-16 items-center px-4 max-w-none">
+              <div className="flex items-center justify-between w-full gap-4">
+                <div className="flex items-center gap-4 min-w-0 flex-1">
+                  <SidebarTrigger className="w-10 h-10 flex items-center justify-center flex-shrink-0 rounded-lg hover:bg-accent transition-colors" />
+                  <div className="flex-1 min-w-0">
+                    <Navbar />
+                  </div>
                 </div>
               </div>
             </div>
