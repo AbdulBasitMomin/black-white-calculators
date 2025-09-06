@@ -44,14 +44,16 @@ const AppContent = () => {
   
   return (
     <SidebarProvider defaultOpen={false}>
-      <div className="min-h-screen flex w-full bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 dark:from-gray-900 dark:via-slate-900 dark:to-gray-900">
+      <div className="min-h-screen flex w-full bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 dark:from-gray-900 dark:via-slate-900 dark:to-gray-900 safe-area-inset-left safe-area-inset-right">
         <AppSidebar />
         <div className="flex-1 flex flex-col">
-          <header className="sticky top-0 z-40 border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-            <div className="flex h-16 items-center px-4">
-              <SidebarTrigger className="mr-4" />
-              <div className="flex-1">
-                <Navbar />
+          <header className="sticky top-0 z-40 border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 safe-area-inset-top">
+            <div className="flex h-16 items-center justify-between px-4 max-w-none">
+              <div className="flex items-center min-w-0">
+                <SidebarTrigger className="w-10 h-10 flex items-center justify-center mr-3 flex-shrink-0" />
+                <div className="flex-1 min-w-0">
+                  <Navbar />
+                </div>
               </div>
             </div>
           </header>
